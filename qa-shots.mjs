@@ -11,7 +11,12 @@
  * Aufruf (Server muss laufen):
  *   node qa-shots.mjs http://localhost:8018 ./beweise/nachher
  */
-import { chromium } from '/Users/lennyschoenbach/Documents/Projekte/Lechcode/pipeline/bin/qa-tools/node_modules/playwright/index.mjs';
+// Playwright liegt zentral in pipeline/bin/qa-tools/. Relativ aufgeloest,
+// damit im oeffentlichen Vorschau-Repo kein lokaler Benutzerpfad steht.
+import { createRequire } from 'node:module';
+const { chromium } = createRequire(
+  new URL('../../../pipeline/bin/qa-tools/', import.meta.url)
+)('playwright');
 
 const BASIS = process.argv[2] || 'http://localhost:8018';
 const AUS   = process.argv[3] || './beweise/nachher';
