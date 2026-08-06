@@ -1,0 +1,40 @@
+/* ═══════════════════════════════════════════════════════════════
+   TOKENS · lilly-stradner — EINZIGE Quelle der Wahrheit.
+   Wird von site.css UND legal.css eingebunden, damit die acht
+   Seiten nicht auseinanderlaufen. Frueher lag dieser Block in
+   jeder Datei einzeln — genau daran ist alexander-faubel
+   haengengeblieben (Rechtsseiten behielten alte Groessenstufen).
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  /* Lillys Markenfarben, exakt wie von ihr genannt */
+  --glut:#A80808;          /* Dunkelrot  — CTA-Flaeche, Siegel, Glut-Kapitel */
+  --wald-hell:#13602F;     /* Dunkelgruen — Akzentlinien, Zustaende */
+  --erde:#764721;          /* Dunkelbraun — Haarlinien, Rahmen */
+
+  /* Daraus abgeleitete Boeden und Textfarben */
+  --nacht:#14100C;         /* Hauptgrund, warmes Braunschwarz aus --erde */
+  --nacht-2:#1D1710;       /* leicht abgesetzte Flaechen auf Nacht */
+  --wald:#12351F;          /* Kapitelboden Gruen */
+  --licht:#F4EBDF;         /* Fliesstext auf dunklem Grund · 16,1:1 auf Nacht */
+  --daemmer:#C9B7A4;       /* Sekundaertext · 9,6:1 auf Nacht */
+
+  /* ⚠ --glut ist als TEXTFARBE auf dunklem Grund UNLESBAR (2,4:1).
+     Nur als Flaeche verwenden. Wo die Wortmarke rot sein soll,
+     steht sie auf dem Pergamentstreifen (6,6:1). Siehe
+     _projekt/WUNSCH-REGISTER.md, Konflikt A. */
+
+  --serif:'Young Serif','Young Fallback',Georgia,serif;
+  --sans:'Epilogue','Epilogue Fallback','Helvetica Neue',Arial,sans-serif;
+
+  --h1:clamp(2.1rem,6.4vw,4.2rem);
+  --h2:clamp(1.75rem,3.9vw,2.75rem);
+  --h3:clamp(1.2rem,2.1vw,1.55rem);
+  --h4:clamp(.98rem,1.5vw,1.1rem);
+  --text:clamp(1.02rem,1.1vw,1.12rem);
+  --klein:.875rem;
+
+  --spalte:1180px;         /* aeussere Buehne */
+  --text-breite:34rem;     /* Lesespalte — max. ~72 Zeichen */
+  --rail:58px;             /* Breite des Seitenreiters ab 900px */
+  --ease:cubic-bezier(.22,.61,.36,1);
+}

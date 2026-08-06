@@ -1,0 +1,51 @@
+/* ============================================================
+   Lilly Stradner · „Spirit of Body and Breath"
+   Lokal gehostete Schriften (latin-Subset, woff2).
+   DSGVO: KEINE Verbindung zu Google oder anderen Drittservern.
+   2 Familien · 3 Dateien · 47 KB gesamt.
+   Der Schnitt 500 ist bewusst raus: Er wurde nur an fuenf unkritischen
+   Stellen genutzt und lud im kritischen Fenster gegen das Hero-Bild an.
+
+   Young Serif: es existiert nur der Schnitt 400. Niemals
+   `font-style: italic` oder `font-weight: 700` darauf setzen —
+   der Browser wuerde synthetisch schraegstellen bzw. fetten und
+   die kraeftigen Serifen verzerren. Auszeichnungen laufen ueber
+   Epilogue.
+
+   Warum diese Paarung: Young Serif hat kraeftige Serifen bei
+   moderatem Strichkontrast. Auf dunklem Grund brechen duenne
+   Haarlinien weg (Halation) — deshalb hier bewusst KEINE Didone
+   und kein Cormorant.
+
+   size-adjust: gegen den System-Fallback gemessen, damit beim
+   Nachladen der Schriften nichts springt (CLS).
+   ============================================================ */
+
+/* — Young Serif (Ueberschriften, Wortmarke) — */
+@font-face{
+  font-family:'Young Serif';
+  font-style:normal; font-weight:400; font-display:swap;
+  src:url(fonts/young-serif-400.woff2) format('woff2');
+}
+@font-face{
+  font-family:'Young Fallback';
+  src:local('Georgia'), local('Times New Roman'), local('Times');
+  size-adjust:94.5%; ascent-override:92%; descent-override:24%;
+}
+
+/* — Epilogue (Fliesstext, Navigation, Labels) — */
+@font-face{
+  font-family:'Epilogue';
+  font-style:normal; font-weight:400; font-display:swap;
+  src:url(fonts/epilogue-400.woff2) format('woff2');
+}
+@font-face{
+  font-family:'Epilogue';
+  font-style:normal; font-weight:600; font-display:swap;
+  src:url(fonts/epilogue-600.woff2) format('woff2');
+}
+@font-face{
+  font-family:'Epilogue Fallback';
+  src:local('Helvetica Neue'), local('Arial');
+  size-adjust:97.2%; ascent-override:95%; descent-override:24%;
+}

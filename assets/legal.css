@@ -1,0 +1,97 @@
+/* ═══════════════════════════════════════════════════════════════
+   Rechtsseiten und 404 · lilly-stradner
+   Tokens kommen aus tokens.css — hier NIE :root neu definieren.
+   Genau diese Duplikation hat bei alexander-faubel dazu gefuehrt,
+   dass die Rechtsseiten alte Groessenstufen behielten.
+   ═══════════════════════════════════════════════════════════════ */
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--nacht); color:var(--licht);
+  font-family:var(--sans); font-size:var(--text); line-height:1.68;
+  overflow-x:clip; -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%; height:auto; display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--serif); font-weight:400; line-height:1.16; margin:0}
+h1{font-size:var(--h2)}                    /* Rechtsseiten fuehren keine H1-Groesse */
+h2{font-size:var(--h3); margin:2.4rem 0 .7rem}
+h3{font-size:var(--h4); margin:1.6rem 0 .5rem; font-family:var(--sans); font-weight:600}
+p,ul{margin:0 0 1.1em}
+ul{padding-left:1.15rem}
+li{margin-bottom:.4rem}
+/* wie in site.css: --wald-hell ergab auf Nacht nur 2,47:1 */
+:focus-visible{outline:3px solid var(--licht); outline-offset:3px; border-radius:3px}
+/* Der Fuss ist der einzige helle Bereich. Ein Ring in --licht waere dort
+   creme auf creme = 1:1 — dieselbe Regel (WCAG 2.2 SC 1.4.11) wie auf dem
+   dunklen Grund, nur die andere Haelfte. Lighthouse prueft Fokusringe nicht. */
+footer :focus-visible,.pergament :focus-visible{outline-color:var(--nacht)}
+
+
+.skip{position:absolute; left:-9999px; top:0; z-index:200;
+      background:var(--licht); color:var(--nacht); padding:.8rem 1.2rem; font-weight:600}
+.skip:focus{left:.5rem; top:.5rem}
+
+/* Kopfzeile: dieselbe Optik wie auf der Hauptseite, aber ohne Reiter */
+.kopf{
+  display:flex; justify-content:space-between; align-items:center; gap:1rem;
+  padding:.7rem clamp(.8rem,2vw,1.4rem); border-bottom:1px solid #3A2C1E;
+  position:sticky; top:0; z-index:10;
+  background:color-mix(in srgb, var(--nacht) 92%, transparent); backdrop-filter:blur(9px);
+}
+.wortmarke{display:flex; align-items:center; gap:.6rem; text-decoration:none; min-height:48px}
+.wortmarke img{width:30px; height:auto; flex:none}
+.wortmarke b{font-family:var(--serif); font-weight:400; font-size:1.05rem}
+.zurueck{
+  display:inline-flex; align-items:center; gap:.45rem; min-height:48px; padding:.45rem .95rem;
+  border:1px solid #4A3826; border-radius:999px; text-decoration:none;
+  font-size:var(--klein); font-weight:600; transition:border-color .25s var(--ease);
+}
+.zurueck:hover{border-color:var(--glut)}
+
+.buehne{width:min(100% - 2.5rem, var(--spalte)); margin-inline:auto}
+main{padding:clamp(2.5rem,6vw,4.5rem) 0 clamp(3.5rem,8vw,6rem)}
+.spalte{max-width:var(--text-breite)}
+.marke{
+  font-family:var(--sans); font-size:var(--klein); font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--daemmer);
+  margin:0 0 1rem; display:flex; align-items:center; gap:.7rem;
+}
+.marke::before{content:''; width:1.6rem; height:1px; background:var(--glut); flex:none}
+
+/* Offener Hinweis auf fehlende Angaben — ehrlich statt erfunden.
+   Beim Scharfschalten ersatzlos loeschen. */
+.offen{
+  border:1px solid var(--erde); border-left:3px solid var(--glut); border-radius:3px;
+  background:var(--nacht-2); padding:1.1rem 1.3rem; margin:0 0 2rem;
+  font-size:var(--klein); color:var(--daemmer); max-width:var(--text-breite);
+}
+.offen strong{color:var(--licht)}
+.luecke{color:var(--licht); background:#A8080833; border-bottom:1px solid var(--glut);
+        padding:.05em .35em; border-radius:2px; font-weight:600}
+
+/* Fuss: derselbe Pergamentstreifen wie auf der Hauptseite */
+footer{background:var(--licht); color:var(--nacht); padding:clamp(2rem,4vw,3rem) 0}
+.fuss-marke{display:flex; align-items:center; gap:.9rem; margin-bottom:1.4rem}
+.fuss-marke img{width:40px; height:auto; flex:none}
+.fuss-marke b{display:block; font-family:var(--serif); font-weight:400; font-size:1.2rem; color:var(--glut)}
+.fuss-marke i{display:block; font-style:normal; font-size:var(--klein); letter-spacing:.13em;
+              text-transform:uppercase; color:var(--glut); font-weight:600; margin-top:.15rem}
+.fuss-links{display:flex; flex-wrap:wrap; gap:.3rem 1.4rem; font-size:var(--klein)}
+.fuss-links a{min-height:44px; display:inline-flex; align-items:center; color:#4A3826; font-weight:600}
+.fuss-links a:hover{color:var(--glut)}
+
+/* 404 — Fuss an die Unterkante, sonst blieb darunter ein schwarzer Streifen */
+body{min-height:100dvh; display:flex; flex-direction:column}
+main{flex:1}
+footer{margin-top:auto}
+.mitte{display:grid; place-items:center; text-align:center}
+.mitte h1{font-size:var(--h1); margin-bottom:1rem}
+.mitte .marke{justify-content:center}
+
+@media print{
+  .kopf,.zurueck{display:none}
+  body{background:#fff; color:#000}
+  a::after{content:' (' attr(href) ')'; font-size:.8em; color:#555}
+}

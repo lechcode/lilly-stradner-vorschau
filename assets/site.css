@@ -1,0 +1,442 @@
+/* Stile der beiden One-Pager (index.html + en.html).
+   Tokens kommen aus tokens.css — hier NIE :root neu definieren. */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--nacht); color:var(--licht);
+  font-family:var(--sans); font-size:var(--text); font-weight:400;
+  line-height:1.68; letter-spacing:.005em;
+  overflow-x:clip;                       /* clip statt hidden: kein Scroll-Container */
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%; height:auto; display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--serif); font-weight:400; line-height:1.14; letter-spacing:-.015em; margin:0}
+h1{font-size:var(--h1)}
+h2{font-size:var(--h2); margin-bottom:clamp(1.1rem,2.3vw,1.7rem)}
+h3{font-size:var(--h3); line-height:1.25}
+p{margin:0 0 1.1em}
+/* Fokusring in --licht: --wald-hell ergab auf Nacht nur 2,47:1,
+   WCAG 2.2 SC 1.4.11 verlangt mindestens 3:1. Nicht zurueckdrehen. */
+:focus-visible{outline:3px solid var(--licht); outline-offset:3px; border-radius:3px}
+/* Der Fuss ist der einzige helle Bereich. Ein Ring in --licht waere dort
+   creme auf creme = 1:1 — dieselbe Regel (WCAG 2.2 SC 1.4.11) wie auf dem
+   dunklen Grund, nur die andere Haelfte. Lighthouse prueft Fokusringe nicht. */
+footer :focus-visible,.pergament :focus-visible{outline-color:var(--nacht)}
+
+
+/* Nur fuer Screenreader: die Kapitelnamen im Seitenreiter. Sichtbar
+   wird der Name erst beim Zeigen, ueber ::after mit data-titel. */
+.sr{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+}
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:200;
+  background:var(--licht); color:var(--nacht); padding:.8rem 1.2rem; font-weight:600;
+}
+.skip:focus{left:.5rem; top:.5rem}
+
+/* ── Buehne ─────────────────────────────────────────────────── */
+.buehne{width:min(100% - 2.5rem, var(--spalte)); margin-inline:auto}
+/* Inhalt im Bereich RECHTS vom Reiter zentrieren. Vorher stand margin-left
+   fest und margin-right auf auto — ab 1920 px lagen 650 px Leere rechts. */
+@media (min-width:900px){
+  .buehne{
+    width:min(100% - var(--rail) - 4rem, var(--spalte));
+    margin-left:auto; margin-right:auto;
+    translate:calc(var(--rail) / 2) 0;
+  }
+}
+.lese{max-width:var(--text-breite)}
+
+section{padding:clamp(4rem,9vw,7.5rem) 0; position:relative; scroll-margin-top:76px}
+.boden-wald{background:var(--wald)}
+.boden-glut{background:var(--glut)}
+
+.marke{
+  font-family:var(--sans); font-size:var(--klein); font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--daemmer);
+  margin:0 0 1.1rem; display:flex; align-items:flex-start; gap:.7rem;
+}
+.marke::before{content:''; width:1.6rem; height:1px; background:var(--glut); flex:none;
+               margin-top:.55em}  /* sonst schwebt der Strich beim Umbruch */
+.boden-glut .marke{color:#F6DCDC}
+.boden-glut .marke::before{background:var(--licht)}
+
+/* ── Kopfleiste: Sprache + Menue, immer sichtbar ───────────────
+   W5: Der Sprachumschalter darf NICHT hinter einem Aufklapper
+   liegen — Lilly ausdruecklich: „dass das nicht uebersehen wird". */
+.kopf{
+  /* z-index MUSS ueber der Ausklapp-Navigation (95) liegen: sonst verdeckt
+     das offene Menue den Schliessen-Knopf und den Sprachumschalter — am Handy
+     gibt es keine Escape-Taste, man kaeme nur ueber einen Kapitel-Link raus. */
+  position:fixed; inset:0 0 auto 0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:1rem; padding:.6rem clamp(.8rem,2vw,1.4rem);
+  background:color-mix(in srgb, var(--nacht) 88%, transparent);
+  backdrop-filter:blur(9px); border-bottom:1px solid #3A2C1E;
+}
+.menue-knopf{
+  display:inline-flex; align-items:center; gap:.55rem;
+  min-height:48px; padding:.5rem .9rem;
+  background:none; border:1px solid #4A3826; border-radius:999px;
+  color:var(--licht); font:600 var(--klein)/1 var(--sans);
+  letter-spacing:.09em; text-transform:uppercase; cursor:pointer;
+  transition:border-color .25s var(--ease), background .25s var(--ease);
+}
+.menue-knopf:hover{border-color:var(--glut); background:var(--nacht-2)}
+.menue-knopf svg{width:15px; height:11px; flex:none}
+.menue-knopf svg line{stroke:currentColor; stroke-width:1.6; transition:transform .3s var(--ease)}
+[aria-expanded=true] .b1{transform:translateY(4.4px) rotate(45deg); transform-origin:center}
+[aria-expanded=true] .b2{opacity:0}
+[aria-expanded=true] .b3{transform:translateY(-4.4px) rotate(-45deg); transform-origin:center}
+
+.sprache{display:flex; gap:.3rem; align-items:center}
+.sprache a{
+  display:inline-flex; align-items:center; gap:.4rem;
+  min-height:48px; padding:.45rem .75rem; border-radius:999px;
+  text-decoration:none; font-weight:600; font-size:var(--klein);
+  letter-spacing:.08em; color:var(--daemmer);
+  border:1px solid transparent; transition:all .25s var(--ease);
+}
+.sprache a:hover{color:var(--licht); border-color:#4A3826}
+/* Aktive Sprache gedeckt markieren, nicht in --glut: rot war hier lauter
+   als der eigentliche Handlungsaufruf und zog den Blick zuerst an.
+   Sichtbarkeit (W5) tragen Position und Flaggen, nicht die Farbe. */
+.sprache a[aria-current=true]{background:#2E241A; color:var(--licht); border-color:var(--erde)}
+.flagge{width:20px; height:14px; border-radius:2px; flex:none; box-shadow:0 0 0 1px #00000040}
+
+/* ── Seitenreiter ──────────────────────────────────────────── */
+.rail{display:none}
+@media (min-width:900px){
+  .rail{
+    display:flex; position:fixed; left:0; top:0; bottom:0; z-index:80;
+    width:var(--rail); flex-direction:column; align-items:center;
+    justify-content:center; gap:1.15rem;
+    border-right:1px solid #3A2C1E; background:var(--nacht);
+  }
+  /* Klickflaeche 44x44, sichtbarer Punkt nur 11px: gemessen waren die
+     Punkte vorher 11x11 und damit zu klein zum Antippen. */
+  .rail a{
+    display:grid; place-items:center; width:44px; height:44px;
+    position:relative; text-decoration:none;
+  }
+  .rail a::before{
+    content:''; width:11px; height:11px; border-radius:50%;
+    border:1px solid var(--erde);
+    transition:background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
+  }
+  .rail a::after{                       /* Beschriftung erscheint beim Zeigen */
+    content:attr(data-titel); position:absolute; left:2.6rem; top:50%;
+    transform:translateY(-50%) translateX(-6px);
+    white-space:nowrap; font-size:var(--klein); font-weight:600; color:var(--licht);
+    background:var(--nacht-2); border:1px solid #4A3826; border-radius:999px;
+    padding:.35rem .8rem; opacity:0; pointer-events:none;
+    transition:opacity .25s var(--ease), transform .25s var(--ease);
+  }
+  .rail a:hover::after,.rail a:focus-visible::after{opacity:1; transform:translateY(-50%) translateX(0)}
+  .rail a:hover::before,.rail a.aktiv::before{background:var(--glut); border-color:var(--glut)}
+  .rail a.aktiv::before{transform:scale(1.35)}
+}
+
+/* ── Ausklapp-Navigation ───────────────────────────────────── */
+.nav{
+  position:fixed; inset:0; z-index:95; background:var(--nacht);
+  display:grid; place-items:center; padding:5rem 1.5rem 2rem;
+  opacity:0; visibility:hidden; transition:opacity .35s var(--ease), visibility .35s;
+}
+.nav[data-offen=true]{opacity:1; visibility:visible}
+.nav ol{list-style:none; margin:0; padding:0; display:grid; gap:.15rem; width:min(100%,30rem)}
+.nav li{counter-increment:k}
+.nav a{
+  display:flex; align-items:baseline; gap:1rem; padding:.7rem .3rem;
+  text-decoration:none; font-family:var(--serif); font-size:clamp(1.4rem,4.5vw,2rem);
+  border-bottom:1px solid #2C2118; transition:color .25s var(--ease), padding-left .25s var(--ease);
+}
+.nav a:hover{color:#F6C9C9; padding-left:.9rem}
+.nav a span{font-family:var(--sans); font-size:var(--klein); color:var(--erde); font-weight:600}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+/* Naht Hero ↔ Kapitel 01 knapp halten: Auf dem Desktop lugt „01 — Über mich"
+   dadurch ueber die Falte. Mobil war darunter nur Schwarz — auf einer
+   durchgehend dunklen Seite liest sich das wie „Seite zu Ende", und W7
+   lebt davon, dass man sieht, dass es weitergeht. */
+.hero{padding-top:clamp(4.6rem,11vw,8rem); padding-bottom:clamp(1.1rem,4vw,3rem)}
+/* knapp gehalten, damit „01 — Über mich" auch mobil ueber die Falte lugt */
+#ueber-mich{padding-top:clamp(.55rem,5vw,4rem)}
+/* Ab 900px zweispaltig: Diptychon links, Text rechts.
+   Lillys Reihenfolge (Bild → Satz → Logo → Willkommen) bleibt erhalten,
+   sie laeuft dann von links nach rechts statt von oben nach unten.
+   Gruende: sonst steht der Hero auf 1440px in einem Meer aus Leere,
+   und H1, Foto und Handlungsaufruf passen nicht gemeinsam ueber die Falte. */
+@media (min-width:900px){
+  .hero-gitter{display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1fr);
+               gap:clamp(2rem,4vw,4rem); align-items:center}
+  .hero-gitter .dipt{margin-bottom:0; max-width:none}
+  .hero-text{max-width:32rem}
+}
+.hero-text>p:not(.marke){max-width:var(--text-breite)}
+.hero-text>p:last-child{margin-bottom:0}   /* der Absatz um den CTA brauchte keine 1,1em */
+
+/* Fängt die Diät-Lesart des Diptychons ab, bevor sie greift. Steht bewusst
+   ÜBER der Falte — Lillys eigener Satz dazu lag vorher sieben Absätze tiefer,
+   und Bild schlägt Text. Aus Andreas Zielkunden-Test. */
+.klarstellung{
+  border-left:2px solid var(--glut); padding-left:.95rem;
+  font-size:var(--klein); color:var(--daemmer); max-width:var(--text-breite);
+}
+.freiwillig{
+  font-weight:400; letter-spacing:.06em; text-transform:none;
+  color:var(--daemmer); font-size:.82em;
+}
+/* W1: Diptychon. Bleibt AUCH mobil nebeneinander — ein Vergleich,
+   den man nicht auf einen Blick sieht, ist kein Vergleich. */
+.dipt{display:grid; grid-template-columns:1fr 1fr; gap:clamp(.5rem,1.4vw,1rem); max-width:33rem; margin:0 0 clamp(.7rem,3vw,2.2rem)}
+.dipt figure{margin:0; position:relative}
+.dipt img{width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:3px}
+/* Auf sehr schmalen Geraeten (360x800 und kleiner) rutschte der Handlungs-
+   aufruf sonst unter die Falte. Die Bilder werden dort etwas flacher
+   beschnitten — die Gesichter sitzen im oberen Drittel, bleiben also drin. */
+@media (max-width:380px){ .dipt img{aspect-ratio:auto; height:168px; object-position:50% 30%} }
+.dipt figcaption{
+  font-size:var(--klein); font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--daemmer); margin-top:.6rem;
+}
+.dipt figure:first-child img{filter:brightness(.86)}
+.dipt::after{                            /* Glut-Linie zwischen den Bildern */
+  content:''; position:absolute; left:50%; top:0; bottom:2rem; width:1px;
+  background:linear-gradient(180deg,transparent,var(--glut),transparent); opacity:.75;
+}
+.dipt{position:relative}
+
+.hero h1{margin:0 0 clamp(1.5rem,3vw,2rem); max-width:14ch}
+
+/* Wortmarke unter dem Hero-Satz (W2) */
+.lockup{display:flex; align-items:center; gap:.9rem; margin:0 0 1.6rem}
+.lockup img{width:clamp(44px,7vw,60px); height:auto; flex:none}
+.lockup b{display:block; font-family:var(--serif); font-size:var(--h3); font-weight:400; line-height:1.15}
+.lockup i{display:block; font-style:normal; font-size:var(--klein); letter-spacing:.13em;
+          text-transform:uppercase; color:var(--daemmer); margin-top:.25rem}
+
+.knopf{
+  display:inline-flex; align-items:center; gap:.6rem; min-height:52px;
+  padding:.85rem 1.6rem; background:var(--glut); color:#fff;   /* 6,6:1 */
+  border:none; border-radius:999px; text-decoration:none;
+  font-family:var(--sans); font-weight:600; font-size:var(--text); cursor:pointer;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.knopf:hover{transform:translateY(-2px); box-shadow:0 10px 26px #A8080840}
+.knopf svg{width:16px; height:16px; flex:none}
+.knopf-leise{
+  display:inline-flex; align-items:center; gap:.5rem; min-height:48px;
+  text-decoration:none; border-bottom:1px solid var(--erde); padding-bottom:.15rem;
+  font-weight:600; transition:border-color .25s var(--ease)
+}
+.knopf-leise:hover{border-color:var(--glut)}
+.boden-glut .knopf{background:var(--licht); color:var(--nacht)}
+
+/* ── Trigger-Hinweis (W12) ─────────────────────────────────── */
+.hinweis{
+  border:1px solid var(--erde); border-left:3px solid var(--glut);
+  border-radius:3px; padding:1.1rem 1.3rem; margin:0 0 2.2rem;
+  background:var(--nacht-2); font-size:var(--klein); color:var(--daemmer);
+  max-width:var(--text-breite);
+}
+.hinweis strong{color:var(--licht); font-weight:600}
+.hinweis a{color:var(--licht)}
+
+/* ── Pergament: dort und nur dort steht Rot auf Hell ───────── */
+.pergament{
+  background:var(--licht); color:var(--nacht);
+  padding:clamp(1.8rem,4vw,2.8rem); border-radius:4px;
+  max-width:38rem; margin:2.5rem 0;
+}
+.pergament blockquote{margin:0; font-family:var(--serif); font-size:var(--h3); line-height:1.32}
+.pergament cite{display:block; margin-top:1rem; font-style:normal; font-size:var(--klein);
+                letter-spacing:.12em; text-transform:uppercase; color:var(--glut); font-weight:600}
+
+/* ── Atmosphaere-Flaechen (W23) ────────────────────────────── */
+.atmo{position:relative; isolation:isolate}
+/* ⚠ Die Bildpfade stehen HIER und nicht als --bild-Variable im HTML.
+   Relative URLs in Custom Properties werden gegen das Stylesheet aufgeloest,
+   das sie BENUTZT — nicht gegen das Dokument. Als das CSS noch inline im
+   HTML stand, funktionierte `url(assets/img/…)`; nach dem Auslagern nach
+   assets/site.css wurde daraus /assets/assets/img/… und die Flaechen waren
+   monatelang unsichtbar, ohne dass das Gate es meldet (es prueft nur
+   literale url() im Stylesheet). Pfade also relativ zu assets/ halten. */
+.atmo::before{
+  content:''; position:absolute; inset:0; z-index:-1;
+  background-size:cover; background-position:center;
+  opacity:.62;                    /* Lichter sind im Bild gekappt, s. optimize-images.py */
+}
+/* Mobil die kleine Stufe: die grossen Varianten starteten zeitgleich mit dem
+   Hero-Bild und haben den LCP von 1,8 s auf 2,25 s gedrueckt. Die Flaechen
+   liegen hinter einem Verlauf bei 62 % — man sieht den Unterschied nicht. */
+#ueber-mich.atmo::before{background-image:url(img/altar-nacht-420.webp)}
+#kontakt.atmo::before{background-image:url(img/altar-glut-420.webp)}
+@media (min-width:900px){
+  #ueber-mich.atmo::before{background-image:url(img/altar-nacht-900.webp)}
+  #kontakt.atmo::before{background-image:url(img/altar-glut-900.webp)}
+}
+.atmo::after{
+  content:''; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(180deg,var(--nacht) 0%,#14100C99 50%,var(--nacht) 100%);
+}
+
+/* ── Erforschen: Saeulen und Karten oeffnen sich (W21) ─────── */
+.falten{display:grid; gap:.6rem; max-width:44rem; margin-top:2.2rem}
+.falte{border:1px solid #3A2C1E; border-radius:4px; background:#00000026; overflow:hidden}
+.falte summary{
+  display:flex; align-items:center; gap:1rem; cursor:pointer; list-style:none;
+  padding:1.1rem 1.3rem; min-height:56px; font-family:var(--serif); font-size:var(--h3);
+  transition:background .25s var(--ease);
+}
+.falte summary::-webkit-details-marker{display:none}
+.falte summary:hover{background:#00000038}
+.falte summary b{
+  font-family:var(--sans); font-size:var(--klein); font-weight:600; color:var(--glut);
+  flex:none; width:1.7rem;
+}
+.boden-wald .falte summary b{color:#7FD79E}
+.falte summary::after{
+  content:''; margin-left:auto; flex:none; width:9px; height:9px;
+  border-right:1.6px solid var(--daemmer); border-bottom:1.6px solid var(--daemmer);
+  transform:rotate(45deg) translateY(-3px); transition:transform .3s var(--ease);
+}
+.falte[open] summary::after{transform:rotate(-135deg) translateY(-3px)}
+.falte .inhalt{padding:0 1.3rem 1.4rem; max-width:var(--text-breite)}
+.falte .inhalt p:last-child{margin-bottom:0}
+
+/* ── Angebotskarten ────────────────────────────────────────── */
+.karten{display:grid; gap:1.1rem; margin-top:2.4rem}
+@media (min-width:760px){ .karten{grid-template-columns:repeat(3,1fr)} }
+.karte{border:1px solid #3A2C1E; border-radius:4px; padding:1.5rem; background:#00000026}
+.karte h3{margin-bottom:.6rem}
+.karte p{font-size:var(--klein); color:var(--daemmer); margin-bottom:0}
+
+/* ── Bild-Doppel ───────────────────────────────────────────── */
+.paar{display:grid; gap:clamp(1.4rem,3vw,2.4rem); align-items:center; margin-top:2.6rem}
+@media (min-width:820px){ .paar{grid-template-columns:1fr 1.15fr} .paar.gedreht{grid-template-columns:1.15fr 1fr} .paar.gedreht .bild{order:2} }
+.bild img{border-radius:3px; width:100%}
+.bild figcaption{font-size:var(--klein); color:var(--daemmer); margin-top:.7rem}
+
+/* ── Hilfe-Block ───────────────────────────────────────────── */
+.hilfe-kapitel{padding-top:clamp(2.5rem,5vw,3.5rem)}
+.hilfe{background:var(--nacht-2); border:1px solid var(--erde); border-radius:4px;
+       padding:clamp(1.4rem,3vw,2rem); max-width:40rem}
+.hilfe h3{margin-bottom:.5rem}
+.hilfe p{font-size:var(--klein); color:var(--daemmer)}
+.hilfe ul{font-size:var(--klein)}
+.hilfe ul{margin:.8rem 0 0; padding-left:1.1rem}
+.hilfe li{margin-bottom:.45rem}
+.hilfe a{font-weight:600}
+
+/* ── Formular ──────────────────────────────────────────────── */
+form{max-width:32rem; margin-top:2rem}
+.feld{margin-bottom:1.1rem}
+label{display:block; font-size:var(--klein); font-weight:600; letter-spacing:.06em; margin-bottom:.4rem}
+input,textarea{
+  width:100%; min-height:52px; padding:.8rem 1rem;
+  background:var(--nacht-2); border:1px solid #4A3826; border-radius:3px;
+  color:var(--licht); font:400 var(--text)/1.5 var(--sans);
+}
+textarea{min-height:130px; resize:vertical}
+input:focus-visible,textarea:focus-visible{
+  border-color:var(--licht); outline:3px solid var(--licht); outline-offset:2px;
+}
+input:focus,textarea:focus{border-color:var(--daemmer)}
+.honig{position:absolute; left:-9999px}
+.meldung{margin-top:1rem; font-size:var(--klein); min-height:1.4em}
+
+/* ── Fuss: Pergamentstreifen (W10 + Konflikt A) ────────────── */
+footer{background:var(--licht); color:var(--nacht); padding:clamp(2.5rem,5vw,3.5rem) 0}
+.fuss-marke{display:flex; align-items:center; gap:.9rem; margin-bottom:1.8rem}
+.fuss-marke img{width:46px; height:auto; flex:none}
+.fuss-marke b{display:block; font-family:var(--serif); font-weight:400; font-size:1.32rem;
+              color:var(--glut); line-height:1.15}          /* 6,6:1 auf Pergament */
+.fuss-marke i{display:block; font-style:normal; font-size:var(--klein); letter-spacing:.13em;
+              text-transform:uppercase; color:var(--glut); margin-top:.2rem; font-weight:600}
+.fuss-reihen{display:grid; gap:1.6rem; min-width:0}
+.fuss-reihen>*{min-width:0}
+@media (min-width:760px){ .fuss-reihen{grid-template-columns:1fr auto; align-items:end} }
+.fuss-links{display:flex; flex-wrap:wrap; gap:.4rem 1.4rem; font-size:var(--klein)}
+.fuss-links a{min-height:44px; display:inline-flex; align-items:center; color:#4A3826; font-weight:600}
+.fuss-links a:hover{color:var(--glut)}
+/* wrap ist Pflicht: drei Chips passen bei 360px nicht nebeneinander,
+   der Ueberstand lag sonst ausserhalb des Pergament-Fusses auf dunklem
+   Grund — das hat Lighthouse zu Recht als Kontrastfehler gemeldet. */
+.sozial{display:flex; flex-wrap:wrap; gap:.6rem}
+.sozial a{
+  display:inline-flex; align-items:center; gap:.5rem; min-height:44px; padding:.5rem 1rem;
+  border:1px solid #C7B49F; border-radius:999px; text-decoration:none;
+  font-size:var(--klein); font-weight:600; color:#4A3826; transition:all .25s var(--ease);
+}
+.sozial a:hover{border-color:var(--glut); color:var(--glut)}
+.sozial svg{width:15px; height:15px; flex:none}
+
+/* Noch fehlende Adressen: sichtbar als Lücke, nicht als toter Knopf.
+   Gleiches Muster wie .luecke auf den Rechtsseiten. Beim Scharfschalten
+   durch echte <a> ersetzen. */
+.sozial-luecke{
+  display:inline-flex; align-items:center; gap:.5rem; min-height:44px; padding:.5rem 1rem;
+  border:1px dashed #B9A48D; border-radius:999px;
+  font-size:var(--klein); font-weight:600; color:#6F604F;  /* 5,2:1 auf Pergament */
+}
+.sozial-luecke b{font-weight:600; color:var(--glut); font-size:.9em}
+.titel-hinweis{font-size:.85em; color:#F6DCDC}
+.handschrift{margin-top:1.8rem; font-size:var(--klein); color:#6F604F}  /* nicht aufhellen: #7A6A58 lag mit 4,42:1 unter AA */
+
+/* ── Glut-Linie ──────────────────────────────────────────────
+   Wandert beim Scrollen mit: mobil oben als schmaler Streifen,
+   ab 900px senkrecht an der Kante des Seitenreiters. */
+.glutlinie{position:fixed; z-index:99; pointer-events:none;
+           inset:0 0 auto 0; height:2px; background:#00000000}
+.glutlinie span{
+  display:block; height:100%; width:calc(var(--fortschritt,0) * 100%);
+  background:linear-gradient(90deg,var(--erde),var(--glut));
+  transition:width .12s linear;
+}
+@media (min-width:900px){
+  .glutlinie{inset:0 auto 0 calc(var(--rail) - 1px); width:2px; height:auto}
+  .glutlinie span{
+    width:100%; height:calc(var(--fortschritt,0) * 100%);
+    background:linear-gradient(180deg,var(--erde),var(--glut));
+    transition:height .12s linear;
+  }
+}
+@media (prefers-reduced-motion:reduce){ .glutlinie span{transition:none} }
+
+/* Zweiter Ruhepunkt in „Über mich" — schmaler als das große Zitat */
+.pergament.schmal{max-width:30rem; padding:clamp(1.3rem,3vw,1.9rem)}
+.pergament.schmal blockquote{font-size:var(--h4); line-height:1.45}
+
+/* Direkte Ansprache für Körper- und Essensthemen */
+.zuspruch{
+  border:1px solid var(--erde); border-left:3px solid var(--glut); border-radius:4px;
+  padding:1.2rem 1.4rem; margin:1.8rem 0 0; background:#00000026;
+  max-width:var(--text-breite);
+}
+.zuspruch h3{margin-bottom:.5rem}
+.zuspruch p{margin-bottom:0; font-size:var(--klein); color:var(--daemmer)}
+
+.zweitweg{margin-top:1.2rem; font-size:var(--klein); color:var(--daemmer)}
+.zweitweg b{color:#F6C9C9; font-weight:600}
+
+/* ── Reveals (W21) ─────────────────────────────────────────── */
+.js .reveal{opacity:0; transform:translateY(20px); transition:opacity .7s var(--ease), transform .7s var(--ease)}
+.js .reveal.da{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1 !important; transform:none !important; transition:opacity .01ms}
+  .knopf:hover{transform:none}
+}
+
+@media print{
+  .js .reveal{opacity:1 !important; transform:none !important}
+  .kopf,.rail,.nav,.knopf,form{display:none}
+  body{background:#fff; color:#000}
+  section{padding:1.5rem 0; page-break-inside:avoid}
+  .atmo::before,.atmo::after{display:none}
+  a::after{content:' (' attr(href) ')'; font-size:.8em; color:#555}
+}

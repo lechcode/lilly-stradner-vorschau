@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js')</script>
+
+<!-- ENTFERNEN, sobald Impressum + Datenschutz vollstaendig sind und Lilly freigegeben hat -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>Somatische Prozessbegleitung &amp; Breathwork | Lilly Stradner</title>
+<meta name="description" content="Lilly Stradner begleitet Menschen somatisch aus Mustern, Körper- und Essensthemen heraus — mit Nervensystemarbeit und Conscious Connected Breathwork. Kostenloses Kennenlerngespräch.">
+<link rel="alternate" hreflang="de" href="https://lechcode.github.io/lilly-stradner-vorschau/">
+<link rel="alternate" hreflang="en" href="https://lechcode.github.io/lilly-stradner-vorschau/en.html">
+<link rel="alternate" hreflang="x-default" href="https://lechcode.github.io/lilly-stradner-vorschau/">
+
+<meta property="og:title" content="Lilly Stradner · Spirit of Body and Breath">
+<meta property="og:description" content="Somatische Prozessbegleitung und Conscious Connected Breathwork. Transformation ist möglich.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<!-- Vorschau-URL, NICHT die spaetere Kundendomain -->
+<meta property="og:url" content="https://lechcode.github.io/lilly-stradner-vorschau/">
+<meta property="og:image" content="https://lechcode.github.io/lilly-stradner-vorschau/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#14100C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100C'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9 7 7 0 1 1-7-7' fill='none' stroke='%23A80808' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<!-- Hero-Diptychon vorladen: beide Bilder sind LCP-Kandidaten. -->
+<link rel="preload" as="image" type="image/webp"
+      imagesrcset="assets/img/frueher-440.webp 440w, assets/img/frueher-880.webp 880w"
+      imagesizes="(min-width:900px) 260px, 42vw">
+<link rel="preload" as="image" type="image/webp"
+      imagesrcset="assets/img/heute-440.webp 440w, assets/img/heute-880.webp 880w"
+      imagesizes="(min-width:900px) 260px, 42vw">
+<link rel="preload" href="assets/fonts/young-serif-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/epilogue-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<!-- Glut-Linie: wandert beim Scrollen mit. Der Bewegungs-Moment aus dem
+     Design-Brief, der im ersten Bau fehlte. Rein dekorativ. -->
+<div class="glutlinie" aria-hidden="true"><span></span></div>
+
+<!-- ══ Kopfleiste ══ Sprache immer sichtbar, nie hinter einem Aufklapper -->
+<header class="kopf">
+  <button class="menue-knopf" id="menue" aria-expanded="false" aria-controls="nav">
+    <svg viewBox="0 0 15 11" aria-hidden="true">
+      <line class="b1" x1="0" y1="1" x2="15" y2="1"/>
+      <line class="b2" x1="0" y1="5.5" x2="15" y2="5.5"/>
+      <line class="b3" x1="0" y1="10" x2="15" y2="10"/>
+    </svg>
+    <span>Kapitel</span>
+  </button>
+
+  <nav class="sprache" aria-label="Sprache wählen">
+    <a href="index.html" aria-current="true" hreflang="de">
+      <svg class="flagge" viewBox="0 0 5 3" aria-hidden="true"><rect width="5" height="1" y="0" fill="#000"/><rect width="5" height="1" y="1" fill="#D00"/><rect width="5" height="1" y="2" fill="#FFCE00"/></svg>
+      DE
+    </a>
+    <a href="en.html" hreflang="en">
+      <svg class="flagge" viewBox="0 0 60 30" aria-hidden="true"><clipPath id="s"><path d="M0 0v30h60V0z"/></clipPath><g clip-path="url(#s)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+      EN
+    </a>
+  </nav>
+</header>
+
+<!-- ══ Seitenreiter (ab 900px) ══ -->
+<nav class="rail" aria-label="Kapitel">
+  <a href="#ueber-mich"  data-titel="Über mich"><span class="sr">Über mich</span></a>
+  <a href="#arbeit"      data-titel="Meine Arbeit"><span class="sr">Meine Arbeit</span></a>
+  <a href="#einszueins"  data-titel="1:1-Begleitung"><span class="sr">1:1-Begleitung</span></a>
+  <a href="#gruppen"     data-titel="Gruppen"><span class="sr">Gruppen</span></a>
+  <a href="#community"   data-titel="Community"><span class="sr">Community</span></a>
+  <a href="#offline"     data-titel="Offline"><span class="sr">Offline</span></a>
+  <a href="#shop"        data-titel="Aufnahmen"><span class="sr">Aufnahmen</span></a>
+  <a href="#kontakt"     data-titel="Kontakt"><span class="sr">Kontakt</span></a>
+</nav>
+
+<!-- ══ Ausklapp-Navigation ══ -->
+<div class="nav" id="nav" data-offen="false">
+  <ol>
+    <li><a href="#ueber-mich"><span>01</span> Über mich</a></li>
+    <li><a href="#arbeit"><span>02</span> Meine Arbeit</a></li>
+    <li><a href="#einszueins"><span>03</span> 1:1-Begleitung</a></li>
+    <li><a href="#gruppen"><span>04</span> Gruppenbegleitungen</a></li>
+    <li><a href="#community"><span>05</span> Community</a></li>
+    <li><a href="#offline"><span>06</span> Offline</a></li>
+    <li><a href="#shop"><span>07</span> Aufnahmen</a></li>
+    <li><a href="#kontakt"><span>08</span> Kontakt</a></li>
+  </ol>
+</div>
+
+<main id="inhalt">
+
+<!-- ══════════ HERO ══════════
+     Reihenfolge exakt nach Lillys Ansage (W1–W3):
+     Bild → „Transformation ist möglich." → Logo + Name → Willkommen.
+     Regel 0: kein kritischer Text ueber einem Gesicht. -->
+<section class="hero">
+  <div class="buehne hero-gitter">
+    <div class="dipt">
+      <figure>
+        <picture>
+          <source type="image/webp" srcset="assets/img/frueher-440.webp 440w, assets/img/frueher-880.webp 880w" sizes="(min-width:900px) 260px, 42vw">
+          <img src="assets/img/frueher-440.jpg"
+               srcset="assets/img/frueher-440.jpg 440w, assets/img/frueher-880.jpg 880w"
+               sizes="(min-width:900px) 260px, 42vw"
+                        width="440" height="550" fetchpriority="high"
+             alt="Lilly vor einigen Jahren: dunkler Raum, abweisender Blick in die Kamera.">
+        </picture>
+        <figcaption>2016</figcaption>
+      </figure>
+      <figure>
+        <picture>
+          <source type="image/webp" srcset="assets/img/heute-440.webp 440w, assets/img/heute-880.webp 880w" sizes="(min-width:900px) 260px, 42vw">
+          <img src="assets/img/heute-440.jpg"
+               srcset="assets/img/heute-440.jpg 440w, assets/img/heute-880.jpg 880w"
+               sizes="(min-width:900px) 260px, 42vw"
+                        width="440" height="550" fetchpriority="high"
+             alt="Lilly heute: im Grünen, offener Blick, ruhiges Lächeln.">
+        </picture>
+        <figcaption>2026</figcaption>
+      </figure>
+    </div>
+
+    <div class="hero-text">
+      <p class="marke">Somatische Prozessbegleitung ·&nbsp;Breathwork</p>
+
+      <h1>Transformation ist möglich.</h1>
+
+      <div class="lockup">
+        <img src="assets/img/siegel-120.webp" width="60" height="62" alt=""
+             srcset="assets/img/siegel-120.webp 120w, assets/img/siegel-240.webp 240w" sizes="60px">
+        <span>
+          <b>Spirit of Body and Breath</b>
+          <i>Lilly Stradner</i>
+        </span>
+      </div>
+
+      <p class="klarstellung">Zehn Jahre. Verändert hat sich nicht mein Körper — sondern dass ich
+        mich nicht mehr verstecke.</p>
+
+      <p>Ich begleite Menschen, bei denen es hakt — im Leben, im Körper oder im Essen.</p>
+
+      <p><a class="knopf" href="#kontakt" data-thema="Kennenlerngespräch">
+        Lass uns sprechen
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 01 · ÜBER MICH ══════════ -->
+<section id="ueber-mich" class="atmo">
+  <div class="buehne">
+    <p class="marke reveal">01 — Über mich</p>
+    <h2 class="reveal lese">Ich weiß, wie es ist, sich selbst im Weg zu stehen.</h2>
+
+    <!-- W12: Trigger-Hinweis vor der Geschichte. -->
+    <div class="hinweis reveal">
+      <strong>Kurz vorweg:</strong> In diesem Kapitel spreche ich offen über Essstörung, Gewalt und
+      Suizidgedanken. Wenn dir das gerade zu nah ist, spring gern direkt
+      <a href="#arbeit">zu meiner Arbeit</a>.
+    </div>
+
+    <div class="lese reveal">
+      <p>Ich bin in einer Familie groß geworden, die von außen nach Friede, Freude, Eierkuchen
+        aussah. Innen drin habe ich früh angefangen zu essen. Viel. Ich war als Kind schon dick,
+        als Jugendliche sehr dick — und ich bin in einer Welt aufgewachsen, die dafür wenig
+        Freundlichkeit übrig hat.</p>
+
+      <p>Ich habe mich selbst gehasst. Ich habe geglaubt, ich sei einfach nicht diszipliniert
+        genug. Fast fünfundzwanzig Jahre lang.</p>
+
+      <p>Dann trennten sich meine Eltern. Und dann starb mein Vater, plötzlich. Er war die
+        einzige sichere Bindung, die ich hatte — der eine Mensch, bei dem ich nichts sein musste.</p>
+
+      <p>Was danach kam, war nicht Trauer, wie man sie sich vorstellt. Es war zu viel, um es zu
+        fühlen. Und irgendwo darunter fing etwas in mir an zu rufen. Ich habe lange gebraucht, um
+        hinzuhören.</p>
+
+      <p>Ich bin dem Rufen gefolgt. Zuerst in Coachings zu emotionalem Essen, wo sich schnell viel
+        löste. Dann tiefer.</p>
+
+      <!-- HIER: Dieser Absatz laesst sich in einem Stueck entfernen oder vertiefen.
+           Wie tief Lillys Geschichte oeffentlich stehen soll, entscheidet sie selbst —
+           siehe _projekt/OFFENE-FRAGEN.md, Q4. -->
+      <p>Auf diesem Weg habe ich mich an etwas erinnert, das mein System zwanzig Jahre lang
+        weggeschlossen hatte: Ich wurde als Fünfjährige von meinem Onkel missbraucht. Eine
+        dissoziative Amnesie hatte mir die Erinnerung genommen — den Schmerz nicht. Gesehen zu
+        werden war für mich lebensgefährlich geworden. Das Essen war die Antwort meines Körpers
+        darauf.</p>
+
+      <p>Dazwischen lagen Jahre, über die ich heute ohne Scham sprechen kann: Alkohol, mit dem ich
+        überhaupt erst unter Menschen gehen konnte. Depressive Phasen. Zeiten, in denen ich nicht
+        mehr leben wollte. Eine Beziehung, die fünf Jahre lang wehtat und aus der ich trotzdem
+        nicht rauskam.</p>
+
+      <p>Mit zwanzig habe ich über fünfzig Kilo abgenommen. Durch Hungern. Es hat nichts geheilt.
+        Danach war ich genauso wenig zu Hause in mir wie vorher — nur dünner, mit zwei Operationen
+        und einer panischen Angst, alles wieder zuzunehmen.</p>
+
+      <figure class="pergament schmal">
+        <blockquote>„Nichts daran war undiszipliniert oder dumm. Es hatte einen Grund."</blockquote>
+      </figure>
+
+      <p>Ein Teil davon war nicht einmal meins. Meine Großmutter hat im Krieg gehungert. Was ich
+        für meine Maßlosigkeit hielt, war zu einem Stück ihr Überleben, weitergereicht durch zwei
+        Generationen. Da bin ich über das Atmen drangekommen, nicht übers Nachdenken.</p>
+    </div>
+
+    <figure class="pergament reveal">
+      <blockquote>„Mein Körper war nie das Problem. Und ich war es auch nie."</blockquote>
+      <cite>Lilly</cite>
+    </figure>
+
+    <p class="lese reveal">Das ist der Satz, um den sich alles dreht, was ich heute tue. Unser
+      Körper ist nicht dumm und nicht undiszipliniert. Er hat immer einen Grund. Wenn wir lernen,
+      ihm wieder zuzuhören, führt er uns zurück.</p>
+
+    <p class="lese reveal"><strong>Und damit das klar ist:</strong> Du musst nichts Schlimmes
+      erlebt haben, um hier richtig zu sein. Es reicht, dass etwas nicht stimmt und du es
+      satt hast.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 02 · MEINE ARBEIT ══════════ -->
+<section id="arbeit" class="boden-wald">
+  <div class="buehne">
+    <p class="marke reveal">02 — Meine Arbeit</p>
+    <h2 class="reveal lese">Wir schauen an, womit du kompensierst. Und wir gehen dahin, wo es
+      herkommt.</h2>
+
+    <div class="lese reveal">
+      <p>Wir verstehen zuerst auf der mentalen Ebene, was in dir passiert: warum du in bestimmten
+        Situationen explodierst, warum du etwas seit Jahren nicht umgesetzt bekommst, welche Sätze
+        du über dich glaubst. Und dann verlassen wir den Kopf — denn verstehen allein hat noch
+        niemanden verändert.</p>
+      <p>Und wir denken mit, in welchen Systemen das alles passiert. Du kannst einmal erkennen,
+        dass du nicht zu wenig bist — und am nächsten Tag erzählt dir die Welt das Gegenteil.</p>
+    </div>
+
+    <!-- W21: Die drei Saeulen oeffnen sich. Ohne JS als <details> voll lesbar. -->
+    <div class="falten reveal">
+      <details class="falte" open>
+        <summary><b>01</b> Zurück in den Körper</summary>
+        <div class="inhalt">
+          <p>Erst einmal lernst du wieder zu spüren. Emotionen, Körperempfindungen, Hunger und
+            Sättigung — all das, was viele von uns irgendwann abgestellt haben, weil es zu viel
+            war.</p>
+          <p>Dazu kommt die Arbeit mit deinem Nervensystem: verstehen, was es überhaupt ist, merken,
+            in welchem Zustand du gerade bist, und im Alltag Stück für Stück regulieren lernen.
+            Das ist die Grundlage. Ohne sie greift alles andere ins Leere.</p>
+        </div>
+      </details>
+
+      <details class="falte">
+        <summary><b>02</b> Aufarbeiten, was darunter liegt</summary>
+        <div class="inhalt">
+          <p>Hier gehen wir an die Ursprünge: somatische Anteilearbeit, somatische Schattenarbeit,
+            Bindungsthemen, Conscious Connected Breathwork. Wir schauen uns deine Trigger an,
+            verstehen, wie sie zusammenhängen, und holen hoch, was lange unten lag.</p>
+          <p>Das ist der Teil, der sich manchmal unangenehm anfühlt. Und der Teil, der wirklich
+            etwas bewegt.</p>
+        </div>
+      </details>
+
+      <details class="falte">
+        <summary><b>03</b> Die Systeme mitdenken</summary>
+        <div class="inhalt">
+          <p>Wir leben in Patriarchat, Kapitalismus und Neokolonialismus. Wir können uns noch so
+            gründlich anschauen und heilen — diese Systeme wirken weiter auf uns.</p>
+          <p>Du kannst einmal erkennen, dass du dich nicht gut genug fühlst, obwohl es nicht stimmt.
+            Und am nächsten Tag erzählt dir die Welt wieder das Gegenteil. Deshalb beziehe ich das
+            von Anfang an mit ein: Wir lernen zu sehen, wo diese Prägungen im Alltag zugreifen —
+            damit du dich nicht darin verlierst, sondern rausgehen kannst.</p>
+          <p>Ich habe Internationale Beziehungen studiert. Aus dem Studium habe ich vor allem eines
+            mitgenommen: Wie sehr wir geprägt werden, und wie viel Energie es kostet, das zu
+            ignorieren.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="paar">
+      <figure class="bild reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/img/atem-580.webp 580w, assets/img/atem-1160.webp 1160w" sizes="(min-width:820px) 46vw, 90vw">
+          <img src="assets/img/atem-580.jpg"
+               srcset="assets/img/atem-580.jpg 580w, assets/img/atem-1160.jpg 1160w"
+               sizes="(min-width:820px) 46vw, 90vw"
+                        width="580" height="725" loading="lazy" decoding="async"
+             alt="Lilly sitzt mit beiden Händen auf dem Herzen, Augen geschlossen.">
+        </picture>
+      </figure>
+      <div class="reveal">
+        <h3>Somatische Arbeit</h3>
+        <p>Somatisch heißt: über den Körper. Nicht über das Gespräch allein. Wir arbeiten mit dem,
+          was gerade in dir spürbar ist — Enge, Druck, Taubheit, Wärme — und folgen dem, statt es
+          wegzudenken. Dein Körper hat die Erfahrungen gespeichert. Also ist er auch der Ort, an
+          dem sie sich lösen können.</p>
+
+        <h3 style="margin-top:1.8rem">Conscious Connected Breathwork</h3>
+        <p>Eine Atemtechnik ohne Pause zwischen Ein- und Ausatmen. Sie bringt dich in einen
+          veränderten Bewusstseinszustand, in dem Dinge an die Oberfläche kommen dürfen, an die du
+          im Alltag nicht herankommst. Ich habe darüber Zusammenhänge in mir gefunden, die ich mir
+          vorher nicht hätte erklären können.</p>
+      </div>
+    </div>
+
+    <div class="lese reveal" style="margin-top:2.6rem">
+      <h3>Wie ich arbeite</h3>
+      <p>Ich bin nicht die, die vorne steht und dir erklärt, wie du zu sein hast. Ich teile meine
+        Erfahrung, ich teile mein Wissen, und ich halte Raum. Ich lerne von den Menschen, die ich
+        begleite, genauso viel wie sie von mir.</p>
+      <p>Was mir dabei am wichtigsten ist: dass du gesehen wirst. In deinem Schmerz, in deinen
+        Mustern, in allem. Weil genau darin etwas passiert, das allein nicht passieren kann.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 03 · 1:1 ══════════ -->
+<section id="einszueins">
+  <div class="buehne">
+    <p class="marke reveal">03 — 1:1-Begleitung</p>
+    <h2 class="reveal lese">Gemeinsam, über einen längeren Zeitraum.</h2>
+
+    <div class="paar gedreht">
+      <div class="reveal">
+        <p>Wir arbeiten online in Sessions, und zwischen den Sessions bin ich per WhatsApp für dich
+          da — denn das Leben passiert nicht in den Terminen, sondern dazwischen.</p>
+        <p>Es gibt zwei Wege zu mir. Der eine ist offen für alles, was gerade hakt: ein Verlust,
+          ein Schicksalsschlag, Leistungsdruck, Prokrastination, Perfektionismus, Wut, die dich
+          überrollt, Einsamkeit, Ängste vor Menschen. Der andere ist für Körper- und Essensthemen —
+          da kenne ich mich aus, weil ich selbst durchgegangen bin.</p>
+        <p>Wie lange wir zusammenarbeiten und wie das genau aussieht, entscheiden wir nicht vorab
+          im Baukasten, sondern gemeinsam im Gespräch.</p>
+
+        <div class="zuspruch">
+          <h3>Wenn es im Leben hakt</h3>
+          <p>Wenn du funktionierst und trotzdem müde bist. Wenn du Menschen anschreist, die du
+            liebst, und dich danach dafür hasst. Wenn ein Verlust dich umgeworfen hat und alle
+            denken, du seist längst darüber hinweg. Wenn du genau weißt, was du tun müsstest, und
+            es trotzdem nicht tust. Dafür braucht es keinen Namen und keine Diagnose.</p>
+        </div>
+
+        <div class="zuspruch">
+          <h3>Wenn es um Körper und Essen geht</h3>
+          <p>Wenn deine Essstörung Vergangenheit ist und trotzdem etwas geblieben ist — das
+            Rechnen, die Scham, der Blick in jede Scheibe — dann bist du hier richtig. Es muss
+            nicht akut sein. Es reicht, dass es dich müde macht.</p>
+        </div>
+
+        <!-- PLATZHALTER-CALENDLY: Sobald Lillys Link da ist, hier eintragen
+             (neuer Tab, kein eingebettetes Widget — sonst Cookies). -->
+        <p style="margin-top:1.6rem"><a class="knopf" href="#kontakt" data-thema="Kennenlerngespräch">
+          Kostenloses Kennenlernen, 30 Minuten
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></p>
+        <p style="font-size:var(--klein); color:var(--daemmer)">Wir schauen in Ruhe, ob es passt —
+          und was es kostet, sage ich dir dort offen.</p>
+      </div>
+
+      <figure class="bild reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/img/online-580.webp 580w, assets/img/online-1160.webp 1160w" sizes="(min-width:820px) 46vw, 90vw">
+          <img src="assets/img/online-580.jpg"
+               srcset="assets/img/online-580.jpg 580w, assets/img/online-1160.jpg 1160w"
+               sizes="(min-width:820px) 46vw, 90vw"
+                        width="580" height="387" loading="lazy" decoding="async"
+             alt="Laptop mit laufender Online-Session, daneben eine brennende Kerze.">
+        </picture>
+        <figcaption>Die meisten Begleitungen laufen online.</figcaption>
+      </figure>
+    </div>
+
+    <div class="hinweis reveal" style="margin-top:2.6rem">
+      <strong>Für wen das nicht das Richtige ist:</strong> Ich bin keine Therapeutin und mache keine
+      Psychotherapie. Wenn du gerade in einer akuten Krise steckst, in einer psychischen Erkrankung,
+      die Behandlung braucht, oder in einer akuten Essstörung, bist du bei einer Ärztin oder einem
+      Psychotherapeuten besser aufgehoben. Sag mir das gern im Gespräch — ich bin da ehrlich zu dir.
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 04 · GRUPPEN ══════════ -->
+<section id="gruppen">
+  <div class="buehne">
+    <p class="marke reveal">04 — Gruppenbegleitungen</p>
+    <h2 class="reveal lese">In der Gruppe geht etwas, das allein nicht geht.</h2>
+
+    <div class="paar">
+      <figure class="bild reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/img/raum-580.webp 580w, assets/img/raum-1160.webp 1160w" sizes="(min-width:820px) 46vw, 90vw">
+          <img src="assets/img/raum-580.jpg"
+               srcset="assets/img/raum-580.jpg 580w, assets/img/raum-1160.jpg 1160w"
+               sizes="(min-width:820px) 46vw, 90vw"
+                        width="580" height="387" loading="lazy" decoding="async"
+             alt="Ein Retreat-Raum, mehrere Menschen liegen auf Decken während einer Session.">
+        </picture>
+      </figure>
+      <div class="reveal">
+        <p>Mein erstes Gruppenmentoring lief mit somatischer Arbeit. Das nächste bekommt deutlich
+          mehr Breathwork — ich arbeite gerade daran, wie es genau aussehen soll.</p>
+        <p>Wenn du dabei sein möchtest, trag dich auf die Warteliste ein. Du hörst von mir, sobald
+          es losgeht, und bist vor allen anderen dran.</p>
+        <p><a class="knopf-leise" href="#kontakt" data-thema="Warteliste Gruppenmentoring">Auf die Warteliste
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 05 · COMMUNITY ══════════ -->
+<section id="community" class="boden-wald">
+  <div class="buehne">
+    <p class="marke reveal">05 — Community</p>
+    <h2 class="reveal lese">Heilung geschieht nicht allein.</h2>
+
+    <div class="paar gedreht">
+      <div class="reveal">
+        <p>Ich habe jahrelang versucht, alles mit mir selbst auszumachen. Allein zu heilen, online
+          zu heilen, niemandem zur Last zu fallen. Es funktioniert nicht. Verbindung ist kein
+          Extra — sie ist Teil der Arbeit.</p>
+        <p>Deshalb baue ich eine Community auf. Einmal im Monat halte ich eine Breathwork-Session,
+          einmal im Monat eine somatische Session. Die Termine stimmen wir gemeinsam ab. Dazu gibt
+          es einen Ort für Fragen und dafür, sich miteinander auszutauschen.</p>
+        <p>Am Anfang läuft das über WhatsApp — unkompliziert, ohne dass du dich irgendwo anmelden
+          musst.</p>
+        <p><a class="knopf-leise" href="#kontakt" data-thema="Community">Dazukommen
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></p>
+      </div>
+
+      <figure class="bild reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/img/umarmung-580.webp 580w, assets/img/umarmung-1114.webp 1114w" sizes="(min-width:820px) 46vw, 90vw">
+          <img src="assets/img/umarmung-580.jpg"
+               srcset="assets/img/umarmung-580.jpg 580w, assets/img/umarmung-1114.jpg 1114w"
+               sizes="(min-width:820px) 46vw, 90vw"
+                        width="580" height="725" loading="lazy" decoding="async"
+             alt="Lilly umarmt eine andere Person, beide mit geschlossenen Augen.">
+        </picture>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 06 · OFFLINE ══════════ -->
+<section id="offline">
+  <div class="buehne">
+    <p class="marke reveal">06 — Offline</p>
+    <h2 class="reveal lese">Am liebsten im selben Raum.</h2>
+
+    <div class="paar">
+      <figure class="bild reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/img/offline-580.webp 580w, assets/img/offline-1160.webp 1160w" sizes="(min-width:820px) 46vw, 90vw">
+          <img src="assets/img/offline-580.jpg"
+               srcset="assets/img/offline-580.jpg 580w, assets/img/offline-1160.jpg 1160w"
+               sizes="(min-width:820px) 46vw, 90vw"
+                        width="580" height="387" loading="lazy" decoding="async"
+             alt="Blick von oben in einen vorbereiteten Retreat-Raum mit Matten und Klangschalen.">
+        </picture>
+        <figcaption>Aus vergangenen Retreats und Gruppensessions.</figcaption>
+      </figure>
+      <div class="reveal">
+        <p>Offline zu arbeiten ist das Schönste — im selben Raum zu sitzen, gemeinsam zu atmen,
+          sich wirklich zu begegnen.</p>
+        <p>Ehrlich gesagt geht es nur nicht immer. Im Winter bin ich meistens weiter weg, im Sommer
+          bin ich in Deutschland, oft in Bielefeld, aber viel unterwegs.</p>
+        <p>Wenn wir zufällig am selben Ort sind: Frag mich einfach. Einzelsessions gehen dann, vor
+          allem Breathwork, aber auch somatische Arbeit. Und wenn du eine Gruppe zusammenbringst,
+          komme ich gern zu euch.</p>
+        <p><a class="knopf-leise" href="#kontakt" data-thema="Offline-Session">Anfragen
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ 07 · AUFNAHMEN ══════════
+     Bewusst OHNE Zahlungsabwicklung (Entscheidung Lenny, 05.08.).
+     Echter Verkauf braucht AGB, Widerrufsbelehrung fuer digitale
+     Inhalte und ein Zahlungskonto — siehe OFFENE-FRAGEN Q15. -->
+<section id="shop">
+  <div class="buehne">
+    <p class="marke reveal">07 — Aufnahmen</p>
+    <h2 class="reveal lese">Zum Ausprobieren, wann immer du willst.</h2>
+    <p class="lese reveal">Drei Aufnahmen, die du dir in Ruhe holen kannst — ohne Termin, ohne
+      Verpflichtung. Ein guter Weg, um zu spüren, ob meine Art zu arbeiten dir liegt.</p>
+
+    <div class="karten reveal">
+      <article class="karte">
+        <h3>Somatisches Yin Yoga</h3>
+        <p>Lange gehaltene Haltungen, in denen du dir selbst begegnest. Ruhig, langsam, tief.</p>
+      </article>
+      <article class="karte">
+        <h3>Breathwork</h3>
+        <p>Eine geführte Conscious-Connected-Breathwork-Session zum Mitatmen von zu Hause.</p>
+      </article>
+      <article class="karte">
+        <h3>Somatische Session</h3>
+        <p>Eine begleitete Einheit, in der du übst, deinem Körper wieder zuzuhören.</p>
+      </article>
+    </div>
+
+    <p class="reveal" style="margin-top:2rem"><a class="knopf-leise" href="#kontakt" data-thema="Aufnahmen">Schreib mir,
+      welche dich interessiert
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a></p>
+    <p class="reveal" style="font-size:var(--klein); color:var(--daemmer)">Später kommt hier das
+      Gruppenmentoring als Kurs dazu.</p>
+  </div>
+</section>
+
+
+<!-- ══════════ 08 · WERDEGANG + ABGRENZUNG ══════════ -->
+<section class="boden-glut">
+  <div class="buehne">
+    <p class="marke reveal">Woher ich komme</p>
+    <h2 class="reveal lese">Ausgebildet — und selbst durchgegangen.</h2>
+
+    <div class="paar gedreht">
+      <div class="reveal lese">
+        <ul style="padding-left:1.1rem; margin:0 0 1.4rem">
+          <li>Conscious Connected Breathwork Facilitator</li>
+          <li>Trauma-informierte Embodiment-Coach <span class="titel-hinweis">(so heißt die Ausbildung)</span></li>
+          <li>200 Stunden Multistyle-Yoga-Ausbildung, dazu Yin Yoga</li>
+          <li>Reiki Grad 1, 2a und 2b</li>
+          <li>Studium der Internationalen Beziehungen</li>
+        </ul>
+        <p>Für alle Ausbildungen habe ich Zertifikate. Wichtiger ist mir aber etwas anderes: Ich
+          schicke dich nirgendwo hin, wo ich nicht selbst war.</p>
+      </div>
+
+      <figure class="bild reveal">
+        <img src="assets/img/lilly-frei-420.webp"
+             srcset="assets/img/lilly-frei-420.webp 420w, assets/img/lilly-frei-840.webp 840w"
+             sizes="(min-width:820px) 42vw, 80vw"
+             width="420" height="391" loading="lazy" decoding="async"
+             alt="Lilly lacht mit geschlossenen Augen, freigestellt.">
+      </figure>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════ HILFE ══════════
+     Bewusst NICHT im Glut-Kapitel: Notrufnummern neben einem lachenden
+     Porträt auf knallrotem Grund waren ein Tonbruch. Hier ruhig und
+     eigenständig, aber weiter sichtbar — nicht im Kleingedruckten. -->
+<section class="hilfe-kapitel">
+  <div class="buehne">
+    <div class="hilfe reveal">
+      <h3>Wenn es gerade akut ist</h3>
+      <p>Meine Arbeit ersetzt keine Psychotherapie und keine ärztliche Behandlung. Wenn es dir
+        gerade sehr schlecht geht, wende dich bitte an Menschen, die rund um die Uhr für dich
+        da sind:</p>
+      <ul>
+        <li><b>Telefonseelsorge</b> — <a href="tel:08001110111">0800 111 0 111</a> und
+          <a href="tel:08001110222">0800 111 0 222</a>, kostenlos, Tag und Nacht</li>
+        <li><b>Bundesweites Info-Telefon Depression</b> — <a href="tel:08003344533">0800 33 44 533</a></li>
+        <li><b>Essstörungen</b> — Beratung der BZgA: <a href="tel:022189920411">0221 89 20 411</a></li>
+        <li>Im Notfall: <b>112</b> oder die nächste psychiatrische Klinik</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════ KONTAKT ══════════ -->
+<section id="kontakt" class="atmo">
+  <div class="buehne">
+    <p class="marke reveal">08 — Kontakt</p>
+    <h2 class="reveal lese">Schreib mir.</h2>
+    <p class="lese reveal">Egal ob Kennenlerngespräch, Warteliste, Community oder eine der
+      Aufnahmen — sag mir einfach, worum es geht. Ich lese jede Nachricht selbst und melde mich
+      innerhalb von zwei Werktagen bei dir.</p>
+
+    <form id="form" class="reveal" novalidate>
+      <div class="feld">
+        <label for="name">Wie heißt du?</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="feld">
+        <label for="email">Deine E-Mail-Adresse</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="feld">
+        <label for="thema">Worum geht es?</label>
+        <input id="thema" name="thema" type="text"
+               placeholder="Kennenlerngespräch, Warteliste, Community …">
+      </div>
+      <div class="feld">
+        <label for="nachricht">Magst du kurz sagen, was dich herführt? <span class="freiwillig">freiwillig</span></label>
+        <textarea id="nachricht" name="message" placeholder="Ein Satz reicht. Oder lass es leer — wir sprechen ja."></textarea>
+      </div>
+      <label class="honig" aria-hidden="true">
+        Bitte leer lassen <input type="text" name="botcheck" tabindex="-1" autocomplete="off">
+      </label>
+      <button class="knopf" type="submit">
+        Abschicken
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <p class="meldung" id="meldung" role="status" aria-live="polite"></p>
+      <p class="zweitweg">Lieber direkt per E-Mail? <b>Adresse folgt</b> — bis dahin geht es
+        nur über dieses Formular.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+
+<!-- ══════════ FUSS ══════════
+     W10: Siegel + Wortmarke in Lillys Dunkelrot, ganz unten.
+     Der Pergamentstreifen ist die Loesung fuer Konflikt A —
+     Rot auf Dunkel waere unlesbar (2,4:1), Rot auf Pergament
+     liegt bei 6,6:1. Nicht auf dunklen Grund umstellen. -->
+<footer>
+  <div class="buehne">
+    <div class="fuss-marke">
+      <img src="assets/img/siegel-120.webp" width="46" height="47" alt=""
+           srcset="assets/img/siegel-120.webp 120w, assets/img/siegel-240.webp 240w" sizes="46px">
+      <span>
+        <b>Lilly Stradner</b>
+        <i>Spirit of Body and Breath</i>
+      </span>
+    </div>
+
+    <div class="fuss-reihen">
+      <nav class="fuss-links" aria-label="Rechtliches">
+        <a href="impressum.html">Impressum</a>
+        <a href="agb.html">AGB</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="en.html">English version</a>
+      </nav>
+
+      <!-- W9: Podcast + BEIDE Instagram-Konten. Die Adressen fehlen noch
+           (OFFENE-FRAGEN Q6 + Q7) — deshalb sichtbar als Luecke markiert,
+           im selben Muster wie auf den Rechtsseiten. Still auf #kontakt zu
+           zeigen waere Kaschieren gewesen. -->
+      <div class="sozial">
+        <span class="sozial-luecke">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.4-.7.5-1 .3-2.8-1.7-6.4-2.1-10.6-1.1-.4.1-.8-.2-.9-.6-.1-.4.2-.8.6-.9 4.6-1 8.6-.6 11.7 1.3.4.2.5.7.2 1zm1.5-3.3c-.3.4-.8.6-1.2.3-3.2-2-8.1-2.5-11.9-1.4-.5.1-1-.1-1.1-.6-.1-.5.1-1 .6-1.1 4.4-1.3 9.8-.7 13.5 1.6.4.2.5.8.1 1.2zm.1-3.4C15.3 8.3 8.8 8.1 5.2 9.2c-.6.2-1.2-.2-1.3-.7-.2-.6.2-1.2.7-1.3 4.2-1.3 11.3-1 15.7 1.6.5.3.7 1 .4 1.5-.3.5-1 .7-1.6.4z"/></svg>
+          Podcast <b>Adresse fehlt</b>
+        </span>
+        <span class="sozial-luecke">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.1A6.7 6.7 0 1 0 18.7 12 6.7 6.7 0 0 0 12 5.3zm0 11A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.2a1.6 1.6 0 1 1-1.6-1.6 1.6 1.6 0 0 1 1.6 1.6z"/></svg>
+          Instagram DE <b>fehlt</b>
+        </span>
+        <span class="sozial-luecke">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.1A6.7 6.7 0 1 0 18.7 12 6.7 6.7 0 0 0 12 5.3zm0 11A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.2a1.6 1.6 0 1 1-1.6-1.6 1.6 1.6 0 0 1 1.6 1.6z"/></svg>
+          Instagram EN <b>fehlt</b>
+        </span>
+      </div>
+    </div>
+
+    <p class="handschrift">Handgebaut in Landsberg am Lech. Keine Cookies, keine Tracker,
+      Schriften liegen auf diesem Server.</p>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
