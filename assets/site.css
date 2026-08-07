@@ -440,3 +440,76 @@ footer{background:var(--licht); color:var(--nacht); padding:clamp(2.5rem,5vw,3.5
   .atmo::before,.atmo::after{display:none}
   a::after{content:' (' attr(href) ')'; font-size:.8em; color:#555}
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   BEWEGUNG · „Atem"
+
+   Eine Sprache, nicht viele Effekte. Alles ist langsam (550–700 ms),
+   weich und winzig in der Amplitude — höchstens 3 px Versatz oder
+   3,5 % Skalierung. Bei einer Frau, die mit Atem arbeitet, darf
+   nichts schnippisch sein.
+
+   Regeln, die hier nicht gebrochen werden:
+   · nur transform / opacity / filter — nie Layout, also kein CLS
+   · alles hinter `@media (hover:hover)`, damit auf dem Handy keine
+     Zustände kleben bleiben (dort gibt es kein „Weg-Hovern")
+   · alles hinter `prefers-reduced-motion` abschaltbar
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Rahmen, in dem sich die Bilder bewegen dürfen, ohne auszubrechen */
+.bild picture,.dipt figure picture{display:block; overflow:hidden; border-radius:3px}
+.bild img,.dipt img{border-radius:0}
+
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+
+  /* ── Bilder atmen ──────────────────────────────────────────── */
+  .bild picture img,.dipt picture img{
+    transition:transform .75s var(--ease), filter .75s var(--ease);
+    /* kein will-change: das befoerdert acht Bilder dauerhaft auf eigene
+       Ebenen und kostet Speicher, ohne dass man den Unterschied sieht. */
+  }
+  .bild:hover picture img{transform:scale(1.035)}
+
+  /* ── Diptychon: die berührte Hälfte tritt vor, die andere tritt
+        einen Schritt zurück. Verstärkt den Vergleich, statt ihn
+        nur zu dekorieren. ─────────────────────────────────────── */
+  .dipt figure{transition:transform .75s var(--ease)}
+  .dipt:hover figure{transform:scale(.985)}
+  .dipt figure:hover{transform:scale(1.015)}
+  .dipt:hover picture img{filter:brightness(.72) saturate(.8)}
+  .dipt figure:hover picture img{filter:none; transform:scale(1.04)}
+  .dipt figure:first-child:hover picture img{filter:brightness(.9)}
+  .dipt figcaption{transition:color .5s var(--ease)}
+  .dipt figure:hover figcaption{color:var(--glut)}
+
+  /* ── Karten und Aufklapper heben sich leicht ───────────────── */
+  .karte,.falte,.zuspruch{
+    transition:transform .55s var(--ease), border-color .55s var(--ease);
+  }
+  .karte:hover,.falte:hover{transform:translateY(-3px); border-color:var(--erde)}
+
+  /* ── Das Siegel dreht sich, als würde es frisch gedrückt ───── */
+  .lockup img,.fuss-marke img{transition:transform 1.1s var(--ease)}
+  .lockup:hover img,.fuss-marke:hover img{transform:rotate(-7deg) scale(1.06)}
+
+  /* ── Der Pfeil im Knopf geht mit ───────────────────────────── */
+  .knopf svg,.knopf-leise svg{transition:transform .45s var(--ease)}
+  .knopf:hover svg,.knopf-leise:hover svg{transform:translateX(3px)}
+}
+
+/* ── Gestaffeltes Einblenden innerhalb einer Gruppe ────────────
+   Die Karten und Säulen steigen nacheinander auf statt als Block.
+   Ohne JS (kein `.js`) sind sie von Anfang an sichtbar. */
+.js .karten .karte,.js .falten .falte{
+  opacity:0; transform:translateY(14px);
+  transition:opacity .6s var(--ease), transform .6s var(--ease);
+}
+.js .karten.da .karte,.js .falten.da .falte{opacity:1; transform:none}
+.js .karten.da .karte:nth-child(2),.js .falten.da .falte:nth-child(2){transition-delay:.1s}
+.js .karten.da .karte:nth-child(3),.js .falten.da .falte:nth-child(3){transition-delay:.2s}
+
+@media (prefers-reduced-motion:reduce){
+  .js .karten .karte,.js .falten .falte{
+    opacity:1 !important; transform:none !important; transition:opacity .01ms;
+  }
+}
