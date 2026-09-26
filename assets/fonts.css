@@ -2,50 +2,57 @@
    Lilly Stradner · „Spirit of Body and Breath"
    Lokal gehostete Schriften (latin-Subset, woff2).
    DSGVO: KEINE Verbindung zu Google oder anderen Drittservern.
-   2 Familien · 3 Dateien · 47 KB gesamt.
-   Der Schnitt 500 ist bewusst raus: Er wurde nur an fuenf unkritischen
-   Stellen genutzt und lud im kritischen Fenster gegen das Hero-Bild an.
+   2 Familien · 5 Dateien · ~114 KB gesamt.
 
-   Young Serif: es existiert nur der Schnitt 400. Niemals
-   `font-style: italic` oder `font-weight: 700` darauf setzen —
-   der Browser wuerde synthetisch schraegstellen bzw. fetten und
-   die kraeftigen Serifen verzerren. Auszeichnungen laufen ueber
-   Epilogue.
+   Runde 2 (25.09.): Lillys eigene Wahl aus dem PDF
+   „Website Anpassungen":
+     Inter — Headlines, alles groß Geschriebene, Labels, Knöpfe
+     Lora  — Fließtext
+   Vorher Young Serif + Epilogue.
 
-   Warum diese Paarung: Young Serif hat kraeftige Serifen bei
-   moderatem Strichkontrast. Auf dunklem Grund brechen duenne
-   Haarlinien weg (Halation) — deshalb hier bewusst KEINE Didone
-   und kein Cormorant.
+   Inter aus goldschnitt/ übernommen, Lora von @fontsource/lora
+   (OFL 1.1). Kein Fettschnitt für Inter über 600 — sonst
+   rechnet der Browser synthetisch nach.
 
-   size-adjust: gegen den System-Fallback gemessen, damit beim
-   Nachladen der Schriften nichts springt (CLS).
+   size-adjust: gegen den System-Fallback abgeglichen, damit beim
+   Nachladen nichts springt (CLS).
    ============================================================ */
 
-/* — Young Serif (Ueberschriften, Wortmarke) — */
+/* — Inter (Headlines, Labels, Knöpfe) — */
 @font-face{
-  font-family:'Young Serif';
+  font-family:'Inter';
   font-style:normal; font-weight:400; font-display:swap;
-  src:url(fonts/young-serif-400.woff2) format('woff2');
+  src:url(fonts/inter-400.woff2) format('woff2');
 }
 @font-face{
-  font-family:'Young Fallback';
-  src:local('Georgia'), local('Times New Roman'), local('Times');
-  size-adjust:94.5%; ascent-override:92%; descent-override:24%;
+  font-family:'Inter';
+  font-style:normal; font-weight:600; font-display:swap;
+  src:url(fonts/inter-600.woff2) format('woff2');
+}
+@font-face{
+  font-family:'Inter Fallback';
+  src:local('Helvetica Neue'), local('Arial');
+  size-adjust:107%; ascent-override:90%; descent-override:22%;
 }
 
-/* — Epilogue (Fliesstext, Navigation, Labels) — */
+/* — Lora (Fließtext) — */
 @font-face{
-  font-family:'Epilogue';
+  font-family:'Lora';
   font-style:normal; font-weight:400; font-display:swap;
-  src:url(fonts/epilogue-400.woff2) format('woff2');
+  src:url(fonts/lora-400.woff2) format('woff2');
 }
 @font-face{
-  font-family:'Epilogue';
+  font-family:'Lora';
+  font-style:italic; font-weight:400; font-display:swap;
+  src:url(fonts/lora-400-italic.woff2) format('woff2');
+}
+@font-face{
+  font-family:'Lora';
   font-style:normal; font-weight:600; font-display:swap;
-  src:url(fonts/epilogue-600.woff2) format('woff2');
+  src:url(fonts/lora-600.woff2) format('woff2');
 }
 @font-face{
-  font-family:'Epilogue Fallback';
-  src:local('Helvetica Neue'), local('Arial');
-  size-adjust:97.2%; ascent-override:95%; descent-override:24%;
+  font-family:'Lora Fallback';
+  src:local('Georgia'), local('Times New Roman');
+  size-adjust:98%; ascent-override:96%; descent-override:26%;
 }

@@ -9,15 +9,15 @@
 html{-webkit-text-size-adjust:100%}
 body{
   margin:0; background:var(--nacht); color:var(--licht);
-  font-family:var(--sans); font-size:var(--text); line-height:1.68;
+  font-family:var(--leib); font-size:var(--text); line-height:1.68;
   overflow-x:clip; -webkit-font-smoothing:antialiased;
 }
 img{max-width:100%; height:auto; display:block}
 a{color:inherit}
-h1,h2,h3{font-family:var(--serif); font-weight:400; line-height:1.16; margin:0}
+h1,h2,h3{font-family:var(--kopf); font-weight:600; letter-spacing:-.02em; line-height:1.16; margin:0}
 h1{font-size:var(--h2)}                    /* Rechtsseiten fuehren keine H1-Groesse */
 h2{font-size:var(--h3); margin:2.4rem 0 .7rem}
-h3{font-size:var(--h4); margin:1.6rem 0 .5rem; font-family:var(--sans); font-weight:600}
+h3{font-size:var(--h4); margin:1.6rem 0 .5rem; font-family:var(--kopf); font-weight:600}
 p,ul{margin:0 0 1.1em}
 ul{padding-left:1.15rem}
 li{margin-bottom:.4rem}
@@ -42,7 +42,7 @@ footer :focus-visible,.pergament :focus-visible{outline-color:var(--nacht)}
 }
 .wortmarke{display:flex; align-items:center; gap:.6rem; text-decoration:none; min-height:48px}
 .wortmarke img{width:30px; height:auto; flex:none}
-.wortmarke b{font-family:var(--serif); font-weight:400; font-size:1.05rem}
+.wortmarke b{font-family:var(--kopf); font-weight:400; font-size:1.05rem}
 .zurueck{
   display:inline-flex; align-items:center; gap:.45rem; min-height:48px; padding:.45rem .95rem;
   border:1px solid #4A3826; border-radius:999px; text-decoration:none;
@@ -54,7 +54,7 @@ footer :focus-visible,.pergament :focus-visible{outline-color:var(--nacht)}
 main{padding:clamp(2.5rem,6vw,4.5rem) 0 clamp(3.5rem,8vw,6rem)}
 .spalte{max-width:var(--text-breite)}
 .marke{
-  font-family:var(--sans); font-size:var(--klein); font-weight:600;
+  font-family:var(--kopf); font-size:var(--klein); font-weight:600;
   letter-spacing:.16em; text-transform:uppercase; color:var(--daemmer);
   margin:0 0 1rem; display:flex; align-items:center; gap:.7rem;
 }
@@ -68,14 +68,14 @@ main{padding:clamp(2.5rem,6vw,4.5rem) 0 clamp(3.5rem,8vw,6rem)}
   font-size:var(--klein); color:var(--daemmer); max-width:var(--text-breite);
 }
 .offen strong{color:var(--licht)}
-.luecke{color:var(--licht); background:#A8080833; border-bottom:1px solid var(--glut);
+.luecke{color:var(--licht); background:#79242733; border-bottom:1px solid var(--glut);
         padding:.05em .35em; border-radius:2px; font-weight:600}
 
 /* Fuss: derselbe Pergamentstreifen wie auf der Hauptseite */
 footer{background:var(--licht); color:var(--nacht); padding:clamp(2rem,4vw,3rem) 0}
 .fuss-marke{display:flex; align-items:center; gap:.9rem; margin-bottom:1.4rem}
 .fuss-marke img{width:40px; height:auto; flex:none}
-.fuss-marke b{display:block; font-family:var(--serif); font-weight:400; font-size:1.2rem; color:var(--glut)}
+.fuss-marke b{display:block; font-family:var(--kopf); font-weight:400; font-size:1.2rem; color:var(--glut)}
 .fuss-marke i{display:block; font-style:normal; font-size:var(--klein); letter-spacing:.13em;
               text-transform:uppercase; color:var(--glut); font-weight:600; margin-top:.15rem}
 .fuss-links{display:flex; flex-wrap:wrap; gap:.3rem 1.4rem; font-size:var(--klein)}

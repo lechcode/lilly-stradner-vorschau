@@ -7,7 +7,12 @@
    ═══════════════════════════════════════════════════════════════ */
 :root{
   /* Lillys Markenfarben, exakt wie von ihr genannt */
-  --glut:#A80808;          /* Dunkelrot  — CTA-Flaeche, Siegel, Glut-Kapitel */
+  /* Runde 2 (25.09.): Bordeaux statt #A80808 — Lilly fand das Rot „zu grell".
+     Gemessen am roten Top auf ihrem bisherigen Hero-Foto (Median der
+     Stoffpixel). Weiss darauf 10,0:1, Pergament darauf 8,5:1. */
+  --glut:#792427;          /* Bordeaux — CTA-Flaeche, Siegel, Glut-Kapitel */
+  --glut-tief:#5E1A1D;     /* dunklere Stufe fuer Flaechen auf Glut-Boden */
+  --glut-hell:#E8A3A6;     /* Rot als TEXT auf Nacht — 9,2:1 */
   --wald-hell:#13602F;     /* Dunkelgruen — Akzentlinien, Zustaende */
   --erde:#764721;          /* Dunkelbraun — Haarlinien, Rahmen */
 
@@ -18,13 +23,16 @@
   --licht:#F4EBDF;         /* Fliesstext auf dunklem Grund · 16,1:1 auf Nacht */
   --daemmer:#C9B7A4;       /* Sekundaertext · 9,6:1 auf Nacht */
 
-  /* ⚠ --glut ist als TEXTFARBE auf dunklem Grund UNLESBAR (2,4:1).
+  /* ⚠ --glut ist als TEXTFARBE auf dunklem Grund UNLESBAR (1,9:1).
+     Fuer roten Text auf Nacht --glut-hell nehmen.
      Nur als Flaeche verwenden. Wo die Wortmarke rot sein soll,
      steht sie auf dem Pergamentstreifen (6,6:1). Siehe
      _projekt/WUNSCH-REGISTER.md, Konflikt A. */
 
-  --serif:'Young Serif','Young Fallback',Georgia,serif;
-  --sans:'Epilogue','Epilogue Fallback','Helvetica Neue',Arial,sans-serif;
+  /* Runde 2: Lillys Wahl. --kopf = Headlines, Labels, Knoepfe;
+     --leib = Fliesstext. */
+  --kopf:'Inter','Inter Fallback','Helvetica Neue',Arial,sans-serif;
+  --leib:'Lora','Lora Fallback',Georgia,serif;
 
   --h1:clamp(2.1rem,6.4vw,4.2rem);
   --h2:clamp(1.75rem,3.9vw,2.75rem);

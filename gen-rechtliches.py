@@ -43,7 +43,7 @@ def seite(datei, lang, titel, beschreibung, marke, ueberschrift, inhalt,
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="theme-color" content="#14100C">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100C'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9 7 7 0 1 1-7-7' fill='none' stroke='%23A80808' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100C'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9 7 7 0 1 1-7-7' fill='none' stroke='%23792427' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/legal.css">

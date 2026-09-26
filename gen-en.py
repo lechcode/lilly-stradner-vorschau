@@ -6,8 +6,12 @@ Warum generiert: So ist strukturelle Gleichwertigkeit der beiden Sprach-
 fassungen garantiert (I6). Jede Ersetzung wird hart geprueft — fehlt eine,
 bricht das Skript ab, statt eine halb uebersetzte Seite zu schreiben.
 
+Runde 2 (25.09.2026): komplett neu auf Lillys eigene Texte aus dem PDF
+„Website Anpassungen". Das Gruppenmentoring (03b) gibt es laut Lilly NUR
+auf Deutsch — alles zwischen <!--nur-de--> und <!--/nur-de--> faellt raus.
+
 Nach jeder Aenderung an index.html erneut laufen lassen:
-    python3 gen-en.py
+    python3 gen-en.py && python3 gen-hell.py
 """
 import re
 import sys
@@ -16,26 +20,35 @@ from pathlib import Path
 W = Path(__file__).parent
 quelle = (W / "index.html").read_text(encoding="utf-8")
 
+# Nur-deutsche Bloecke heraustrennen (inkl. Menuepunkt 03b)
+s, n = re.subn(r"<!--nur-de-->.*?<!--/nur-de-->\n?", "", quelle, flags=re.S)
+if n < 2:
+    sys.exit(f"ABBRUCH: erwartet mind. 2 nur-de-Bloecke, gefunden {n}")
+
+# Kommen mehrfach vor — ueberall ersetzen (mind. einmal muss es sie geben).
+ALLE = [
+    ('data-thema="Kennenlerncall"', 'data-thema="Introductory call"'),
+    ('>Unverbindlich kennenlernen', '>Get to know me, no strings attached'),
+    ('aria-label="Kapitel"', 'aria-label="Chapters"'),
+]
+
 # (deutsch, englisch) — der Reihe nach angewendet, jede muss vorkommen.
 PAARE = [
     # ── Kopf ─────────────────────────────────────────────────────────────
     ('<html lang="de">', '<html lang="en">'),
-    ('<!-- ENTFERNEN, sobald Impressum + Datenschutz vollstaendig sind und Lilly freigegeben hat -->',
-     '<!-- ENTFERNEN, sobald Impressum + Datenschutz vollstaendig sind und Lilly freigegeben hat -->'),
-    ('<title>Somatische Prozessbegleitung &amp; Breathwork | Lilly Stradner</title>',
+    ('<title>Somatische Prozessbegleitung &amp; Atemarbeit | Lilly Stradner</title>',
      '<title>Somatic process facilitation &amp; breathwork | Lilly Stradner</title>'),
-    ('content="Lilly Stradner begleitet Menschen somatisch aus Mustern, Körper- und Essensthemen heraus — mit Nervensystemarbeit und Conscious Connected Breathwork. Kostenloses Kennenlerngespräch."',
-     'content="Lilly Stradner accompanies people somatically out of patterns, body and food struggles — with nervous system work and Conscious Connected Breathwork. Free introductory call."'),
-    ('<meta property="og:description" content="Somatische Prozessbegleitung und Conscious Connected Breathwork. Transformation ist möglich.">',
-     '<meta property="og:description" content="Somatic process facilitation and Conscious Connected Breathwork. Transformation is possible.">'),
+    ('content="Lilly Stradner begleitet Menschen hin zu einer liebevollen Beziehung zu sich selbst und ihrem Körper — mit somatischer Arbeit, Nervensystemarbeit und Atemarbeit. Unverbindlicher Kennenlerncall."',
+     'content="Lilly Stradner accompanies people towards a loving relationship with themselves and their body — through somatic work, nervous system work and breathwork. Free, no-strings introductory call."'),
+    ('<meta property="og:description" content="Somatische Prozessbegleitung &amp; Atemarbeit. Transformation ist möglich.">',
+     '<meta property="og:description" content="Somatic process facilitation &amp; breathwork. Transformation is possible.">'),
     ('<meta property="og:locale" content="de_DE">', '<meta property="og:locale" content="en_GB">'),
     ('<meta property="og:url" content="https://lechcode.github.io/lilly-stradner-vorschau/">',
      '<meta property="og:url" content="https://lechcode.github.io/lilly-stradner-vorschau/en.html">'),
 
-    # ── Sprachumschalter: aktiv ist jetzt EN ─────────────────────────────
     ('<a class="skip" href="#inhalt">Zum Inhalt springen</a>',
      '<a class="skip" href="#inhalt">Skip to content</a>'),
-    ('    <span>Kapitel</span>', '    <span>Chapters</span>'),
+    ('    <span>Menü</span>', '    <span>Menu</span>'),
     ('<nav class="sprache" aria-label="Sprache wählen">',
      '<nav class="sprache" aria-label="Choose language">'),
     ('<a href="index.html" aria-current="true" hreflang="de">',
@@ -43,419 +56,283 @@ PAARE = [
     ('<a href="en.html" hreflang="en">',
      '<a href="en.html" aria-current="true" hreflang="en">'),
 
-    # ── Seitenreiter + Navigation ────────────────────────────────────────
-    ('<nav class="rail" aria-label="Kapitel">', '<nav class="rail" aria-label="Chapters">'),
-    ('<a href="#ueber-mich"  data-titel="Über mich"><span class="sr">Über mich</span></a>',
-     '<a href="#ueber-mich"  data-titel="About me"><span class="sr">About me</span></a>'),
-    ('<a href="#arbeit"      data-titel="Meine Arbeit"><span class="sr">Meine Arbeit</span></a>',
-     '<a href="#arbeit"      data-titel="My work"><span class="sr">My work</span></a>'),
-    ('<a href="#einszueins"  data-titel="1:1-Begleitung"><span class="sr">1:1-Begleitung</span></a>',
-     '<a href="#einszueins"  data-titel="One-to-one"><span class="sr">One-to-one</span></a>'),
-    ('<a href="#gruppen"     data-titel="Gruppen"><span class="sr">Gruppen</span></a>',
-     '<a href="#gruppen"     data-titel="Groups"><span class="sr">Groups</span></a>'),
-    ('<a href="#community"   data-titel="Community"><span class="sr">Community</span></a>',
-     '<a href="#community"   data-titel="Community"><span class="sr">Community</span></a>'),
-    ('<a href="#offline"     data-titel="Offline"><span class="sr">Offline</span></a>',
-     '<a href="#offline"     data-titel="In person"><span class="sr">In person</span></a>'),
-    ('<a href="#shop"        data-titel="Aufnahmen"><span class="sr">Aufnahmen</span></a>',
-     '<a href="#shop"        data-titel="Recordings"><span class="sr">Recordings</span></a>'),
-    ('<a href="#kontakt"     data-titel="Kontakt"><span class="sr">Kontakt</span></a>',
-     '<a href="#kontakt"     data-titel="Contact"><span class="sr">Contact</span></a>'),
-
-    ('<li><a href="#ueber-mich"><span>01</span> Über mich</a></li>',
-     '<li><a href="#ueber-mich"><span>01</span> About me</a></li>'),
-    ('<li><a href="#arbeit"><span>02</span> Meine Arbeit</a></li>',
-     '<li><a href="#arbeit"><span>02</span> My work</a></li>'),
-    ('<li><a href="#einszueins"><span>03</span> 1:1-Begleitung</a></li>',
-     '<li><a href="#einszueins"><span>03</span> One-to-one</a></li>'),
-    ('<li><a href="#gruppen"><span>04</span> Gruppenbegleitungen</a></li>',
-     '<li><a href="#gruppen"><span>04</span> Group journeys</a></li>'),
-    ('<li><a href="#offline"><span>06</span> Offline</a></li>',
-     '<li><a href="#offline"><span>06</span> In person</a></li>'),
-    ('<li><a href="#shop"><span>07</span> Aufnahmen</a></li>',
-     '<li><a href="#shop"><span>07</span> Recordings</a></li>'),
-    ('<li><a href="#kontakt"><span>08</span> Kontakt</a></li>',
-     '<li><a href="#kontakt"><span>08</span> Contact</a></li>'),
+    # ── Seitenreiter + Menue ─────────────────────────────────────────────
+    ('data-titel="Über mich"><span class="sr">Über mich</span>',
+     'data-titel="About me"><span class="sr">About me</span>'),
+    ('data-titel="Meine Arbeit"><span class="sr">Meine Arbeit</span>',
+     'data-titel="My work"><span class="sr">My work</span>'),
+    ('data-titel="Online-Begleitungen"><span class="sr">Online-Begleitungen</span>',
+     'data-titel="Online journeys"><span class="sr">Online journeys</span>'),
+    ('data-titel="Online-Community"><span class="sr">Online-Community</span>',
+     'data-titel="Online community"><span class="sr">Online community</span>'),
+    ('data-titel="Offline &amp; Kooperationen"><span class="sr">Offline &amp; Kooperationen</span>',
+     'data-titel="In person &amp; collaborations"><span class="sr">In person &amp; collaborations</span>'),
+    ('data-titel="Kontakt"><span class="sr">Kontakt</span>',
+     'data-titel="Contact"><span class="sr">Contact</span>'),
+    ('<span>01</span> Über mich</a>', '<span>01</span> About me</a>'),
+    ('<span>02</span> Meine Arbeit</a>', '<span>02</span> My work</a>'),
+    ('<span>03</span> Online-Begleitungen</a>', '<span>03</span> Online journeys</a>'),
+    ('<span>03a</span> 1:1-Begleitung</a>', '<span>03a</span> One-to-one journey</a>'),
+    ('<span>04</span> Online-Community</a>', '<span>04</span> Online community</a>'),
+    ('<span>05</span> Offline-Angebote &amp; Kooperationen</a>',
+     '<span>05</span> In person &amp; collaborations</a>'),
+    ('<span>→</span> Kontakt &amp; Kennenlerncall</a>',
+     '<span>→</span> Contact &amp; introductory call</a>'),
 
     # ── Hero ─────────────────────────────────────────────────────────────
-    ('alt="Lilly vor einigen Jahren: dunkler Raum, abweisender Blick in die Kamera."',
-     'alt="Lilly some years ago: a dark room, a closed-off look into the camera."'),
-    ('<figcaption>2016</figcaption>', '<figcaption>2016</figcaption>'),
-    ('alt="Lilly heute: im Grünen, offener Blick, ruhiges Lächeln."',
-     'alt="Lilly today: outdoors in the green, open gaze, a calm smile."'),
-    ('<figcaption>2026</figcaption>', '<figcaption>2026</figcaption>'),
-    # Das &nbsp; gehoert HINTER den Mittelpunkt, sonst haengt er am Zeilenende.
-    ('<p class="marke">Somatische Prozessbegleitung ·&nbsp;Breathwork</p>',
-     '<p class="marke">Somatic process facilitation ·&nbsp;Breathwork</p>'),
+    ('alt="Lilly vor zehn Jahren in einer Höhle: weißes Shirt, Haare hochgesteckt, vorsichtiges Lächeln."',
+     'alt="Lilly ten years ago in a cave: white T-shirt, hair tied up, a cautious smile."'),
+    ('alt="Lilly heute am Seeufer unter einer Weide: braunes Top, tätowierter Arm, ruhiges Lächeln."',
+     'alt="Lilly today on a lakeshore under a willow: brown top, tattooed arm, a calm smile."'),
     ('<h1>Transformation ist möglich.</h1>', '<h1>Transformation is possible.</h1>'),
-    ("""      <p class="klarstellung">Zehn Jahre. Verändert hat sich nicht mein Körper — sondern dass ich
-        mich nicht mehr verstecke.</p>
-
-      <p>Ich begleite Menschen, bei denen es hakt — im Leben, im Körper oder im Essen.</p>""",
-     """      <p class="klarstellung">Ten years. What changed is not my body — it is that I no longer
-        hide.</p>
-
-      <p>I accompany people for whom something is stuck — in life, in the body or around food.</p>"""),
-    ('        Lass uns sprechen', '        Let us talk'),
-    # data-thema muss mituebersetzt werden — sonst steht im englischen
-    # Formular ein deutsches Thema (Leonardo, Runde 2).
-    ('<a class="knopf" href="#kontakt" data-thema="Kennenlerngespräch">',
-     '<a class="knopf" href="#kontakt" data-thema="Introductory call">'),
+    ('Und die Grundlage dafür: eine gesunde Beziehung zu dir selbst.',
+     'And the foundation for it: a healthy relationship with yourself.'),
+    ('<p class="zeile">Somatische Prozessbegleitung &amp; Atemarbeit</p>',
+     '<p class="zeile">Somatic process facilitation &amp; breathwork</p>'),
+    ('<p class="kern">Jahrelang habe ich mich und meinen Körper gehasst. Heute weiß ich: <em>Wir waren nie das wirkliche Problem!</em></p>',
+     '<p class="kern">For years I hated myself and my body. Today I know: <em>we were never the real problem!</em></p>'),
+    ('Genau deshalb begleite ich Menschen hin zu einer liebevollen Beziehung zu sich selbst und ihrem Körper ~ damit von hier aus alles andere wachsen kann.',
+     'That is exactly why I accompany people towards a loving relationship with themselves and their body ~ so that everything else can grow from there.'),
+    ('          Erfahre mehr über mich und meine Arbeit\n', '          Learn more about me and my work\n'),
+    ('>Oder lern mich unverbindlich kennen</a>', '>Or get to know me, no strings attached</a>'),
 
     # ── 01 · Über mich ───────────────────────────────────────────────────
     ('<p class="marke reveal">01 — Über mich</p>', '<p class="marke reveal">01 — About me</p>'),
-    ('<h2 class="reveal lese">Ich weiß, wie es ist, sich selbst im Weg zu stehen.</h2>',
-     '<h2 class="reveal lese">I know what it is like to stand in your own way.</h2>'),
-    ("""      <strong>Kurz vorweg:</strong> In diesem Kapitel spreche ich offen über Essstörung, Gewalt und
-      Suizidgedanken. Wenn dir das gerade zu nah ist, spring gern direkt
-      <a href="#arbeit">zu meiner Arbeit</a>.""",
-     """      <strong>Before you read on:</strong> in this chapter I speak openly about an eating
-      disorder, abuse and suicidal thoughts. If that feels too close right now, please skip
-      ahead <a href="#arbeit">to my work</a>."""),
-    ("""      <p>Ich bin in einer Familie groß geworden, die von außen nach Friede, Freude, Eierkuchen
-        aussah. Innen drin habe ich früh angefangen zu essen. Viel. Ich war als Kind schon dick,
-        als Jugendliche sehr dick — und ich bin in einer Welt aufgewachsen, die dafür wenig
-        Freundlichkeit übrig hat.</p>""",
-     """      <p>I grew up in a family that looked perfectly fine from the outside. Inside, I started
-        eating early. A lot. I was a heavy child and a very heavy teenager — and I grew up in a
-        world that has little kindness to spare for that.</p>"""),
-    ("""      <p>Ich habe mich selbst gehasst. Ich habe geglaubt, ich sei einfach nicht diszipliniert
-        genug. Fast fünfundzwanzig Jahre lang.</p>""",
-     """      <p>I hated myself. I believed I simply was not disciplined enough. For almost
-        twenty-five years.</p>"""),
-    ("""      <p>Dann trennten sich meine Eltern. Und dann starb mein Vater, plötzlich. Er war die
-        einzige sichere Bindung, die ich hatte — der eine Mensch, bei dem ich nichts sein musste.</p>
-
-      <p>Was danach kam, war nicht Trauer, wie man sie sich vorstellt. Es war zu viel, um es zu
-        fühlen. Und irgendwo darunter fing etwas in mir an zu rufen. Ich habe lange gebraucht, um
-        hinzuhören.</p>""",
-     """      <p>Then my parents separated. And then my father died, suddenly. He was the only secure
-        attachment I had — the one person around whom I did not have to be anything.</p>
-
-      <p>What came after was not grief the way you picture it. It was too much to feel. And
-        somewhere underneath, something in me began to call. It took me a long time to listen.</p>"""),
-    ("""      <p>Ich bin dem Rufen gefolgt. Zuerst in Coachings zu emotionalem Essen, wo sich schnell viel
-        löste. Dann tiefer.</p>""",
-     """      <p>I followed that call. First into work on emotional eating, where a lot shifted quickly.
-        Then deeper.</p>"""),
-    ("""      <p>Auf diesem Weg habe ich mich an etwas erinnert, das mein System zwanzig Jahre lang
-        weggeschlossen hatte: Ich wurde als Fünfjährige von meinem Onkel missbraucht. Eine
-        dissoziative Amnesie hatte mir die Erinnerung genommen — den Schmerz nicht. Gesehen zu
-        werden war für mich lebensgefährlich geworden. Das Essen war die Antwort meines Körpers
-        darauf.</p>""",
-     """      <p>Along the way I remembered something my system had locked away for twenty years: I was
-        abused by my uncle when I was five. A dissociative amnesia had taken the memory from me —
-        not the pain. Being seen had become life-threatening for me. Eating was my body's answer
-        to that.</p>"""),
-    ("""      <p>Dazwischen lagen Jahre, über die ich heute ohne Scham sprechen kann: Alkohol, mit dem ich
-        überhaupt erst unter Menschen gehen konnte. Depressive Phasen. Zeiten, in denen ich nicht
-        mehr leben wollte. Eine Beziehung, die fünf Jahre lang wehtat und aus der ich trotzdem
-        nicht rauskam.</p>""",
-     """      <p>In between lay years I can speak about without shame today: alcohol, without which I
-        could not be around people at all. Depressive phases. Times when I no longer wanted to
-        live. A relationship that hurt for five years and that I still could not leave.</p>"""),
-    ("""      <p>Mit zwanzig habe ich über fünfzig Kilo abgenommen. Durch Hungern. Es hat nichts geheilt.
-        Danach war ich genauso wenig zu Hause in mir wie vorher — nur dünner, mit zwei Operationen
-        und einer panischen Angst, alles wieder zuzunehmen.</p>""",
-     """      <p>At twenty I lost more than fifty kilos. By starving. It healed nothing. Afterwards I
-        was just as little at home in myself as before — only thinner, with two operations and a
-        panicked fear of gaining it all back.</p>"""),
-    ("""      <p>Ein Teil davon war nicht einmal meins. Meine Großmutter hat im Krieg gehungert. Was ich
-        für meine Maßlosigkeit hielt, war zu einem Stück ihr Überleben, weitergereicht durch zwei
-        Generationen. Da bin ich über das Atmen drangekommen, nicht übers Nachdenken.</p>""",
-     """      <p>Part of it was not even mine. My grandmother went hungry during the war. What I took
-        for my own lack of restraint was in part her survival, handed down through two
-        generations. I reached that through breathing, not through thinking.</p>"""),
-    ('<blockquote>„Mein Körper war nie das Problem. Und ich war es auch nie."</blockquote>',
-     '<blockquote>“My body was never the problem. And neither was I.”</blockquote>'),
-    ("""    <p class="lese reveal">Das ist der Satz, um den sich alles dreht, was ich heute tue. Unser
-      Körper ist nicht dumm und nicht undiszipliniert. Er hat immer einen Grund. Wenn wir lernen,
-      ihm wieder zuzuhören, führt er uns zurück.</p>
-
-    <p class="lese reveal"><strong>Und damit das klar ist:</strong> Du musst nichts Schlimmes
-      erlebt haben, um hier richtig zu sein. Es reicht, dass etwas nicht stimmt und du es
-      satt hast.</p>""",
-     """    <p class="lese reveal">That sentence is what everything I do today turns around. Our body is
-      not stupid and not undisciplined. It always has a reason. When we learn to listen to it
-      again, it leads us back.</p>
-
-    <p class="lese reveal"><strong>And to be clear:</strong> you do not need to have been through
-      something terrible to belong here. It is enough that something is not right and that you
-      have had enough of it.</p>"""),
+    ('<strong>Kurz vorweg:</strong> In diesem Kapitel spreche ich offen über Essstörung, Suizidgedanken und sexuelle Gewalt. Wenn dir das gerade zu nah geht, springe hier gern direkt zu <a href="#arbeit">meiner Arbeit</a>.',
+     '<strong>Before you read on:</strong> in this chapter I speak openly about an eating disorder, suicidal thoughts and sexual violence. If that feels too close right now, feel free to skip straight to <a href="#arbeit">my work</a>.'),
+    ('Stell dir vor, du wächst in einer augenscheinlich „ganz normalen Familie“ auf.',
+     'Imagine growing up in a seemingly “perfectly normal family”.'),
+    ('<p>Haus, Garten, Schule, Urlaub.<br>Doch trotzdem hasst du dich selbst abgrundtief, seitdem du denken kannst.<br>Du kannst nicht anders, als ständig zu essen, schämst dich für deinen Körper und verstehst einfach nicht, warum du so viel schlimmer bist als alle anderen.</p>',
+     '<p>House, garden, school, holidays.<br>And yet you have hated yourself to the core for as long as you can remember.<br>You cannot help eating all the time, you are ashamed of your body and you simply do not understand why you are so much worse than everyone else.</p>'),
+    ('<p>Trotz einer eigentlich schönen Kindheit hat schon immer „irgendetwas mit mir nicht gestimmt“. Fressanfälle. Mein Gewicht. Die Angst, aufzufallen. Depressive Phasen und Zeiten, in denen ich mir selbst weh tue und nicht mehr leben will. Drogen, emotionale Abhängigkeiten und der Zwang, mich selbst immer weiter zu optimieren.<br>Das alles unter dem Deckmantel einer Essstörung, für die ich mich selbst verurteile.</p>',
+     '<p>Despite what was actually a lovely childhood, “something was always wrong with me”. Binge eating. My weight. The fear of standing out. Depressive phases and times when I hurt myself and no longer want to live. Drugs, emotional dependencies and the compulsion to keep optimising myself.<br>All of it under the cover of an eating disorder I judge myself for.</p>'),
+    ('<blockquote>„Wenn ich es endlich hinkriegen würde, diszipliniert und dünn zu sein, dann wäre alles gut.“</blockquote>',
+     '<blockquote>“If I could finally manage to be disciplined and thin, everything would be fine.”</blockquote>'),
+    ('<p>Eine der größten Lügen, die uns unsere Gesellschaft erzählt und auch ich mir lange erzählt habe.<br><span class="beiseite">(Ich habe über 50 kg abgenommen und war trotzdem nicht glücklich. ;) )</span></p>',
+     '<p>One of the biggest lies our society tells us — and one I told myself for a long time.<br><span class="beiseite">(I lost over 50 kg and still was not happy. ;) )</span></p>'),
+    ('<p class="markiert">Heute weiß ich: Ob Betäubung, Kontrolle, Rückzug oder Ablenkung: Egal zu welcher Überlebensstrategie wir greifen, es sind intelligente Mechanismen von unserem System, die uns helfen, mit Dingen klarzukommen.</p>',
+     '<p class="markiert">Today I know: numbing, control, withdrawal or distraction — whichever survival strategy we reach for, they are intelligent mechanisms of our system that help us cope.</p>'),
+    ('alt="Lilly mit grünen Haarspitzen, ein Weinglas und eine Zigarette in der Hand."',
+     'alt="Lilly with green-tipped hair, holding a glass of wine and a cigarette."'),
+    ('<span>Essen, Alkohol &amp; Zigaretten</span>', '<span>Food, alcohol &amp; cigarettes</span>'),
+    ('alt="Lilly in Lederjacke, Augen geschlossen, Zunge herausgestreckt, eine Zigarette zwischen den Fingern."',
+     'alt="Lilly in a leather jacket, eyes closed, tongue out, a cigarette between her fingers."'),
+    ('<span>Drogen &amp; Depression</span>', '<span>Drugs &amp; depression</span>'),
+    ('alt="Spiegel-Selfie: Lilly sehr schlank in schwarzem Mantel und Stiefeln."',
+     'alt="Mirror selfie: Lilly very thin in a black coat and boots."'),
+    ('<span>Hungern, Sport &amp; Studium</span>', '<span>Starving, sport &amp; university</span>'),
+    ('alt="Lilly im Krankenhausbett, mit Zugang an der Hand."',
+     'alt="Lilly in a hospital bed with an IV cannula in her hand."'),
+    ('<span>Hautstraffungen</span>', '<span>Skin-tightening surgery</span>'),
+    ('<figcaption>Egal welche Schutzstrategie: Am Ende ist es immer eine Form von Betäubung, Flucht oder Ablenkung.</figcaption>',
+     '<figcaption>Whatever the protective strategy: in the end it is always a form of numbing, escape or distraction.</figcaption>'),
+    ('<p>All das bedeutet nicht, dass mit uns etwas nicht stimmt, sondern dass wir hinschauen dürfen, was dahinter eigentlich unsere Aufmerksamkeit braucht.</p>',
+     '<p>None of this means something is wrong with us. It means we are allowed to look at what behind it actually needs our attention.</p>'),
+    ('<p>Das musste ich allerdings erst schmerzhaft lernen.<br>Mein Kartenhaus bricht in sich zusammen, als mein Papa, die einzig wirklich sichere Person in meinem Leben, viel zu früh aus dem Nichts stirbt. †</p>',
+     '<p>I had to learn that the painful way, though.<br>My house of cards collapses when my dad, the only truly safe person in my life, dies far too early, out of nowhere. †</p>'),
+    ('<p>Doch gleichzeitig bricht in diesem schlimmsten Schmerz auch etwas auf.<br>Tief unter dieser Trauer beginnt ein Anteil zu rufen: „Hier steckt noch mehr dahinter.“<br>Zunächst ganz leise, doch ich folge ihm.</p>',
+     '<p>And yet, in this worst pain, something also breaks open.<br>Deep beneath the grief, a part of me begins to call: “There is more to this.”<br>Very quietly at first, but I follow it.</p>'),
+    ('<p>Ich beginne, mich selbst kennenzulernen, zu spüren. Reise. Coachings, Energiearbeit, eine Yogaausbildung. Mein erstes Praktikum im Coaching-Bereich.</p>',
+     '<p>I begin to get to know myself, to feel. Travel. Coaching, energy work, a yoga teacher training. My first internship in coaching.</p>'),
+    ('<p>Vieles ändert sich zum Positiven. Schnell sogar.<br>Doch gleichzeitig spüre ich: Irgendetwas sitzt da noch. Und ich verurteile mich immer noch dafür.</p>',
+     '<p>A lot changes for the better. Quickly, even.<br>But at the same time I sense: something is still stuck there. And I still judge myself for it.</p>'),
+    ('<blockquote>„Ich weiß, ich bin gut genug, nur warum fühle ich es nicht?!“</blockquote>',
+     '<blockquote>“I know I am good enough — so why don’t I feel it?!”</blockquote>'),
+    ('<p>Deshalb entscheide ich mich für eine Ausbildung im Bereich Trauma, Nervensystem und somatische Arbeit.<br>Und tatsächlich: Nach fünf Wochen täglicher somatischer Arbeit mit mir selbst offenbart sich mir das letzte große Puzzleteil.</p>',
+     '<p>So I decide to train in trauma, the nervous system and somatic work.<br>And indeed: after five weeks of daily somatic work with myself, the last big piece of the puzzle reveals itself.</p>'),
+    ('<p>Nach über 20 Jahren erinnere ich mich daran, dass ein Mann aus dem Umfeld meiner Familie mich im Alter von fünf Jahren vergewaltigt hat.</p>',
+     '<p>After more than 20 years, I remember that a man from my family’s circle raped me when I was five years old.</p>'),
+    ('<p>Zunächst Schock, Zweifel, Unsicherheit.<br>Und dennoch die tiefe Gewissheit: Jetzt macht auf einmal alles Sinn.</p>',
+     '<p>At first shock, doubt, uncertainty.<br>And yet a deep certainty: suddenly everything makes sense.</p>'),
+    ('<p>Ich nehme mich der vermutlich lebenslangen Aufgabe an, dies aufzuarbeiten. Suche mir erneut Unterstützung. Lerne, darüber zu sprechen. Mich zu zeigen. Zu fühlen, was da ist, ohne wegzulaufen.</p>',
+     '<p>I take on what is probably the lifelong task of working through this. I look for support again. I learn to talk about it. To show myself. To feel what is there without running away.</p>'),
+    ('<p>Mit Erfolg. Heute habe ich selbst in schwierigen Zeiten tief verinnerlicht, <strong class="glut-text">dass ich liebevoll zu mir selbst bleiben darf.</strong></p>',
+     '<p>With success. Today, even in difficult times, I have deeply taken in <strong class="glut-text">that I am allowed to stay loving towards myself.</strong></p>'),
+    ('<p>Und mit dieser liebevollen Beziehung zu mir selbst verstehe ich, dass mir die Vergewaltigung vor allem eins genommen hat: echte Verbindung zu anderen Menschen.<br>Wahrhaftig gesehen zu werden, war lebensgefährlich für mich geworden.</p>',
+     '<p>And with this loving relationship with myself I understand that the rape took one thing from me above all: real connection with other people.<br>Being truly seen had become life-threatening for me.</p>'),
+    ('<p>Dem stelle ich mich in meinem Breathwork Teacher Training und lerne:</p>',
+     '<p>I face this in my breathwork teacher training and learn:</p>'),
+    ('<p class="satz-gross">Gesehen werden kann heute sicher sein.</p>',
+     '<p class="satz-gross">Being seen can be safe today.</p>'),
+    ('<p>Mit dieser Arbeit tauche ich noch tiefer, arbeite mit dem Kriegstrauma meiner Oma, das ich in mir trage, und lege Schichten ab, die älter als meine eigene Geschichte sind.</p>',
+     '<p>Through this work I go even deeper, work with my grandmother’s war trauma that I carry in me, and shed layers that are older than my own story.</p>'),
+    ('<p>Du siehst, neben verschiedenen Ausbildungen prägt mich vor allem meine eigene Erfahrung.<br>Und genau darum geht es auch in meiner Arbeit: Vor allem begleite und halte ich Raum für deine Selbsterfahrung.</p>',
+     '<p>So you see: besides various trainings, what shapes me most is my own experience.<br>And that is exactly what my work is about: above all, I accompany and hold space for your own self-experience.</p>'),
+    ('<span>Lies hier weiter, um mehr über meine Arbeit zu erfahren.</span>',
+     '<span>Read on here to learn more about my work.</span>'),
+    ('<p><strong>Und damit vorab eins klar ist:</strong> Du musst nichts Schlimmes erlebt haben, um hier richtig zu sein. Es reicht, wenn du mit etwas unzufrieden bist und es verändern willst.</p>',
+     '<p><strong>And just so one thing is clear from the start:</strong> you do not have to have been through something terrible to be in the right place here. It is enough that something is not right for you and you want to change it.</p>'),
+    ('<p>„Nicht schlimm genug“ gibt es bei mir nicht, bzw. das schauen wir uns dann liebevoll in der gemeinsamen Arbeit an. ;)</p>',
+     '<p>“Not bad enough” does not exist with me — or rather, that is something we will look at lovingly in our work together. ;)</p>'),
 
     # ── 02 · Meine Arbeit ────────────────────────────────────────────────
     ('<p class="marke reveal">02 — Meine Arbeit</p>', '<p class="marke reveal">02 — My work</p>'),
-    ("""<h2 class="reveal lese">Wir schauen an, womit du kompensierst. Und wir gehen dahin, wo es
-      herkommt.</h2>""",
-     """<h2 class="reveal lese">We look at what you compensate with. And we go to where it comes
-      from.</h2>"""),
-    ("""      <p>Wir verstehen zuerst auf der mentalen Ebene, was in dir passiert: warum du in bestimmten
-        Situationen explodierst, warum du etwas seit Jahren nicht umgesetzt bekommst, welche Sätze
-        du über dich glaubst. Und dann verlassen wir den Kopf — denn verstehen allein hat noch
-        niemanden verändert.</p>""",
-     """      <p>First we understand on a mental level what happens inside you: why you explode in
-        certain situations, why something has not moved for years, which sentences you believe
-        about yourself. And then we leave the head — because understanding alone has never
-        changed anyone.</p>"""),
-    ('<summary><b>01</b> Zurück in den Körper</summary>',
-     '<summary><b>01</b> Back into the body</summary>'),
-    ("""          <p>Erst einmal lernst du wieder zu spüren. Emotionen, Körperempfindungen, Hunger und
-            Sättigung — all das, was viele von uns irgendwann abgestellt haben, weil es zu viel
-            war.</p>
-          <p>Dazu kommt die Arbeit mit deinem Nervensystem: verstehen, was es überhaupt ist, merken,
-            in welchem Zustand du gerade bist, und im Alltag Stück für Stück regulieren lernen.
-            Das ist die Grundlage. Ohne sie greift alles andere ins Leere.</p>""",
-     """          <p>First you learn to feel again. Emotions, bodily sensations, hunger and fullness —
-            all the things many of us switched off at some point because they were too much.</p>
-          <p>Alongside that comes the work with your nervous system: understanding what it even
-            is, noticing which state you are in, and learning to regulate step by step in daily
-            life. This is the foundation. Without it, everything else falls flat.</p>"""),
-    ('<summary><b>02</b> Aufarbeiten, was darunter liegt</summary>',
-     '<summary><b>02</b> Working through what lies beneath</summary>'),
-    ("""          <p>Hier gehen wir an die Ursprünge: somatische Anteilearbeit, somatische Schattenarbeit,
-            Bindungsthemen, Conscious Connected Breathwork. Wir schauen uns deine Trigger an,
-            verstehen, wie sie zusammenhängen, und holen hoch, was lange unten lag.</p>
-          <p>Das ist der Teil, der sich manchmal unangenehm anfühlt. Und der Teil, der wirklich
-            etwas bewegt.</p>""",
-     """          <p>Here we go to the origins: somatic parts work, somatic shadow work, attachment
-            themes, Conscious Connected Breathwork. We look at your triggers, understand how they
-            connect, and bring up what has been down there a long time.</p>
-          <p>This is the part that sometimes feels uncomfortable. And the part that actually
-            moves something.</p>"""),
-    ('<summary><b>03</b> Die Systeme mitdenken</summary>',
-     '<summary><b>03</b> Keeping the systems in view</summary>'),
-    ("""          <p>Wir leben in Patriarchat, Kapitalismus und Neokolonialismus. Wir können uns noch so
-            gründlich anschauen und heilen — diese Systeme wirken weiter auf uns.</p>
-          <p>Du kannst einmal erkennen, dass du dich nicht gut genug fühlst, obwohl es nicht stimmt.
-            Und am nächsten Tag erzählt dir die Welt wieder das Gegenteil. Deshalb beziehe ich das
-            von Anfang an mit ein: Wir lernen zu sehen, wo diese Prägungen im Alltag zugreifen —
-            damit du dich nicht darin verlierst, sondern rausgehen kannst.</p>
-          <p>Ich habe Internationale Beziehungen studiert. Aus dem Studium habe ich vor allem eines
-            mitgenommen: Wie sehr wir geprägt werden, und wie viel Energie es kostet, das zu
-            ignorieren.</p>""",
-     """          <p>We live in patriarchy, capitalism and neocolonialism. We can look at ourselves and
-            heal as thoroughly as we like — these systems keep acting on us.</p>
-          <p>You can recognise once that you feel not good enough although it is not true. And the
-            next day the world tells you the opposite again. That is why I include this from the
-            start: we learn to see where these conditionings take hold in daily life — so that you
-            do not lose yourself in them, but can step out.</p>
-          <p>I studied International Relations. What I took from it above all is this: how deeply
-            we are shaped, and how much energy it costs to ignore that.</p>"""),
-    ('alt="Lilly sitzt mit beiden Händen auf dem Herzen, Augen geschlossen."',
-     'alt="Lilly sitting with both hands on her heart, eyes closed."'),
-    ('<h3>Somatische Arbeit</h3>', '<h3>Somatic work</h3>'),
-    ("""        <p>Somatisch heißt: über den Körper. Nicht über das Gespräch allein. Wir arbeiten mit dem,
-          was gerade in dir spürbar ist — Enge, Druck, Taubheit, Wärme — und folgen dem, statt es
-          wegzudenken. Dein Körper hat die Erfahrungen gespeichert. Also ist er auch der Ort, an
-          dem sie sich lösen können.</p>""",
-     """        <p>Somatic means: through the body. Not through conversation alone. We work with what
-          is noticeable in you right now — tightness, pressure, numbness, warmth — and follow it
-          instead of thinking it away. Your body stored the experiences. So it is also the place
-          where they can release.</p>"""),
-    ("""        <p>Eine Atemtechnik ohne Pause zwischen Ein- und Ausatmen. Sie bringt dich in einen
-          veränderten Bewusstseinszustand, in dem Dinge an die Oberfläche kommen dürfen, an die du
-          im Alltag nicht herankommst. Ich habe darüber Zusammenhänge in mir gefunden, die ich mir
-          vorher nicht hätte erklären können.</p>""",
-     """        <p>A breathing technique with no pause between the in-breath and the out-breath. It
-          brings you into an altered state of consciousness in which things are allowed to surface
-          that you cannot reach in everyday life. Through it I found connections in myself I could
-          not have explained before.</p>"""),
-    ('<h3>Wie ich arbeite</h3>', '<h3>How I work</h3>'),
-    ("""      <p>Ich bin nicht die, die vorne steht und dir erklärt, wie du zu sein hast. Ich teile meine
-        Erfahrung, ich teile mein Wissen, und ich halte Raum. Ich lerne von den Menschen, die ich
-        begleite, genauso viel wie sie von mir.</p>
-      <p>Was mir dabei am wichtigsten ist: dass du gesehen wirst. In deinem Schmerz, in deinen
-        Mustern, in allem. Weil genau darin etwas passiert, das allein nicht passieren kann.</p>""",
-     """      <p>I am not the one standing at the front telling you how to be. I share my experience, I
-        share my knowledge, and I hold space. I learn as much from the people I accompany as they
-        learn from me.</p>
-      <p>What matters most to me: that you are witnessed. In your pain, in your patterns, in all
-        of it. Because exactly there something happens that cannot happen alone.</p>"""),
-
-    # ── 03 · 1:1 ─────────────────────────────────────────────────────────
-    ('<p class="marke reveal">03 — 1:1-Begleitung</p>',
-     '<p class="marke reveal">03 — One-to-one</p>'),
-    ('<h2 class="reveal lese">Gemeinsam, über einen längeren Zeitraum.</h2>',
-     '<h2 class="reveal lese">Together, over a longer stretch of time.</h2>'),
-    ("""        <p>Wir arbeiten online in Sessions, und zwischen den Sessions bin ich per WhatsApp für dich
-          da — denn das Leben passiert nicht in den Terminen, sondern dazwischen.</p>
-        <p>Es gibt zwei Wege zu mir. Der eine ist offen für alles, was gerade hakt: ein Verlust,
-          ein Schicksalsschlag, Leistungsdruck, Prokrastination, Perfektionismus, Wut, die dich
-          überrollt, Einsamkeit, Ängste vor Menschen. Der andere ist für Körper- und Essensthemen —
-          da kenne ich mich aus, weil ich selbst durchgegangen bin.</p>
-        <p>Wie lange wir zusammenarbeiten und wie das genau aussieht, entscheiden wir nicht vorab
-          im Baukasten, sondern gemeinsam im Gespräch.</p>""",
-     """        <p>We work online in sessions, and between the sessions I am there for you on WhatsApp —
-          because life does not happen in the appointments, it happens in between.</p>
-        <p>There are two ways in. One is open to whatever is stuck right now: a loss, a blow of
-          fate, pressure to perform, procrastination, perfectionism, anger that overwhelms you,
-          loneliness, fear of other people. The other is for body and food themes — I know my way
-          around there, because I went through it myself.</p>
-        <p>How long we work together and what exactly it looks like is not decided in advance from
-          a menu, but together in conversation.</p>"""),
-    ('          Kostenloses Kennenlernen, 30 Minuten',
-     '          Free introductory call, 30 minutes'),
-    ('<a class="knopf" href="#kontakt" data-thema="Kennenlerngespräch">',
-     '<a class="knopf" href="#kontakt" data-thema="Introductory call">'),
-    ("""        <p style="font-size:var(--klein); color:var(--daemmer)">Wir schauen in Ruhe, ob es passt —
-          und was es kostet, sage ich dir dort offen.</p>""",
-     """        <p style="font-size:var(--klein); color:var(--daemmer)">We take our time to see whether it
-          fits — and I will tell you openly there what it costs.</p>"""),
-    ('alt="Laptop mit laufender Online-Session, daneben eine brennende Kerze."',
-     'alt="A laptop with an online session running, a burning candle beside it."'),
-    ('<figcaption>Die meisten Begleitungen laufen online.</figcaption>',
-     '<figcaption>Most of this work happens online.</figcaption>'),
-    ("""      <strong>Für wen das nicht das Richtige ist:</strong> Ich bin keine Therapeutin und mache keine
-      Psychotherapie. Wenn du gerade in einer akuten Krise steckst, in einer psychischen Erkrankung,
-      die Behandlung braucht, oder in einer akuten Essstörung, bist du bei einer Ärztin oder einem
-      Psychotherapeuten besser aufgehoben. Sag mir das gern im Gespräch — ich bin da ehrlich zu dir.""",
-     """      <strong>Who this is not right for:</strong> I am not a therapist and I do not practise
-      psychotherapy. If you are currently in an acute crisis, in a mental illness that needs
-      treatment, or in an acute eating disorder, you are in better hands with a doctor or a
-      psychotherapist. Do tell me in our call — I will be honest with you about it."""),
-
-    # ── 04 · Gruppen ─────────────────────────────────────────────────────
-    ('<p class="marke reveal">04 — Gruppenbegleitungen</p>',
-     '<p class="marke reveal">04 — Group journeys</p>'),
-    ('<h2 class="reveal lese">In der Gruppe geht etwas, das allein nicht geht.</h2>',
-     '<h2 class="reveal lese">In a group, something works that cannot work alone.</h2>'),
-    ('alt="Ein Retreat-Raum, mehrere Menschen liegen auf Decken während einer Session."',
-     'alt="A retreat room, several people lying on blankets during a session."'),
-    ("""        <p>Mein erstes Gruppenmentoring lief mit somatischer Arbeit. Das nächste bekommt deutlich
-          mehr Breathwork — ich arbeite gerade daran, wie es genau aussehen soll.</p>
-        <p>Wenn du dabei sein möchtest, trag dich auf die Warteliste ein. Du hörst von mir, sobald
-          es losgeht, und bist vor allen anderen dran.</p>""",
-     """        <p>My first group mentoring ran on somatic work. The next one will have considerably
-          more breathwork — I am working out exactly how it should look.</p>
-        <p>If you would like to be there, put your name on the waiting list. You will hear from me
-          as soon as it starts, ahead of everyone else.</p>"""),
-    ('<a class="knopf-leise" href="#kontakt" data-thema="Warteliste Gruppenmentoring">Auf die Warteliste',
-     '<a class="knopf-leise" href="#kontakt" data-thema="Waiting list, group mentoring">Join the waiting list'),
-
-    # ── 05 · Community ───────────────────────────────────────────────────
-    ('<p class="marke reveal">05 — Community</p>', '<p class="marke reveal">05 — Community</p>'),
-    ('<h2 class="reveal lese">Heilung geschieht nicht allein.</h2>',
-     '<h2 class="reveal lese">Healing does not happen alone.</h2>'),
-    ("""        <p>Ich habe jahrelang versucht, alles mit mir selbst auszumachen. Allein zu heilen, online
-          zu heilen, niemandem zur Last zu fallen. Es funktioniert nicht. Verbindung ist kein
-          Extra — sie ist Teil der Arbeit.</p>
-        <p>Deshalb baue ich eine Community auf. Einmal im Monat halte ich eine Breathwork-Session,
-          einmal im Monat eine somatische Session. Die Termine stimmen wir gemeinsam ab. Dazu gibt
-          es einen Ort für Fragen und dafür, sich miteinander auszutauschen.</p>
-        <p>Am Anfang läuft das über WhatsApp — unkompliziert, ohne dass du dich irgendwo anmelden
-          musst.</p>""",
-     """        <p>For years I tried to sort everything out with myself. To heal alone, to heal online,
-          to be a burden to no one. It does not work. Connection is not an extra — it is part of
-          the work.</p>
-        <p>That is why I am building a community. Once a month I hold a breathwork session, once a
-          month a somatic session. We agree the dates together. Alongside that there is a place
-          for questions and for being in exchange with each other.</p>
-        <p>To begin with this runs on WhatsApp — uncomplicated, with nothing to sign up for.</p>"""),
-    ('<a class="knopf-leise" href="#kontakt" data-thema="Community">Dazukommen',
-     '<a class="knopf-leise" href="#kontakt" data-thema="Community">Come along'),
-    ('alt="Lilly umarmt eine andere Person, beide mit geschlossenen Augen."',
-     'alt="Lilly embracing another person, both with their eyes closed."'),
-
-    # ── 06 · Offline ─────────────────────────────────────────────────────
-    ('<p class="marke reveal">06 — Offline</p>', '<p class="marke reveal">06 — In person</p>'),
-    ('<h2 class="reveal lese">Am liebsten im selben Raum.</h2>',
-     '<h2 class="reveal lese">Best of all, in the same room.</h2>'),
-    ('alt="Blick von oben in einen vorbereiteten Retreat-Raum mit Matten und Klangschalen."',
-     'alt="Looking down into a prepared retreat room with mats and singing bowls."'),
-    ('<figcaption>Aus vergangenen Retreats und Gruppensessions.</figcaption>',
-     '<figcaption>From past retreats and group sessions.</figcaption>'),
-    ("""        <p>Offline zu arbeiten ist das Schönste — im selben Raum zu sitzen, gemeinsam zu atmen,
-          sich wirklich zu begegnen.</p>
-        <p>Ehrlich gesagt geht es nur nicht immer. Im Winter bin ich meistens weiter weg, im Sommer
-          bin ich in Deutschland, oft in Bielefeld, aber viel unterwegs.</p>
-        <p>Wenn wir zufällig am selben Ort sind: Frag mich einfach. Einzelsessions gehen dann, vor
-          allem Breathwork, aber auch somatische Arbeit. Und wenn du eine Gruppe zusammenbringst,
-          komme ich gern zu euch.</p>""",
-     """        <p>Working in person is the loveliest thing — sitting in the same room, breathing
-          together, really meeting each other.</p>
-        <p>Honestly, it is just not always possible. In winter I am usually further away; in summer
-          I am in Germany, often in Bielefeld, but travelling a lot.</p>
-        <p>If we happen to be in the same place: just ask me. Single sessions work then, breathwork
-          above all, but somatic work too. And if you bring a group together, I will gladly come
-          to you.</p>"""),
-    ('<a class="knopf-leise" href="#kontakt" data-thema="Offline-Session">Anfragen',
-     '<a class="knopf-leise" href="#kontakt" data-thema="In-person session">Get in touch'),
-
-    # ── 07 · Aufnahmen ───────────────────────────────────────────────────
-    ('<p class="marke reveal">07 — Aufnahmen</p>', '<p class="marke reveal">07 — Recordings</p>'),
-    ('<h2 class="reveal lese">Zum Ausprobieren, wann immer du willst.</h2>',
-     '<h2 class="reveal lese">To try out, whenever you like.</h2>'),
-    ("""    <p class="lese reveal">Drei Aufnahmen, die du dir in Ruhe holen kannst — ohne Termin, ohne
-      Verpflichtung. Ein guter Weg, um zu spüren, ob meine Art zu arbeiten dir liegt.</p>""",
-     """    <p class="lese reveal">Three recordings you can take in your own time — no appointment, no
-      commitment. A good way to sense whether my way of working suits you.</p>"""),
-    ('<h3>Somatisches Yin Yoga</h3>', '<h3>Somatic yin yoga</h3>'),
-    ('<p>Lange gehaltene Haltungen, in denen du dir selbst begegnest. Ruhig, langsam, tief.</p>',
-     '<p>Long-held postures in which you meet yourself. Quiet, slow, deep.</p>'),
-    ('<p>Eine geführte Conscious-Connected-Breathwork-Session zum Mitatmen von zu Hause.</p>',
-     '<p>A guided Conscious Connected Breathwork session to breathe along with from home.</p>'),
-    ('<h3>Somatische Session</h3>', '<h3>Somatic session</h3>'),
-    ('<p>Eine begleitete Einheit, in der du übst, deinem Körper wieder zuzuhören.</p>',
-     '<p>An accompanied session in which you practise listening to your body again.</p>'),
-    ("""<a class="knopf-leise" href="#kontakt" data-thema="Aufnahmen">Schreib mir,
-      welche dich interessiert""",
-     """<a class="knopf-leise" href="#kontakt" data-thema="Recordings">Tell me which one
-      interests you"""),
-    ("""<p class="reveal" style="font-size:var(--klein); color:var(--daemmer)">Später kommt hier das
-      Gruppenmentoring als Kurs dazu.</p>""",
-     """<p class="reveal" style="font-size:var(--klein); color:var(--daemmer)">The group mentoring
-      will join them here later as a course.</p>"""),
-
-    # ── 08 · Werdegang ───────────────────────────────────────────────────
-    ('<p class="marke reveal">Woher ich komme</p>', '<p class="marke reveal">Where I come from</p>'),
-    ('<h2 class="reveal lese">Ausgebildet — und selbst durchgegangen.</h2>',
-     '<h2 class="reveal lese">Trained — and lived through it myself.</h2>'),
-    ('<li>Trauma-informierte Embodiment-Coach <span class="titel-hinweis">(so heißt die Ausbildung)</span></li>',
-     '<li>Trauma-informed Embodiment Coach <span class="titel-hinweis">(the name of the training)</span></li>'),
+    ('<p class="szene">Stell dir vor, du machst dir an einem aufregenden Tag zwischendurch dein Lieblingsgetränk und setzt dich für einen Moment gemütlich hin.<br>Eine innere Stimme sagt dir, dafür hättest du keine Zeit. Du umarmst sie gedanklich, schließt deine Augen und schenkst dir einen tiefen Atemzug. Mhhhhhhhhh.<br>Du spürst eine sprudelnde Energie in deinem Körper, fühlst dich lebendig, aber dennoch sicher. Es ist aufregend und manchmal herausfordernd, für die Dinge loszugehen, die dir wichtig sind. Doch gleichzeitig bist du tief im Vertrauen, dass du dich selbst liebevoll durch die Höhen und Tiefen deines Lebens begleiten kannst. Du bist stolz und dankbar. Und du freust dich auf dein Date mit dir selbst, das du dir für morgen eingeplant hast …</p>',
+     '<p class="szene">Imagine: on an exciting day you make yourself your favourite drink and sit down comfortably for a moment.<br>An inner voice tells you that you have no time for this. You hug it in your mind, close your eyes and give yourself a deep breath. Mhhhhhhhhh.<br>You feel a bubbling energy in your body, you feel alive and yet safe. It is exciting and sometimes challenging to go for the things that matter to you. But at the same time you trust deeply that you can lovingly accompany yourself through the highs and lows of your life. You are proud and grateful. And you are looking forward to the date with yourself that you have planned for tomorrow …</p>'),
+    ('<span class="audio-text">Kurze Sprachnachricht von mir, als ich beim Schreiben dieses Textes genau diesen Moment erlebt habe. <b>Folgt bald.</b></span>',
+     '<span class="audio-text">A short voice message I recorded while writing this, in exactly that moment. <b>Coming soon.</b></span>'),
+    ('<tspan x="140" dy="0">Körper &amp;</tspan><tspan x="140" dy="36">Nerven-</tspan><tspan x="140" dy="36">system</tspan>',
+     '<tspan x="140" dy="0">Body &amp;</tspan><tspan x="140" dy="36">nervous</tspan><tspan x="140" dy="36">system</tspan>'),
+    ('<tspan x="460" dy="0">Somatische</tspan><tspan x="460" dy="36">Aufarbeitung</tspan>',
+     '<tspan x="460" dy="0">Somatic</tspan><tspan x="460" dy="36">processing</tspan>'),
+    ('<tspan x="300" dy="0">System-</tspan><tspan x="300" dy="36">bewusstsein</tspan>',
+     '<tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="36">awareness</tspan>'),
+    ('<p class="gross">Genau das ist das Ziel meiner Arbeit: Dass du dich selbst, deinen Körper, dein Nervensystem, deine Emotionen und Energien kennst und spürst, was du brauchst. Dass du dich sicher in dir fühlst, dir selbst vertraust und weißt, dass du dir aus einer liebevollen Beziehung zu dir dein Leben kreierst.</p>',
+     '<p class="gross">That is exactly the aim of my work: that you know yourself, your body, your nervous system, your emotions and energies, and sense what you need. That you feel safe within yourself, trust yourself and know that you are creating your life from a loving relationship with yourself.</p>'),
+    ('<h3>Wie machen wir das?</h3>', '<h3>How do we get there?</h3>'),
+    ('<p>Meine Arbeit ist kein klassisches Coaching, sondern eine Prozessbegleitung. Das bedeutet, in unseren gemeinsamen Räumen geht es darum, Referenzerfahrungen für dein System zu kreieren, durch die du lernst, dass heute neue Wege möglich sind.<br>Diese neuen Wege gilt es dann in realistischen Schritten auch im Alltag zu üben und umzusetzen, sodass du dir Stück für Stück eine neue Realität schaffen kannst.</p>',
+     '<p>My work is not classic coaching but process facilitation. In the spaces we share, we create reference experiences for your system through which you learn that new ways are possible today.<br>You then practise these new ways in realistic steps in everyday life, so that bit by bit you can create a new reality for yourself.</p>'),
+    ('<p class="markiert">Alles darf da sein und gefühlt werden, sodass es sich integrieren kann und seine unterbewusste Macht verliert.</p>',
+     '<p class="markiert">Everything is allowed to be there and to be felt, so that it can integrate and lose its unconscious power.</p>'),
+    ('<p>Du bist genauso richtig, wie du bist, und von dort aus forschen wir gemeinsam, was es braucht. Ich halte dir den Raum, teile mein Wissen und meine Erfahrung, wir begegnen uns auf Augenhöhe.</p>',
+     '<p>You are right just as you are, and from there we explore together what is needed. I hold the space for you, share my knowledge and experience, and we meet as equals.</p>'),
+    ('<p>Ich arbeite trauma-informiert und gerade im 1:1 sehr individuell. Wir schauen, was du in deiner Lebensrealität brauchst.<br>Grundsätzlich basiert meine Methode „Spirit of Body and Breath“ aber auf folgenden drei ineinandergreifenden Bereichen:</p>',
+     '<p>I work in a trauma-informed way and, especially one-to-one, very individually. We look at what you need in the reality of your life.<br>At its core, though, my method “Spirit of Body and Breath” rests on three interlocking areas:</p>'),
+    ('<p class="methode-hinweis">Tippe auf ein Feld, um zu erfahren, worum es darin geht.</p>',
+     '<p class="methode-hinweis">Tap a field to find out what it is about.</p>'),
+    ('aria-label="Modell Spirit of Body and Breath: drei sich überlappende Kreise"',
+     'aria-label="Spirit of Body and Breath model: three overlapping circles"'),
+    ('<tspan x="135" dy="0">Körper &amp;</tspan><tspan x="135" dy="1.22em">Nerven-</tspan><tspan x="135" dy="1.22em">system</tspan>',
+     '<tspan x="135" dy="0">Body &amp;</tspan><tspan x="135" dy="1.22em">nervous</tspan><tspan x="135" dy="1.22em">system</tspan>'),
+    ('<tspan x="465" dy="0">Somatische</tspan><tspan x="465" dy="1.22em">Aufarbeitung</tspan>',
+     '<tspan x="465" dy="0">Somatic</tspan><tspan x="465" dy="1.22em">processing</tspan>'),
+    ('<tspan x="300" dy="0">System-</tspan><tspan x="300" dy="1.22em">bewusstsein</tspan>',
+     '<tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="1.22em">awareness</tspan>'),
+    ('<tspan x="300" dy="0">Frieden mit</tspan><tspan x="300" dy="1.22em">deinen</tspan><tspan x="300" dy="1.22em">Themen</tspan>',
+     '<tspan x="300" dy="0">Peace with</tspan><tspan x="300" dy="1.22em">your</tspan><tspan x="300" dy="1.22em">themes</tspan>'),
+    ('<tspan x="192" dy="0">Du in</tspan><tspan x="192" dy="1.22em">unserer</tspan><tspan x="192" dy="1.22em">heutigen Welt</tspan>',
+     '<tspan x="192" dy="0">You in</tspan><tspan x="192" dy="1.22em">today’s</tspan><tspan x="192" dy="1.22em">world</tspan>'),
+    ('<tspan x="408" dy="0">Deine</tspan><tspan x="408" dy="1.22em">Aufgabe</tspan><tspan x="408" dy="1.22em">hier</tspan>',
+     '<tspan x="408" dy="0">Your</tspan><tspan x="408" dy="1.22em">purpose</tspan><tspan x="408" dy="1.22em">here</tspan>'),
+    ('<tspan x="300" dy="0">Sicherheit &amp;</tspan><tspan x="300" dy="1.22em">Selbstwert</tspan>',
+     '<tspan x="300" dy="0">Safety &amp;</tspan><tspan x="300" dy="1.22em">self-worth</tspan>'),
+    ('<p class="methode-leer">Wähle ein Feld im Modell.</p>', '<p class="methode-leer">Choose a field in the model.</p>'),
+    ('<h4>Körper &amp; Nervensystem</h4>', '<h4>Body &amp; nervous system</h4>'),
+    ('<p>Das Fundament besteht darin, überhaupt erstmal wieder eine Verbindung zu deinem Körper aufzubauen. Du lernst ihn wieder zu spüren und zuzuhören. Außerdem geht es darum, dein Nervensystem zu verstehen. Du lernst zu erkennen, wo du mit deinem Nervensystem gerade stehst, und dich darin zu navigieren. Dabei geht es nicht darum, immer ruhig und reguliert zu sein, sondern dir das zu geben, was du gerade wirklich brauchst. Dadurch brauchen wir es mit der Zeit immer weniger, zu ungesunden Mechanismen zu greifen.</p>',
+     '<p>The foundation is to rebuild a connection with your body in the first place. You learn to feel it again and to listen to it. It is also about understanding your nervous system. You learn to recognise where your nervous system is right now and how to navigate it. This is not about always being calm and regulated, but about giving yourself what you truly need in the moment. Over time, we then need to reach for unhealthy mechanisms less and less.</p>'),
+    ('<h4>Frieden mit deinen Themen</h4>', '<h4>Peace with your themes</h4>'),
+    ('<p>Ein tiefes Vertrauen: Du kannst dich und deine Themen halten. Du trägst niemals Schuld, aber übernimmst die Verantwortung.</p>',
+     '<p>A deep trust: you can hold yourself and your themes. You are never to blame, but you take responsibility.</p>'),
+    ('<h4>Somatische Aufarbeitung</h4>', '<h4>Somatic processing</h4>'),
+    ('<p>Hier schauen wir uns deine Geschichte und Themen an. Deine Verletzungen und Prägungen aus der Kindheit, deine heutigen Trigger, Bindungsmuster &amp; Co. Wir lernen, alles zu spüren, zu halten und zu integrieren, sodass es seine unterbewusste Macht verliert. Ich arbeite hier vor allem gerne mit somatischer Arbeit und Atemarbeit. Darunter fällt die Arbeit mit Anteilen, Schatten, Chakren, unterdrückten Emotionen, deiner Stimme und vielem mehr. Immer entsprechend deiner Wünsche und Bedürfnisse.</p>',
+     '<p>Here we look at your story and your themes. Your wounds and imprints from childhood, your triggers today, attachment patterns and so on. We learn to feel, hold and integrate all of it, so that it loses its unconscious power. I especially love working with somatic work and breathwork here. That includes working with parts, shadow, chakras, suppressed emotions, your voice and much more. Always according to your wishes and needs.</p>'),
+    ('<h4>Deine Aufgabe hier</h4>', '<h4>Your purpose here</h4>'),
+    ('<p>In unseren Erfahrungen und Schmerzen liegen oft auch Leidenschaft und Potenzial. Was willst du wirklich aus deinem Leben machen?</p>',
+     '<p>Our experiences and our pain often hold passion and potential too. What do you really want to do with your life?</p>'),
+    ('<h4>Systembewusstsein</h4>', '<h4>Systemic awareness</h4>'),
+    ('<p>Wir sind eben nicht einfach nur wir, sondern Wesen, die ihr Leben lang in Systemen geprägt werden. Familiensysteme, Schulsysteme, Arbeitskontexte, gesellschaftliche Systeme wie Kapitalismus, Patriarchat, Neokolonialismus und viele mehr. All diese wirken tagtäglich auf uns und werden das auch weiterhin tun. Nur wenn wir lernen, dies zu erkennen, sind wir dem nicht mehr machtlos ausgeliefert.</p>',
+     '<p>We are not simply “just us” — we are beings shaped by systems all our lives. Family systems, school systems, work contexts, societal systems like capitalism, patriarchy, neocolonialism and many more. All of these act on us every day and will keep doing so. Only when we learn to recognise this are we no longer powerless in the face of it.</p>'),
+    ('<h4>Du in unserer heutigen Welt</h4>', '<h4>You in today’s world</h4>'),
+    ('<p>Anstatt einfach nur zu funktionieren, lerne dich in den Systemen, die dich prägen, zu halten und zu navigieren.</p>',
+     '<p>Instead of just functioning, learn to hold yourself and navigate within the systems that shape you.</p>'),
+    ('<h4>Sicherheit &amp; Selbstwert</h4>', '<h4>Safety &amp; self-worth</h4>'),
+    ('<p>Du in deiner unantastbaren Verbindung zu dir. Auch wenn nicht immer alles Friede, Freude, Eierkuchen sein wird: Du weißt, du kannst dich liebevoll halten und begleiten.</p>',
+     '<p>You, in your untouchable connection with yourself. Even if life will not always be sunshine and rainbows: you know you can lovingly hold and accompany yourself.</p>'),
+    ('<span class="audio-text">Lilly erklärt das Modell. <b>Audio folgt.</b></span>',
+     '<span class="audio-text">Lilly explains the model. <b>Audio coming soon.</b></span>'),
+    ('<p class="gross">In meiner Arbeit liegt der Fokus darauf, vom Verstand in die Verkörperung zu kommen.</p>',
+     '<p class="gross">In my work, the focus is on moving from the mind into embodiment.</p>'),
+    ('<p>Wir wollen das, was wir oft schon wissen, eben auch wirklich im Hier und Jetzt lernen zu leben. Dennoch nehmen wir unseren wundervollen Kopf natürlich immer mit, eben so wie das, was sich manchmal jenseits von Worten zeigt, wenn du dafür offen bist.</p>',
+     '<p>What we often already know, we want to actually learn to live, here and now. Of course we always bring our wonderful head along — just like whatever sometimes shows up beyond words, if you are open to it.</p>'),
+    ('<summary><b>Für die Nerds</b> Somatische Arbeit &amp; Breathwork erklärt</summary>',
+     '<summary><b>For the nerds</b> Somatic work &amp; breathwork explained</summary>'),
+    ('<p class="platzhalter">Hier erkläre ich bald ausführlicher, was im Körper passiert, wenn wir somatisch arbeiten und atmen. <b>Text folgt.</b></p>',
+     '<p class="platzhalter">Soon I will explain here in more detail what happens in the body when we work somatically and breathe. <b>Text coming soon.</b></p>'),
+    ('<h3>Woher ich komme</h3>', '<h3>Where I come from</h3>'),
+    ('<p>Und falls du wissen magst, welche Ausbildungen mich neben meiner eigenen Geschichte geprägt haben:</p>',
+     '<p>And in case you would like to know which trainings have shaped me alongside my own story:</p>'),
+    ('<li>Trauma-informierte Embodiment-Coach</li>', '<li>Trauma-informed embodiment coach</li>'),
     ('<li>200 Stunden Multistyle-Yoga-Ausbildung, dazu Yin Yoga</li>',
-     '<li>200-hour multistyle yoga teacher training, plus yin yoga</li>'),
+     '<li>200-hour multistyle yoga teacher training, plus Yin Yoga</li>'),
     ('<li>Reiki Grad 1, 2a und 2b</li>', '<li>Reiki levels 1, 2a and 2b</li>'),
-    ('<li>Studium der Internationalen Beziehungen</li>',
-     '<li>Degree in International Relations</li>'),
-    ("""        <p>Für alle Ausbildungen habe ich Zertifikate. Wichtiger ist mir aber etwas anderes: Ich
-          schicke dich nirgendwo hin, wo ich nicht selbst war.</p>""",
-     """        <p>I hold certificates for all of these trainings. But something else matters more to
-          me: I will not send you anywhere I have not been myself.</p>"""),
+    ('<li>Studium der Internationalen Beziehungen</li>', '<li>Degree in International Relations</li>'),
     ('alt="Lilly lacht mit geschlossenen Augen, freigestellt."',
      'alt="Lilly laughing with her eyes closed, cut out from the background."'),
+
+    # ── 03 · Online-Begleitungen ─────────────────────────────────────────
+    ('<p class="marke reveal">03 — Online-Begleitungen</p>', '<p class="marke reveal">03 — Online journeys</p>'),
+    ('Meine Online-Begleitungen erstrecken sich über einen längeren Zeitraum und richten sich an Menschen, die wirklich etwas verändern wollen.',
+     'My online journeys run over a longer period and are for people who truly want to change something.'),
+    ('<p>Es geht darum umzusetzen, auszuprobieren, zu fühlen, dich selbst zu erfahren.<br>Meine Arbeit ist nicht für dich, wenn du dich berieseln lassen möchtest, auf der Suche nach einem „Quick Fix“ bist oder gerettet werden möchtest.</p>',
+     '<p>It is about putting things into practice, trying things out, feeling, experiencing yourself.<br>My work is not for you if you want to be passively entertained, are looking for a “quick fix” or want to be rescued.</p>'),
+    ('<blockquote>„Ich will Verantwortung für mich und meine Themen übernehmen und wünsche mir dabei einen gehaltenen Raum.“</blockquote>',
+     '<blockquote>“I want to take responsibility for myself and my themes — and I would like a space that holds me while I do.”</blockquote>'),
+    ('<p class="marke">03a — 1:1-Prozessbegleitung</p>', '<p class="marke">03a — One-to-one process journey</p>'),
+    ('<p>Meine 1:1-Prozessbegleitung ist perfekt für dich, wenn du dich entscheidest, dich selbst endlich wirklich ernst zu nehmen.</p>',
+     '<p>My one-to-one process journey is perfect for you if you decide to finally take yourself seriously.</p>'),
+    ('<p>In regelmäßigen Online-Sessions via Zoom gehen wir anhand meiner Methode „Spirit of Body and Breath“ deine Themen ganzheitlich an. (<a href="#methode">siehe hier</a>)<br>Zwischen den Sessions bin ich via WhatsApp für dich da und wir checken regelmäßig miteinander ein.</p>',
+     '<p>In regular online sessions via Zoom we approach your themes holistically, based on my method “Spirit of Body and Breath” (<a href="#methode">see here</a>).<br>Between sessions I am there for you on WhatsApp, and we check in with each other regularly.</p>'),
+    ('<p>Es gibt zusätzliche Materialien wie Audiotrainings, aufgezeichnete Sessions, Workbooks und andere Aufgaben. Wichtig ist hier: Es gibt kein allgemeines Schema X, das du durchläufst. Wir erforschen gemeinsam, was du genau brauchst und in welchem Tempo.</p>',
+     '<p>There are additional materials such as audio trainings, recorded sessions, workbooks and other exercises. What matters here: there is no one-size-fits-all scheme you are put through. Together we explore what exactly you need and at what pace.</p>'),
+    ('<p class="gross">Mein Anspruch an mich selbst ist es, mit dir einen Raum zu kreieren, in dem du dich wahrhaftig gesehen fühlst und in dem ausnahmslos alles da sein darf. Genau hier liegt oft schon ein riesiger Teil der Heilung.</p>',
+     '<p class="gross">What I ask of myself is to create a space with you in which you feel truly seen and in which absolutely everything is allowed to be there. This alone is often a huge part of the healing.</p>'),
+    ('alt="Laptop mit laufender Online-Session, daneben eine brennende Kerze."',
+     'alt="Laptop with an online session running, a lit candle beside it."'),
+    ('<p class="gross">Klingt spannend? Hier kannst du dir einen 10–20 Minuten unverbindlichen Kennenlerncall buchen, in dem wir einmal kurz per Telefon einchecken, ob eine Zusammenarbeit in Frage kommt.</p>',
+     '<p class="gross">Sounds exciting? Here you can book a free, no-strings 10–20 minute introductory call, in which we briefly check in by phone to see whether working together could be right.</p>'),
+    ('<p>Wenn die Chemie zwischen uns stimmt, vereinbaren wir einen zweiten Call via Zoom, in dem wir uns dann nochmal ganz in Ruhe ca. 1 Stunde Zeit nehmen, alle Fragen klären &amp; Co. Auch völlig unverbindlich und kostenfrei.</p>',
+     '<p>If the chemistry is right, we arrange a second call via Zoom, where we take about an hour in peace to answer all your questions and so on. Also completely free and without obligation.</p>'),
+    ('Kennenlerncall buchen\n', 'Book an introductory call\n'),
+    ('<strong>Für wen das nicht das Richtige ist:</strong> Ich bin keine Therapeutin und mache keine Psychotherapie. Wenn du gerade in einer akuten Krise steckst, in einer psychischen Erkrankung, die Behandlung braucht, oder in einer akuten Essstörung, bist du bei einer Ärztin oder einem Psychotherapeuten besser aufgehoben. Sag mir das gern im Gespräch — ich bin da ehrlich zu dir.',
+     '<strong>Who this is not right for:</strong> I am not a therapist and I do not offer psychotherapy. If you are in an acute crisis, living with a mental illness that needs treatment, or in an acute eating disorder, a doctor or psychotherapist is the better place for you. Feel free to tell me in our call — I will be honest with you.'),
+
+    # ── 04 · Community ───────────────────────────────────────────────────
+    ('<p class="marke reveal">04 — Online-Community</p>', '<p class="marke reveal">04 — Online community</p>'),
+    ('<p class="plakette">Kostenlos und unverbindlich</p>', '<p class="plakette">Free and without obligation</p>'),
+    ('<h2>Heilung geschieht nicht allein.</h2>', '<h2>Healing does not happen alone.</h2>'),
+    ('<p>So lange habe ich es alleine versucht, mir eingeredet, ich bräuchte niemanden, alleine geht es mir besser. Dabei war ich tief im Inneren einsam und Verbindung für mich einfach nicht sicher.<br><strong>Heute weiß ich: Verbindung kann wieder sicher werden und ist kein Extra, sondern Teil der Arbeit.</strong></p>',
+     '<p>For so long I tried to do it alone, telling myself I did not need anyone, that I was better off on my own. Deep down I was lonely, and connection simply was not safe for me.<br><strong>Today I know: connection can become safe again, and it is not an extra — it is part of the work.</strong></p>'),
+    ('<p>Deshalb baue ich eine Community auf, in der wir uns begegnen und gemeinsam an der Arbeit dranbleiben. Sie entsteht gerade, heißt, du kannst von Anfang an mitgestalten.<br>Los geht’s ganz niederschwellig über WhatsApp: Wir stimmen dort Themen und Termine ab, und je nach Nachfrage entstehen Online-Breathwork- und Somatics-Sessions mit optionalen Sharings.</p>',
+     '<p>That is why I am building a community in which we meet and stay with the work together. It is just forming, which means you can help shape it from the very start.<br>We are starting in the simplest way, on WhatsApp: there we agree on topics and dates, and depending on demand, online breathwork and somatics sessions with optional sharing circles come to life.</p>'),
+    ('Hier beitreten\n', 'Join here\n'),
+    ('<p class="klein">Kein Spam! Du landest erstmal nur im Ankündigungskanal, dort schreibe nur ich. Ob du den Austausch-Kanälen beitrittst, entscheidest du selbst. Die Community ist kostenfrei und unverbindlich. Du zahlst nur für Sessions, zu denen du dich anmeldest, und kannst jederzeit selbstständig austreten.</p>',
+     '<p class="klein">No spam! At first you only land in the announcement channel, where only I post. Whether you join the exchange channels is up to you. The community is free and without obligation. You only pay for sessions you sign up for, and you can leave on your own at any time.</p>'),
+    ('<p>Ich bin gespannt, wohin das Ganze wächst.', '<p>I am curious to see where this grows.'),
+    ('alt="Lilly umarmt eine andere Person, beide mit geschlossenen Augen."',
+     'alt="Lilly hugging another person, both with their eyes closed."'),
+
+    # ── 05 · Offline ─────────────────────────────────────────────────────
+    ('<p class="marke reveal">05 — Offline-Angebote &amp; Kooperationen</p>',
+     '<p class="marke reveal">05 — In person &amp; collaborations</p>'),
+    ('Ob im 1:1 oder in der Gruppe: Offline zu arbeiten, liebe ich am meisten.',
+     'One-to-one or in a group: working in person is what I love most.'),
+    ('alt="Blick von oben in einen vorbereiteten Retreat-Raum mit Matten und Klangschalen."',
+     'alt="View from above into a prepared retreat room with mats and singing bowls."'),
+    ('<p>Im selben Raum zu sitzen, gemeinsam zu atmen, sich wirklich zu begegnen. Mit somatischer Arbeit und Breathwork entstehen dabei tiefe, trauma-informierte Erfahrungsräume — einzigartige Sessions und Rituale, die unter die Haut gehen.</p>',
+     '<p>Sitting in the same room, breathing together, truly meeting each other. With somatic work and breathwork, deep, trauma-informed spaces of experience emerge — unique sessions and rituals that get under your skin.</p>'),
+    ('<p>Ich bin viel unterwegs, aber immer offen für Anfragen: im Winter meist in Indien und Südostasien, im Sommer in Deutschland (vor allem NRW &amp; Berlin) und Europa.</p>',
+     '<p>I travel a lot, but I am always open to requests: in winter mostly in India and Southeast Asia, in summer in Germany (especially North Rhine-Westphalia &amp; Berlin) and Europe.</p>'),
+    ('<p>Ich biete offline Folgendes an:</p>', '<p>In person, I offer:</p>'),
+    ('<li>Offline-1:1-Sessions (gerne auch in Verbindung mit Online-Begleitungen)</li>',
+     '<li>One-to-one sessions in person (also in combination with an online journey)</li>'),
+    ('<li>Offline-Gruppensessions zu verschiedenen Themen</li>', '<li>Group sessions in person on various themes</li>'),
+    ('<li>Frauenkreise</li>', '<li>Women’s circles</li>'),
+    ('<p>Hast du Interesse an einer Offline-Session oder einer Kooperation?</p>',
+     '<p>Interested in an in-person session or a collaboration?</p>'),
+    ('data-thema="Offline-Session / Kooperation">Lass uns ins Gespräch kommen',
+     'data-thema="In-person session / collaboration">Let’s talk'),
+
+    # ── Hilfe ────────────────────────────────────────────────────────────
     ('<h3>Wenn es gerade akut ist</h3>', '<h3>If things are acute right now</h3>'),
-    ("""      <p>Meine Arbeit ersetzt keine Psychotherapie und keine ärztliche Behandlung. Wenn es dir
-        gerade sehr schlecht geht, wende dich bitte an Menschen, die rund um die Uhr für dich
-        da sind:</p>""",
-     """      <p>My work replaces neither psychotherapy nor medical treatment. If you are in a very bad
-        place right now, please turn to people who are there for you around the clock. These are
-        German services — if you are elsewhere, please look up the helpline for your country:</p>"""),
-    ("""        <li><b>Telefonseelsorge</b> — <a href="tel:08001110111">0800 111 0 111</a> und
-          <a href="tel:08001110222">0800 111 0 222</a>, kostenlos, Tag und Nacht</li>
-        <li><b>Bundesweites Info-Telefon Depression</b> — <a href="tel:08003344533">0800 33 44 533</a></li>
-        <li><b>Essstörungen</b> — Beratung der BZgA: <a href="tel:022189920411">0221 89 20 411</a></li>
-        <li>Im Notfall: <b>112</b> oder die nächste psychiatrische Klinik</li>""",
-     """        <li><b>Telefonseelsorge</b> (crisis line) — <a href="tel:08001110111">0800 111 0 111</a>
-          and <a href="tel:08001110222">0800 111 0 222</a>, free, day and night</li>
-        <li><b>National depression helpline</b> — <a href="tel:08003344533">0800 33 44 533</a></li>
-        <li><b>Eating disorders</b> — BZgA counselling: <a href="tel:022189920411">0221 89 20 411</a></li>
-        <li>In an emergency: <b>112</b> or the nearest psychiatric hospital</li>"""),
+    ('<p>Meine Arbeit ersetzt keine Psychotherapie und keine ärztliche Behandlung. Wenn es dir gerade sehr schlecht geht, wende dich bitte an Menschen, die rund um die Uhr für dich da sind:</p>',
+     '<p>My work replaces neither psychotherapy nor medical treatment. If you are in a very bad place right now, please turn to people who are there for you around the clock. These are German services — if you are elsewhere, please look up the helpline for your country:</p>'),
+    ('<li><b>Telefonseelsorge</b> — <a href="tel:08001110111">0800 111 0 111</a> und <a href="tel:08001110222">0800 111 0 222</a>, kostenlos, Tag und Nacht</li>',
+     '<li><b>Telefonseelsorge</b> (crisis line) — <a href="tel:08001110111">0800 111 0 111</a> and <a href="tel:08001110222">0800 111 0 222</a>, free, day and night</li>'),
+    ('<li><b>Bundesweites Info-Telefon Depression</b>', '<li><b>National depression helpline</b>'),
+    ('<li><b>Essstörungen</b> — Beratung der BZgA:', '<li><b>Eating disorders</b> — BZgA counselling:'),
+    ('<li>Im Notfall: <b>112</b> oder die nächste psychiatrische Klinik</li>',
+     '<li>In an emergency: <b>112</b> or the nearest psychiatric hospital</li>'),
 
     # ── Kontakt ──────────────────────────────────────────────────────────
-    ('<p class="marke reveal">08 — Kontakt</p>', '<p class="marke reveal">08 — Contact</p>'),
-    ('<h2 class="reveal lese">Schreib mir.</h2>', '<h2 class="reveal lese">Write to me.</h2>'),
-    ("""    <p class="lese reveal">Egal ob Kennenlerngespräch, Warteliste, Community oder eine der
-      Aufnahmen — sag mir einfach, worum es geht. Ich lese jede Nachricht selbst und melde mich
-      innerhalb von zwei Werktagen bei dir.</p>""",
-     """    <p class="lese reveal">Whether it is an introductory call, the waiting list, the community
-      or one of the recordings — just tell me what it is about. I read every message myself and
-      will get back to you within two working days.</p>"""),
+    ('<p class="marke reveal">Kontakt &amp; Kennenlerncall</p>', '<p class="marke reveal">Contact &amp; introductory call</p>'),
+    ('<h2 class="reveal lese">Lern mich unverbindlich kennen.</h2>',
+     '<h2 class="reveal lese">Get to know me, no strings attached.</h2>'),
+    ('<p class="lese reveal">Ob Kennenlerncall, Warteliste, Community oder eine Offline-Session — sag mir einfach, worum es geht. Ich lese jede Nachricht selbst und melde mich innerhalb von zwei Werktagen bei dir.</p>',
+     '<p class="lese reveal">Whether it is an introductory call, the community or an in-person session — just tell me what it is about. I read every message myself and will get back to you within two working days.</p>'),
     ('<label for="name">Wie heißt du?</label>', '<label for="name">What is your name?</label>'),
-    ('<label for="email">Deine E-Mail-Adresse</label>',
-     '<label for="email">Your email address</label>'),
+    ('<label for="email">Deine E-Mail-Adresse</label>', '<label for="email">Your email address</label>'),
     ('<label for="thema">Worum geht es?</label>', '<label for="thema">What is it about?</label>'),
-    ('placeholder="Kennenlerngespräch, Warteliste, Community …"',
-     'placeholder="Introductory call, waiting list, community …"'),
+    ('placeholder="Kennenlerncall, Warteliste, Community …"', 'placeholder="Introductory call, community …"'),
     ('<label for="nachricht">Magst du kurz sagen, was dich herführt? <span class="freiwillig">freiwillig</span></label>',
      '<label for="nachricht">Would you like to say briefly what brings you here? <span class="freiwillig">optional</span></label>'),
     ('placeholder="Ein Satz reicht. Oder lass es leer — wir sprechen ja."',
@@ -463,10 +340,11 @@ PAARE = [
     ('        Bitte leer lassen <input type="text" name="botcheck" tabindex="-1" autocomplete="off">',
      '        Please leave empty <input type="text" name="botcheck" tabindex="-1" autocomplete="off">'),
     ('        Abschicken', '        Send'),
+    ('<p class="zweitweg">Lieber direkt per E-Mail? <b>Adresse folgt</b> — bis dahin geht es nur über dieses Formular.</p>',
+     '<p class="zweitweg">Prefer email? <b>Address to follow</b> — until then this form is the only way.</p>'),
 
     # ── Fuss ─────────────────────────────────────────────────────────────
-    ('<nav class="fuss-links" aria-label="Rechtliches">',
-     '<nav class="fuss-links" aria-label="Legal">'),
+    ('<nav class="fuss-links" aria-label="Rechtliches">', '<nav class="fuss-links" aria-label="Legal">'),
     ("""        <a href="impressum.html">Impressum</a>
         <a href="agb.html">AGB</a>
         <a href="datenschutz.html">Datenschutz</a>
@@ -479,43 +357,16 @@ PAARE = [
       Schriften liegen auf diesem Server.</p>""",
      """    <p class="handschrift">Handmade in Landsberg am Lech, Germany. No cookies, no trackers,
       fonts served from this server.</p>"""),
-    # ── Runde 2: Zitat, Systeme-Saeule, Körper &amp; Essen, zweiter Weg ──
-    ('<blockquote>„Nichts daran war undiszipliniert oder dumm. Es hatte einen Grund."</blockquote>',
-     '<blockquote>“None of it was undisciplined or stupid. It had a reason.”</blockquote>'),
-    ("""          <h3>Wenn es um Körper und Essen geht</h3>
-          <p>Wenn deine Essstörung Vergangenheit ist und trotzdem etwas geblieben ist — das
-            Rechnen, die Scham, der Blick in jede Scheibe — dann bist du hier richtig. Es muss
-            nicht akut sein. Es reicht, dass es dich müde macht.</p>""",
-     """          <h3>When it is about body and food</h3>
-          <p>If your eating disorder is in the past and something stayed anyway — the counting,
-            the shame, the glance into every shop window — then you are in the right place. It
-            does not have to be acute. It is enough that it wears you out.</p>"""),
-    ("""      <p class="zweitweg">Lieber direkt per E-Mail? <b>Adresse folgt</b> — bis dahin geht es
-        nur über dieses Formular.</p>""",
-     """      <p class="zweitweg">Prefer email? <b>Address to follow</b> — until then this form is the
-        only way.</p>"""),
-    ("""          Podcast <b>Adresse fehlt</b>""", """          Podcast <b>address missing</b>"""),
-    ("""          Instagram DE <b>fehlt</b>""", """          Instagram DE <b>missing</b>"""),
-    ("""          Instagram EN <b>fehlt</b>""", """          Instagram EN <b>missing</b>"""),
-    # ── Runde 3: gleichwertiger Block fuer den generellen Weg, Systeme sichtbar ──
-    ("""          <h3>Wenn es im Leben hakt</h3>
-          <p>Wenn du funktionierst und trotzdem müde bist. Wenn du Menschen anschreist, die du
-            liebst, und dich danach dafür hasst. Wenn ein Verlust dich umgeworfen hat und alle
-            denken, du seist längst darüber hinweg. Wenn du genau weißt, was du tun müsstest, und
-            es trotzdem nicht tust. Dafür braucht es keinen Namen und keine Diagnose.</p>""",
-     """          <h3>When life is stuck</h3>
-          <p>When you function and are tired anyway. When you shout at people you love and hate
-            yourself for it afterwards. When a loss knocked you over and everyone assumes you are
-            long past it. When you know exactly what you should do and still do not do it. None of
-            that needs a name or a diagnosis.</p>"""),
-    ("""      <p>Und wir denken mit, in welchen Systemen das alles passiert. Du kannst einmal erkennen,
-        dass du nicht zu wenig bist — und am nächsten Tag erzählt dir die Welt das Gegenteil.</p>""",
-     """      <p>And we keep in view which systems all of this happens in. You can recognise once that
-        you are not too little — and the next day the world tells you the opposite.</p>"""),
+    ("Podcast <b>Adresse fehlt</b>", "Podcast <b>address missing</b>"),
+    ("Instagram DE <b>fehlt</b>", "Instagram DE <b>missing</b>"),
+    ("Instagram EN <b>fehlt</b>", "Instagram EN <b>missing</b>"),
 ]
 
-s = quelle
 fehlend = []
+for de, en in ALLE:
+    if de not in s:
+        fehlend.append(de[:80])
+    s = s.replace(de, en)
 for de, en in PAARE:
     if de not in s:
         fehlend.append(de[:80])
@@ -537,8 +388,11 @@ sichtbar = re.sub(r"<[^>]+>", " ", sichtbar)
 VERDAECHTIG = ["ich ", "und ", "nicht ", "über ", "für ", "mich", "dich ",
                "Körper", "Arbeit", "Menschen", "wir ", "dass "]
 treffer = sorted({w for w in VERDAECHTIG if w in sichtbar})
-print(f"en.html geschrieben · {len(s)} Zeichen · {len(PAARE)} Ersetzungen")
+print(f"en.html geschrieben · {len(s)} Zeichen · {len(PAARE) + len(ALLE)} Ersetzungen")
 if treffer:
     print("⚠ moeglicher deutscher Resttext:", treffer)
+    for w in treffer:
+        i = sichtbar.find(w)
+        print("   …", " ".join(sichtbar[max(0, i-60):i+40].split()))
 else:
     print("✓ kein deutscher Resttext im sichtbaren Bereich")

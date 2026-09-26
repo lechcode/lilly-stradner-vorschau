@@ -20,6 +20,7 @@ from PIL import Image, ImageOps, ImageEnhance
 WURZEL = Path(__file__).parent
 MATERIAL = WURZEL / "material"
 KONV = MATERIAL / "konvertiert"
+RUNDE2 = MATERIAL / "runde2"              # Fotos aus Lillys Änderungsrunde 25.09.
 FREI = MATERIAL / "freisteller"
 ZIEL = WURZEL / "assets" / "img"
 ZIEL.mkdir(parents=True, exist_ok=True)
@@ -38,8 +39,17 @@ NACHT = (0x14, 0x10, 0x0C)
 # Bewusst zurueckhaltend dosiert — das Vorher-Bild wird NICHT dramatisiert.
 AUFTRAEGE = {
     # Hero-Diptychon — gleiche Kadrierung, damit die Haltung den Unterschied macht
-    "frueher":     ("IMG_4721.jpg",  [440, 880],  (4, 5), 0.68, 0.04),
-    "heute":       ("IMG_4068.PNG",  [440, 880],  (4, 5), 1.00, 0.06),
+    # Runde 2 (25.09.): Lilly hat beide Bilder neu gewaehlt (0232 Hoehle, 0835 See).
+    "frueher":     ("IMG_0232.jpg",  [440, 880],  (4, 5), 0.85, 0.04),
+    "heute":       ("IMG_0835.PNG",  [440, 880],  (4, 5), 1.00, 0.04),
+
+    # Runde 2: Bilderreihe in „Über mich" — vier Phasen, alle im selben
+    # Format 4:5, damit sie auch am Handy in EINER Zeile stehen.
+    # Farben unangetastet: das sind Lillys Erinnerungsfotos, keine Stimmungsbilder.
+    "reihe-1":     ("IMG_0207.jpg",  [200, 400],  (4, 5), 1.00, 0.0),
+    "reihe-2":     ("IMG_0182.jpg",  [200, 400],  (4, 5), 1.00, 0.0),
+    "reihe-3":     ("IMG_0171.jpg",  [200, 400],  (4, 5), 1.00, 0.0),
+    "reihe-4":     ("IMG_0153.jpg",  [200, 400],  (4, 5), 1.00, 0.0),
 
     # Kapitelbilder
     "atem":        ("IMG_4744.PNG",  [580, 1160], (4, 5), 0.94, 0.06),
@@ -66,7 +76,7 @@ ALPHA = {
 
 def quelle(name: str) -> Path:
     """material/ zuerst, dann konvertiert/, dann freisteller/."""
-    for ordner in (MATERIAL, KONV, FREI):
+    for ordner in (RUNDE2, MATERIAL, KONV, FREI):
         p = ordner / name
         if p.exists():
             return p
@@ -110,6 +120,23 @@ def toenen(im: Image.Image, saettigung: float, waerme: float) -> Image.Image:
     return im
 
 
+def bordeaux(im: Image.Image) -> Image.Image:
+    """Runde 2: Lilly will das Wachssiegel im selben Rot wie Knoepfe und Top.
+
+    Das Foto-Siegel war fast schwarzrot (Median #390406). Helligkeit bleibt
+    als Relief erhalten, der Farbton wird auf --glut #792427 gelegt.
+    """
+    alpha = im.getchannel("A")
+    grau = ImageOps.autocontrast(im.convert("L"), cutoff=1)
+    # Das Siegel ist ueberwiegend dunkel — Mitten anheben, sonst landet der
+    # Median wieder bei Schwarzrot statt bei Bordeaux.
+    grau = grau.point([int(255 * (v / 255) ** 0.5) for v in range(256)])
+    farbig = ImageOps.colorize(grau, black="#1C0607", mid="#792427",
+                               white="#E2A9AC", midpoint=85)
+    farbig.putalpha(alpha)
+    return farbig
+
+
 def schreiben(im: Image.Image, name: str, breiten, mit_jpeg=True, guete=(80, 82)):
     """guete = (webp, jpeg). Das QA-Gate meldet ab 250 KB GELB, ab 500 KB ROT."""
     q_webp, q_jpeg = guete
@@ -141,6 +168,8 @@ def main():
             # 62 % Deckkraft hinter einem Verlauf. Dafuer laedt sie nicht mehr
             # gegen das Hero-Bild an (LCP).
             guete = (42, 48)
+        elif name == "heute":
+            guete = (70, 72)                # Seeufer-Laub ist teuer — sonst > 250 KB
         else:
             guete = (74, 78)
         schreiben(im, name, breiten, guete=guete)
@@ -150,6 +179,8 @@ def main():
         im = Image.open(quelle(datei))
         im = ImageOps.exif_transpose(im).convert("RGBA")
         im = im.crop(im.getchannel("A").getbbox())    # leeren Rand abschneiden
+        if name == "siegel":
+            im = bordeaux(im)
         schreiben(im, name, breiten, mit_jpeg=False)
 
     gesamt = sum(p.stat().st_size for p in ZIEL.iterdir())

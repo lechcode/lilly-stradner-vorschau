@@ -21,7 +21,7 @@ BREITE, HOEHE = 1200, 630
 NACHT = (0x14, 0x10, 0x0C)
 LICHT = (0xF4, 0xEB, 0xDF)
 DAEMMER = (0xC9, 0xB7, 0xA4)
-GLUT = (0xA8, 0x08, 0x08)
+GLUT = (0x79, 0x24, 0x27)
 
 
 def ttf(name: str) -> Path:
@@ -50,9 +50,9 @@ def portrait(datei: str, breite: int, hoehe: int, oben: float = 0.0) -> Image.Im
 
 
 def main():
-    serif = ImageFont.truetype(str(ttf("young-serif-400")), 72)
-    sans6 = ImageFont.truetype(str(ttf("epilogue-600")), 15)
-    serif_klein = ImageFont.truetype(str(ttf("young-serif-400")), 27)
+    serif = ImageFont.truetype(str(ttf("inter-600")), 72)
+    sans6 = ImageFont.truetype(str(ttf("inter-600")), 15)
+    serif_klein = ImageFont.truetype(str(ttf("inter-600")), 27)
 
     og = Image.new("RGB", (BREITE, HOEHE), NACHT)
 

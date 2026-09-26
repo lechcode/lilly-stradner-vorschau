@@ -148,6 +148,86 @@
     });
   });
 
+  /* ── Methode: interaktives Modell (Runde 2) ──
+     Welches Feld getroffen wurde, wird aus der Geometrie berechnet:
+     Die Flaechen sind Masken, und Masken zaehlen beim Klicken nicht mit.
+     Mittelpunkte und Radius muessen zu den <circle> in index.html passen. */
+  var venn = document.querySelector('.venn');
+  if (venn){
+    var KREISE = [[215,210],[385,210],[300,357]], RADIUS = 165;
+    var textBox = document.getElementById('methode-text');
+    var lichter = venn.querySelectorAll('.lichter rect');
+    var felder  = venn.querySelectorAll('.feld');
+    var texte   = textBox.querySelectorAll('.feld-text');
+
+    var feldAn = function(evt){
+      var ctm = venn.getScreenCTM();
+      if (!ctm) return '';
+      var pt = venn.createSVGPoint();
+      pt.x = evt.clientX; pt.y = evt.clientY;
+      pt = pt.matrixTransform(ctm.inverse());
+      var id = '';
+      KREISE.forEach(function(k, i){
+        var dx = pt.x - k[0], dy = pt.y - k[1];
+        if (dx*dx + dy*dy <= RADIUS*RADIUS) id += (i + 1);
+      });
+      return id;
+    };
+    var markieren = function(klasse, id){
+      lichter.forEach(function(r){ r.classList.toggle(klasse, r.dataset.feld === id); });
+    };
+    var waehlen = function(id, scrollen){
+      if (!id) return;
+      markieren('aktiv', id);
+      felder.forEach(function(f){ f.setAttribute('aria-pressed', f.dataset.feld === id ? 'true' : 'false'); });
+      texte.forEach(function(t){ t.classList.toggle('zeigen', t.dataset.feld === id); });
+      textBox.classList.add('gewaehlt');
+      /* Am Handy steht der Text UNTER dem Modell — einmal sanft hinschieben,
+         sonst merkt man nicht, dass sich etwas getan hat. */
+      if (scrollen && window.innerWidth < 900){
+        var oben = textBox.getBoundingClientRect().top;
+        if (oben > window.innerHeight * 0.7){
+          textBox.scrollIntoView({behavior: ruhig ? 'auto' : 'smooth', block:'center'});
+        }
+      }
+    };
+
+    /* Das Fundament ist vorgewaehlt: So sieht man sofort, dass hier
+       etwas zu entdecken ist, statt auf ein leeres Feld zu schauen. */
+    waehlen('1', false);
+
+    venn.addEventListener('click', function(e){ waehlen(feldAn(e), true); });
+    venn.addEventListener('pointermove', function(e){
+      if (e.pointerType === 'mouse') markieren('hover', feldAn(e));
+    });
+    venn.addEventListener('pointerleave', function(){ markieren('hover', ''); });
+    felder.forEach(function(f){
+      f.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); waehlen(f.dataset.feld, false); }
+      });
+      f.addEventListener('focus', function(){ markieren('hover', f.dataset.feld); });
+      f.addEventListener('blur',  function(){ markieren('hover', ''); });
+    });
+  }
+
+  /* ── Kennenlernen-Knopf am Handy (Runde 2) ──
+     Unter 640px schwebt er unten, sobald der Hero verlassen ist, und
+     macht Platz, wenn das Formular im Bild ist. Die Klasse wirkt nur
+     dort (CSS) — auf breiten Schirmen sitzt er fest in der Kopfleiste. */
+  var hero = document.querySelector('.hero'),
+      kontakt = document.getElementById('kontakt'),
+      fuss = document.querySelector('footer');
+  function ctaPruefen(){
+    var nachHero = hero ? hero.getBoundingClientRect().bottom < window.innerHeight * 0.35 : true;
+    var hoehe = window.innerHeight;
+    var imKontakt = kontakt && kontakt.getBoundingClientRect().top < hoehe * 0.8;
+    var imFuss = fuss && fuss.getBoundingClientRect().top < hoehe;
+    document.body.classList.toggle('cta-zeigen', nachHero && !imKontakt && !imFuss);
+  }
+  window.addEventListener('scroll', ctaPruefen, {passive:true});
+  window.addEventListener('resize', ctaPruefen);
+  ctaPruefen();
+
   /* ── Formular ──
      SCHARF auf true stellen, sobald der Worker den Slug kennt:
        1. plattform/worker/recipients.js → 'lilly-stradner' eintragen
