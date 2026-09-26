@@ -49,4 +49,4 @@ for quelle, ziel, andere_sprache, _ in PAARE:
     (W / ziel).write_text(s, encoding="utf-8")
     print(f"  {ziel} aus {quelle}")
 
-print("\nRichtung B erzeugt. Vergleich: index.html (dunkel) ↔ hell.html (Pergament)")
+print("\nRichtung B erzeugt. Vergleich: index.html ↔ hell.html (alternative Vorschau)")

@@ -35,15 +35,35 @@
     nav.dataset.offen = offen ? 'true' : 'false';
     knopf.setAttribute('aria-expanded', offen ? 'true' : 'false');
     document.body.style.overflow = offen ? 'hidden' : '';
+    document.querySelectorAll('main, footer, .rail').forEach(function(el){ el.inert = offen; });
+    if (offen) requestAnimationFrame(function(){ nav.querySelector('a').focus(); });
   }
   knopf.addEventListener('click', function(){
     navSetzen(nav.dataset.offen !== 'true');
   });
+  document.querySelectorAll('.kopf a').forEach(function(a){
+    a.addEventListener('click', function(){ if (nav.dataset.offen === 'true') navSetzen(false); });
+  });
   nav.addEventListener('click', function(e){
-    if (e.target.closest('a')) navSetzen(false);
+    var link = e.target.closest('a');
+    if (link){
+      navSetzen(false);
+      var target = document.querySelector(link.getAttribute('href'));
+      if (target){ target.setAttribute('tabindex', '-1'); target.focus({preventScroll:true}); }
+    }
   });
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && nav.dataset.offen === 'true'){ navSetzen(false); knopf.focus(); }
+    if (nav.dataset.offen !== 'true') return;
+    if (e.key === 'Escape'){ navSetzen(false); knopf.focus(); }
+    if (e.key === 'Tab'){
+      var items = Array.from(document.querySelectorAll('.kopf a, .kopf button, #nav a')).filter(function(el){
+        var css = getComputedStyle(el);
+        return el.getClientRects().length && css.visibility !== 'hidden' && css.opacity !== '0';
+      });
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
   });
 
   /* ── Reveals (W21: „die Teile fliegen so ein bisschen rein") ──
