@@ -35,12 +35,20 @@
     nav.dataset.offen = offen ? 'true' : 'false';
     knopf.setAttribute('aria-expanded', offen ? 'true' : 'false');
     document.body.style.overflow = offen ? 'hidden' : '';
+    /* Kopfleiste liegt dann auf Bordeaux — CSS schaltet sie hell */
+    document.documentElement.classList.toggle('nav-offen', offen);
+    /* Tastatur: Seite dahinter ist bei offenem Menue nicht erreichbar,
+       der Fokus springt auf den ersten Punkt (aus dem Parallel-Commit
+       731d407 uebernommen, 26.09.). */
     document.querySelectorAll('main, footer, .rail').forEach(function(el){ el.inert = offen; });
-    if (offen) requestAnimationFrame(function(){ nav.querySelector('a').focus(); });
+    /* Kurz warten: solange das Menue noch visibility:hidden hat, ignoriert
+       der Browser focus() stillschweigend (rAF war dafuer zu frueh). */
+    if (offen) setTimeout(function(){ nav.querySelector('a').focus(); }, 60);
   }
   knopf.addEventListener('click', function(){
     navSetzen(nav.dataset.offen !== 'true');
   });
+  /* Kennenlernen/Sprache in der Kopfleiste schliessen ein offenes Menue */
   document.querySelectorAll('.kopf a').forEach(function(a){
     a.addEventListener('click', function(){ if (nav.dataset.offen === 'true') navSetzen(false); });
   });
@@ -48,21 +56,23 @@
     var link = e.target.closest('a');
     if (link){
       navSetzen(false);
-      var target = document.querySelector(link.getAttribute('href'));
-      if (target){ target.setAttribute('tabindex', '-1'); target.focus({preventScroll:true}); }
+      /* Fokus mitnehmen, sonst bleibt er nach dem Sprung oben im Kopf */
+      var ziel = document.querySelector(link.getAttribute('href'));
+      if (ziel){ ziel.setAttribute('tabindex', '-1'); ziel.focus({preventScroll:true}); }
     }
   });
   document.addEventListener('keydown', function(e){
     if (nav.dataset.offen !== 'true') return;
     if (e.key === 'Escape'){ navSetzen(false); knopf.focus(); }
+    /* Fokus-Falle: Tab laeuft nur zwischen Kopfleiste und Menue im Kreis */
     if (e.key === 'Tab'){
-      var items = Array.from(document.querySelectorAll('.kopf a, .kopf button, #nav a')).filter(function(el){
+      var punkte = Array.from(document.querySelectorAll('.kopf a, .kopf button, #nav a')).filter(function(el){
         var css = getComputedStyle(el);
         return el.getClientRects().length && css.visibility !== 'hidden' && css.opacity !== '0';
       });
-      var first = items[0], last = items[items.length - 1];
-      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      var erster = punkte[0], letzter = punkte[punkte.length - 1];
+      if (e.shiftKey && document.activeElement === erster){ e.preventDefault(); letzter.focus(); }
+      else if (!e.shiftKey && document.activeElement === letzter){ e.preventDefault(); erster.focus(); }
     }
   });
 

@@ -23,8 +23,8 @@
 <meta property="og:image" content="https://lechcode.github.io/lilly-stradner-vorschau/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="theme-color" content="#F7F3EB">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100C'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9 7 7 0 1 1-7-7' fill='none' stroke='%23792427' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#F7F0E6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23792427'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9 7 7 0 1 1-7-7' fill='none' stroke='%23F7F0E6' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <!-- Hero-Diptychon vorladen: beide Bilder sind LCP-Kandidaten. -->
 <link rel="preload" as="image" type="image/webp"
       imagesrcset="assets/img/frueher-440.webp 440w, assets/img/frueher-880.webp 880w"
@@ -37,7 +37,6 @@
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="assets/redesign.css">
 </head>
 <body>
 
@@ -48,7 +47,6 @@
 
 <!-- ══ Kopfleiste ══ Sprache immer sichtbar, nie hinter einem Aufklapper -->
 <header class="kopf">
-  <a class="kopf-marke" href="#inhalt"><img src="assets/img/siegel-120.webp" width="36" height="37" alt=""><span>Lilly Stradner<small>Spirit of Body and Breath</small></span></a>
   <button class="menue-knopf" id="menue" aria-expanded="false" aria-controls="nav">
     <svg viewBox="0 0 15 11" aria-hidden="true">
       <line class="b1" x1="0" y1="1" x2="15" y2="1"/>
@@ -87,7 +85,6 @@
 
 <!-- ══ Ausklapp-Navigation ══ Punkte exakt nach Lillys PDF (Runde 2) -->
 <div class="nav" id="nav" data-offen="false">
-  <div class="nav-intro" aria-hidden="true"><img src="assets/img/siegel-240.webp" width="80" height="83" alt=""><p>Spirit of<br>Body and Breath</p><span>Lilly Stradner</span></div>
   <ol>
     <li><a href="#ueber-mich"><span>01</span> About me</a></li>
     <li><a href="#arbeit"><span>02</span> My work</a></li>
@@ -167,16 +164,16 @@
 
 <!-- ══════════ 01 · ÜBER MICH ══════════
      Text 1:1 aus Lillys PDF (Runde 2). -->
-<section id="ueber-mich" class="atmo">
+<section id="ueber-mich">
   <div class="buehne">
-    <p class="marke reveal">01 — About me</p>
+    <div class="kapitel-kopf reveal"><p class="marke">01 — About me</p></div>
 
     <!-- W12: Trigger-Hinweis vor der Geschichte. -->
     <div class="hinweis reveal">
       <strong>Before you read on:</strong> in this chapter I speak openly about an eating disorder, suicidal thoughts and sexual violence. If that feels too close right now, feel free to skip straight to <a href="#arbeit">my work</a>.
     </div>
 
-    <h2 class="reveal lese">Imagine growing up in a seemingly “perfectly normal family”.</h2>
+    <div class="kapitel-kopf reveal"><h2>Imagine growing up in a seemingly “perfectly normal family”.</h2></div>
 
     <div class="lese reveal">
       <p>House, garden, school, holidays.<br>And yet you have hated yourself to the core for as long as you can remember.<br>You cannot help eating all the time, you are ashamed of your body and you simply do not understand why you are so much worse than everyone else.</p>
@@ -286,9 +283,9 @@
 
 
 <!-- ══════════ 02 · MEINE ARBEIT ══════════ -->
-<section id="arbeit">
+<section id="arbeit" class="boden-zart">
   <div class="buehne">
-    <p class="marke reveal">02 — My work</p>
+    <div class="kapitel-kopf reveal"><p class="marke">02 — My work</p></div>
 
     <div class="arbeit-auftakt">
       <div class="lese reveal">
@@ -307,24 +304,38 @@
            Das grosse, interaktive steht weiter unten bei #methode. -->
       <figure class="methode-mini reveal" aria-hidden="true">
         <svg viewBox="30 30 540 510">
-          <!-- nutzt die Masken des grossen Modells (#vm…) — gleiche Farben -->
+          <!-- Eigene Masken: Verweise auf die Masken des grossen Modells
+               weiter unten rendert Chrome schwarz. -->
+          <defs>
+          <clipPath id="mini-vk1"><circle cx="215" cy="210" r="165"/></clipPath>
+          <clipPath id="mini-vk2"><circle cx="385" cy="210" r="165"/></clipPath>
+          <mask id="mini-vm1"><rect x="30" y="30" width="540" height="510" fill="#000"/><circle cx="215" cy="210" r="165" fill="#fff"/><circle cx="385" cy="210" r="165" fill="#000"/><circle cx="300" cy="357" r="165" fill="#000"/></mask>
+          <mask id="mini-vm2"><rect x="30" y="30" width="540" height="510" fill="#000"/><circle cx="385" cy="210" r="165" fill="#fff"/><circle cx="215" cy="210" r="165" fill="#000"/><circle cx="300" cy="357" r="165" fill="#000"/></mask>
+          <mask id="mini-vm3"><rect x="30" y="30" width="540" height="510" fill="#000"/><circle cx="300" cy="357" r="165" fill="#fff"/><circle cx="215" cy="210" r="165" fill="#000"/><circle cx="385" cy="210" r="165" fill="#000"/></mask>
+          <mask id="mini-vm12"><rect x="30" y="30" width="540" height="510" fill="#000"/><g clip-path="url(#mini-vk1)"><circle cx="385" cy="210" r="165" fill="#fff"/></g><circle cx="300" cy="357" r="165" fill="#000"/></mask>
+          <mask id="mini-vm13"><rect x="30" y="30" width="540" height="510" fill="#000"/><g clip-path="url(#mini-vk1)"><circle cx="300" cy="357" r="165" fill="#fff"/></g><circle cx="385" cy="210" r="165" fill="#000"/></mask>
+          <mask id="mini-vm23"><rect x="30" y="30" width="540" height="510" fill="#000"/><g clip-path="url(#mini-vk2)"><circle cx="300" cy="357" r="165" fill="#fff"/></g><circle cx="215" cy="210" r="165" fill="#000"/></mask>
+          <mask id="mini-vm123"><rect x="30" y="30" width="540" height="510" fill="#000"/><g clip-path="url(#mini-vk1)"><g clip-path="url(#mini-vk2)"><circle cx="300" cy="357" r="165" fill="#fff"/></g></g></mask>
+          </defs>
           <g class="lichter">
-            <rect data-feld="1"   x="30" y="30" width="540" height="510" mask="url(#vm1)"/>
-            <rect data-feld="2"   x="30" y="30" width="540" height="510" mask="url(#vm2)"/>
-            <rect data-feld="3"   x="30" y="30" width="540" height="510" mask="url(#vm3)"/>
-            <rect data-feld="12"  x="30" y="30" width="540" height="510" mask="url(#vm12)"/>
-            <rect data-feld="13"  x="30" y="30" width="540" height="510" mask="url(#vm13)"/>
-            <rect data-feld="23"  x="30" y="30" width="540" height="510" mask="url(#vm23)"/>
-            <rect data-feld="123" x="30" y="30" width="540" height="510" mask="url(#vm123)"/>
+            <rect data-feld="1"   x="30" y="30" width="540" height="510" mask="url(#mini-vm1)"/>
+            <rect data-feld="2"   x="30" y="30" width="540" height="510" mask="url(#mini-vm2)"/>
+            <rect data-feld="3"   x="30" y="30" width="540" height="510" mask="url(#mini-vm3)"/>
+            <rect data-feld="12"  x="30" y="30" width="540" height="510" mask="url(#mini-vm12)"/>
+            <rect data-feld="13"  x="30" y="30" width="540" height="510" mask="url(#mini-vm13)"/>
+            <rect data-feld="23"  x="30" y="30" width="540" height="510" mask="url(#mini-vm23)"/>
+            <rect data-feld="123" x="30" y="30" width="540" height="510" mask="url(#mini-vm123)"/>
           </g>
-          <circle class="rand" cx="215" cy="210" r="165"/>
-          <circle class="rand" cx="385" cy="210" r="165"/>
-          <circle class="rand" cx="300" cy="357" r="165"/>
-          <text x="140" y="160"><tspan x="140" dy="0">Body &amp;</tspan><tspan x="140" dy="36">nervous</tspan><tspan x="140" dy="36">system</tspan></text>
-          <text x="460" y="165"><tspan x="460" dy="0">Somatic</tspan><tspan x="460" dy="36">processing</tspan></text>
-          <text x="300" y="455"><tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="36">awareness</tspan></text>
+          <circle class="rand r1" cx="215" cy="210" r="165"/>
+          <circle class="rand r2" cx="385" cy="210" r="165"/>
+          <circle class="rand r3" cx="300" cy="357" r="165"/>
         </svg>
         <figcaption>Spirit of Body and Breath</figcaption>
+        <ul class="legende">
+          <li class="l1">Body &amp; nervous system</li>
+          <li class="l2">Somatic processing</li>
+          <li class="l3">Systemic awareness</li>
+        </ul>
       </figure>
     </div>
 
@@ -375,18 +386,18 @@
             <rect data-feld="23"  x="30" y="30" width="540" height="510" mask="url(#vm23)"/>
             <rect data-feld="123" x="30" y="30" width="540" height="510" mask="url(#vm123)"/>
           </g>
-          <circle class="rand" cx="215" cy="210" r="165"/>
-          <circle class="rand" cx="385" cy="210" r="165"/>
-          <circle class="rand" cx="300" cy="357" r="165"/>
+          <circle class="rand r1" cx="215" cy="210" r="165"/>
+          <circle class="rand r2" cx="385" cy="210" r="165"/>
+          <circle class="rand r3" cx="300" cy="357" r="165"/>
 
           <g class="felder">
-            <g class="feld haupt" data-feld="1" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="135" y="140"><tspan x="135" dy="0">Body &amp;</tspan><tspan x="135" dy="1.22em">nervous</tspan><tspan x="135" dy="1.22em">system</tspan></text></g>
-            <g class="feld haupt" data-feld="2" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="465" y="150"><tspan x="465" dy="0">Somatic</tspan><tspan x="465" dy="1.22em">processing</tspan></text></g>
-            <g class="feld haupt" data-feld="3" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="300" y="455"><tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="1.22em">awareness</tspan></text></g>
-            <g class="feld" data-feld="12" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="300" y="112"><tspan x="300" dy="0">Peace with</tspan><tspan x="300" dy="1.22em">your</tspan><tspan x="300" dy="1.22em">themes</tspan></text></g>
-            <g class="feld" data-feld="13" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="192" y="310"><tspan x="192" dy="0">You in</tspan><tspan x="192" dy="1.22em">today’s</tspan><tspan x="192" dy="1.22em">world</tspan></text></g>
-            <g class="feld" data-feld="23" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="408" y="310"><tspan x="408" dy="0">Your</tspan><tspan x="408" dy="1.22em">purpose</tspan><tspan x="408" dy="1.22em">here</tspan></text></g>
-            <g class="feld mitte" data-feld="123" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="300" y="250"><tspan x="300" dy="0">Safety &amp;</tspan><tspan x="300" dy="1.22em">self-worth</tspan></text></g>
+            <g class="feld haupt" data-feld="1" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="140" y="175"><tspan x="140" dy="0">Body &amp;</tspan><tspan x="140" dy="1.2em">nervous system</tspan></text></g>
+            <g class="feld haupt" data-feld="2" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="460" y="175"><tspan x="460" dy="0">Somatic</tspan><tspan x="460" dy="1.2em">processing</tspan></text></g>
+            <g class="feld haupt" data-feld="3" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="300" y="450"><tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="1.2em">awareness</tspan></text></g>
+            <g class="feld" data-feld="12" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="300" y="130"><tspan x="300" dy="0">Peace with</tspan><tspan x="300" dy="1.25em">your themes</tspan></text></g>
+            <g class="feld" data-feld="13" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="214" y="318"><tspan x="214" dy="0">You in</tspan><tspan x="214" dy="1.25em">today’s world</tspan></text></g>
+            <g class="feld" data-feld="23" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="388" y="318"><tspan x="388" dy="0">Your purpose</tspan><tspan x="388" dy="1.25em">here</tspan></text></g>
+            <g class="feld mitte" data-feld="123" tabindex="0" role="button" aria-controls="methode-text" aria-pressed="false"><text x="300" y="255"><tspan x="300" dy="0">Safety &amp;</tspan><tspan x="300" dy="1.25em">self-worth</tspan></text></g>
           </g>
         </svg>
 
@@ -485,8 +496,10 @@
      Runde 2: Bordeaux-Boden — Lilly will mehr Rot statt Schwarz. -->
 <section id="begleitung" class="boden-glut">
   <div class="buehne">
-    <p class="marke reveal">03 — Online journeys</p>
-    <h2 class="reveal lese lang">My online journeys run over a longer period and are for people who truly want to change something.</h2>
+    <div class="kapitel-kopf reveal">
+      <p class="marke">03 — Online journeys</p>
+      <h2 class="lang">My online journeys run over a longer period and are for people who truly want to change something.</h2>
+    </div>
     <div class="lese reveal">
       <p>It is about putting things into practice, trying things out, feeling, experiencing yourself.<br>My work is not for you if you want to be passively entertained, are looking for a “quick fix” or want to be rescued.</p>
     </div>
@@ -535,9 +548,9 @@
 
 
 <!-- ══════════ 04 · ONLINE-COMMUNITY ══════════ -->
-<section id="community" class="boden-wald">
+<section id="community">
   <div class="buehne">
-    <p class="marke reveal">04 — Online community</p>
+    <div class="kapitel-kopf reveal"><p class="marke">04 — Online community</p></div>
     <div class="paar gedreht">
       <div class="reveal">
         <p class="plakette">Free and without obligation</p>
@@ -570,8 +583,10 @@
 <!-- ══════════ 05 · OFFLINE & KOOPERATIONEN ══════════ -->
 <section id="offline" class="boden-glut">
   <div class="buehne">
-    <p class="marke reveal">05 — In person &amp; collaborations</p>
-    <h2 class="reveal lese lang">One-to-one or in a group: working in person is what I love most.</h2>
+    <div class="kapitel-kopf reveal">
+      <p class="marke">05 — In person &amp; collaborations</p>
+      <h2 class="lang">One-to-one or in a group: working in person is what I love most.</h2>
+    </div>
 
     <div class="paar">
       <figure class="bild reveal">
@@ -623,11 +638,13 @@
 
 
 <!-- ══════════ KONTAKT ══════════ -->
-<section id="kontakt" class="atmo">
+<section id="kontakt" class="boden-zart">
   <div class="buehne">
-    <p class="marke reveal">Contact &amp; introductory call</p>
-    <h2 class="reveal lese">Get to know me, no strings attached.</h2>
-    <p class="lese reveal">Whether it is an introductory call, the community or an in-person session — just tell me what it is about. I read every message myself and will get back to you within two working days.</p>
+    <div class="kapitel-kopf reveal">
+      <p class="marke">Contact &amp; introductory call</p>
+      <h2>Get to know me, no strings attached.</h2>
+    </div>
+    <p class="lese reveal" style="text-align:center">Whether it is an introductory call, the community or an in-person session — just tell me what it is about. I read every message myself and will get back to you within two working days.</p>
 
     <form id="form" class="reveal" novalidate>
       <div class="feld">

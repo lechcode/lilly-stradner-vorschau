@@ -1,48 +1,50 @@
 /* ═══════════════════════════════════════════════════════════════
    TOKENS · lilly-stradner — EINZIGE Quelle der Wahrheit.
-   Wird von site.css UND legal.css eingebunden, damit die acht
-   Seiten nicht auseinanderlaufen. Frueher lag dieser Block in
-   jeder Datei einzeln — genau daran ist alexander-faubel
-   haengengeblieben (Rechtsseiten behielten alte Groessenstufen).
+   Wird von site.css, legal.css und vorschau.html eingebunden.
+
+   Runde 2b (26.09.2026): Entscheidung Lenny — HELL mit Bordeaux-
+   Kapiteln. Creme-Grund, Bordeaux als kraeftige Flaeche, Gruen und
+   Braun als Akzente. Der dunkle Braunschwarz-Grund ist Geschichte.
    ═══════════════════════════════════════════════════════════════ */
 :root{
-  /* Lillys Markenfarben, exakt wie von ihr genannt */
-  /* Runde 2 (25.09.): Bordeaux statt #A80808 — Lilly fand das Rot „zu grell".
-     Gemessen am roten Top auf ihrem bisherigen Hero-Foto (Median der
-     Stoffpixel). Weiss darauf 10,0:1, Pergament darauf 8,5:1. */
-  --glut:#792427;          /* Bordeaux — CTA-Flaeche, Siegel, Glut-Kapitel */
-  --glut-tief:#5E1A1D;     /* dunklere Stufe fuer Flaechen auf Glut-Boden */
-  --glut-hell:#E8A3A6;     /* Rot als TEXT auf Nacht — 9,2:1 */
-  --wald-hell:#13602F;     /* Dunkelgruen — Akzentlinien, Zustaende */
-  --erde:#764721;          /* Dunkelbraun — Haarlinien, Rahmen */
+  /* Lillys Markenfarben */
+  --bordeaux:#792427;       /* gemessen am roten Top (Runde 2) — Knoepfe, Kapitel, Siegel */
+  --bordeaux-tief:#5E1A1D;  /* Fuss, gedrueckte Zustaende */
+  --bordeaux-zart:#F4DEDB;  /* getoente Flaechen auf Creme */
+  --wald:#13602F;           /* Dunkelgruen — Koerper & Nervensystem */
+  --wald-zart:#DCEBDF;
+  --erde:#764721;           /* Dunkelbraun — Systembewusstsein, Haarlinien */
+  --erde-zart:#EFE1CF;
 
-  /* Daraus abgeleitete Boeden und Textfarben */
-  --nacht:#14100C;         /* Hauptgrund, warmes Braunschwarz aus --erde */
-  --nacht-2:#1D1710;       /* leicht abgesetzte Flaechen auf Nacht */
-  --wald:#12351F;          /* Kapitelboden Gruen */
-  --licht:#F4EBDF;         /* Fliesstext auf dunklem Grund · 16,1:1 auf Nacht */
-  --daemmer:#C9B7A4;       /* Sekundaertext · 9,6:1 auf Nacht */
+  /* Grund und Schrift */
+  --creme:#F7F0E6;          /* Hauptgrund */
+  --creme-2:#EFE5D6;        /* abgesetzte Kapitel */
+  --tinte:#2B1A17;          /* Text · 15,2:1 auf Creme */
+  --tinte-2:#65514A;        /* Sekundaertext · 6,6:1 auf Creme */
+  --linie:#E0D0BC;          /* Rahmen, Trennlinien */
+  --auf-bordeaux:#FBF3EA;   /* Text auf Bordeaux · 9,6:1 */
+  --auf-bordeaux-2:#EDCBC8; /* Sekundaertext auf Bordeaux · 6,9:1 */
 
-  /* ⚠ --glut ist als TEXTFARBE auf dunklem Grund UNLESBAR (1,9:1).
-     Fuer roten Text auf Nacht --glut-hell nehmen.
-     Nur als Flaeche verwenden. Wo die Wortmarke rot sein soll,
-     steht sie auf dem Pergamentstreifen (6,6:1). Siehe
-     _projekt/WUNSCH-REGISTER.md, Konflikt A. */
+  /* Alte Namen — nur noch fuer legal.css und vorschau.html. Nicht neu verwenden. */
+  --glut:var(--bordeaux);
+  --nacht:var(--creme);
+  --nacht-2:var(--creme-2);
+  --licht:var(--tinte);
+  --daemmer:var(--tinte-2);
+  --wald-hell:var(--wald);
 
-  /* Runde 2: Lillys Wahl. --kopf = Headlines, Labels, Knoepfe;
-     --leib = Fliesstext. */
-  --kopf:'Inter','Inter Fallback','Helvetica Neue',Arial,sans-serif;
-  --leib:'Lora','Lora Fallback',Georgia,serif;
+  --kopf:'Inter','Inter Fallback','Helvetica Neue',Arial,sans-serif;   /* Headlines, Labels, Knoepfe */
+  --leib:'Lora','Lora Fallback',Georgia,serif;                         /* Fliesstext */
 
-  --h1:clamp(2.1rem,6.4vw,4.2rem);
-  --h2:clamp(1.75rem,3.9vw,2.75rem);
-  --h3:clamp(1.2rem,2.1vw,1.55rem);
-  --h4:clamp(.98rem,1.5vw,1.1rem);
-  --text:clamp(1.02rem,1.1vw,1.12rem);
+  --h1:clamp(2.3rem,6.2vw,4.4rem);
+  --h2:clamp(1.8rem,3.9vw,2.8rem);
+  --h3:clamp(1.25rem,2.1vw,1.6rem);
+  --h4:clamp(1.02rem,1.5vw,1.15rem);
+  --text:clamp(1.04rem,1.1vw,1.14rem);
   --klein:.875rem;
 
-  --spalte:1180px;         /* aeussere Buehne */
-  --text-breite:34rem;     /* Lesespalte — max. ~72 Zeichen */
-  --rail:58px;             /* Breite des Seitenreiters ab 900px */
+  --spalte:1180px;          /* aeussere Buehne */
+  --text-breite:40rem;      /* mittige Lesespalte — ~72 Zeichen */
+  --rail:58px;              /* Seitenreiter ab 900px */
   --ease:cubic-bezier(.22,.61,.36,1);
 }

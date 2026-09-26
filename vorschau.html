@@ -14,8 +14,8 @@
 <meta property="og:image" content="https://lechcode.github.io/lilly-stradner-vorschau/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="theme-color" content="#14100C">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314100C'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9 7 7 0 1 1-7-7' fill='none' stroke='%23792427' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#F7F0E6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23792427'/%3E%3Cpath d='M16 7a9 9 0 1 0 9 9 7 7 0 1 1-7-7' fill='none' stroke='%23F7F0E6' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/tokens.css">
 <style>
@@ -33,7 +33,7 @@ h3{font-family:var(--kopf); font-size:1rem; font-weight:600; margin:0 0 .4rem}
 p{margin:0 0 1.05em}
 :focus-visible{outline:3px solid var(--wald-hell); outline-offset:3px}
 .buehne{width:min(100% - 2.5rem, 46rem); margin-inline:auto}
-section{padding:clamp(2.6rem,6vw,4.4rem) 0; border-top:1px solid #2C2118}
+section{padding:clamp(2.6rem,6vw,4.4rem) 0; border-top:1px solid var(--linie)}
 section:first-of-type{border-top:none}
 .marke{font-size:.85rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
        color:var(--daemmer); margin:0 0 .9rem; display:flex; align-items:center; gap:.7rem}
@@ -47,7 +47,7 @@ section:first-of-type{border-top:none}
 
 .zahlen{display:grid; gap:.8rem; margin-top:1.6rem}
 @media (min-width:640px){.zahlen{grid-template-columns:repeat(3,1fr)}}
-.zahl{border:1px solid #3A2C1E; border-radius:4px; padding:1.2rem; background:#00000026}
+.zahl{border:1px solid var(--linie); border-radius:6px; padding:1.2rem; background:#fff}
 .zahl b{display:block; font-family:var(--kopf); font-size:2rem; line-height:1.1; margin-bottom:.2rem}
 .zahl span{font-size:.85rem; color:var(--daemmer)}
 
@@ -57,7 +57,7 @@ section:first-of-type{border-top:none}
                  color:var(--daemmer); margin-top:.45rem}
 .dipt figure{margin:0}
 
-.richtung{border:1px solid #3A2C1E; border-radius:4px; padding:1.3rem; background:#00000026; margin-top:1rem}
+.richtung{border:1px solid var(--linie); border-radius:6px; padding:1.3rem; background:#fff; margin-top:1rem}
 .tupfer{display:flex; gap:.5rem; margin:.8rem 0 .6rem}
 .tupfer i{width:2.4rem; height:2.4rem; border-radius:3px; display:block;
           box-shadow:inset 0 0 0 1px #ffffff1f}
@@ -67,12 +67,12 @@ section:first-of-type{border-top:none}
 .frage b{display:block; margin-bottom:.15rem}
 .frage span{font-size:.92rem; color:var(--daemmer)}
 
-footer{background:var(--licht); color:var(--nacht); padding:2.6rem 0 3rem; margin-top:2rem}
+footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:2.6rem 0 3rem; margin-top:2rem}
 .fuss-marke{display:flex; align-items:center; gap:.9rem; margin-bottom:1.2rem}
 .fuss-marke img{width:44px; flex:none}
-.fuss-marke b{display:block; font-family:var(--kopf); font-weight:400; font-size:1.25rem; color:var(--glut)}
+.fuss-marke b{display:block; font-family:var(--kopf); font-weight:600; font-size:1.25rem}
 .fuss-marke i{display:block; font-style:normal; font-size:.8rem; letter-spacing:.13em;
-              text-transform:uppercase; color:var(--glut); font-weight:600}
+              text-transform:uppercase; color:var(--auf-bordeaux-2); font-weight:600}
 .gruss{font-family:var(--kopf); font-size:1.3rem}
 </style>
 </head>
@@ -114,6 +114,8 @@ footer{background:var(--licht); color:var(--nacht); padding:2.6rem 0 3rem; margi
         „Für die Nerds" — sichtbar markiert, bis du sie lieferst.</li>
       <li><strong>„Woher ich komme"</strong> steht jetzt hinter „Für die Nerds".</li>
       <li><strong>Schrift</strong>: Inter für Überschriften, Lora für den Fließtext.</li>
+      <li><strong>Neues Erscheinungsbild</strong>: heller Creme-Grund mit kräftigen Bordeaux-Kapiteln,
+        Überschriften mittig — leichter und klarer als der dunkle erste Entwurf.</li>
     </ul>
   </div>
 </section>
@@ -129,10 +131,10 @@ footer{background:var(--licht); color:var(--nacht); padding:2.6rem 0 3rem; margi
         <i style="background:#14100C"></i>
       </div>
       <p style="margin:0; font-size:.92rem; color:var(--daemmer)">Du hast nach dem Farbton gefragt:
-        <strong style="color:var(--licht)">#792427</strong> (RGB 121 · 36 · 39). Wir haben ihn direkt
+        <strong style="color:var(--bordeaux)">#792427</strong> (RGB 121 · 36 · 39). Wir haben ihn direkt
         am roten Top auf deinem bisherigen Startbild gemessen. Knöpfe, Wachssiegel und die roten
-        Flächen tragen jetzt alle genau diesen Ton — „Online-Begleitungen" und „Offline" stehen
-        ganz auf Bordeaux statt auf Schwarz.</p>
+        Flächen tragen jetzt alle genau diesen Ton — „Online-Begleitungen", „Offline", das Menü und
+        der Fuß stehen ganz auf Bordeaux.</p>
     </div>
   </div>
 </section>
@@ -180,7 +182,7 @@ footer{background:var(--licht); color:var(--nacht); padding:2.6rem 0 3rem; margi
       </span>
     </div>
     <p class="gruss">Wir freuen uns auf deine Rückmeldung.</p>
-    <p style="margin:0; color:#4A3826">Lenny &amp; Michael · Landsberg am Lech</p>
+    <p style="margin:0; color:var(--auf-bordeaux-2)">Lenny &amp; Michael · Landsberg am Lech</p>
   </div>
 </footer>
 

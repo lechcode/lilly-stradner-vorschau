@@ -11,7 +11,7 @@ Runde 2 (25.09.2026): komplett neu auf Lillys eigene Texte aus dem PDF
 auf Deutsch — alles zwischen <!--nur-de--> und <!--/nur-de--> faellt raus.
 
 Nach jeder Aenderung an index.html erneut laufen lassen:
-    python3 gen-en.py && python3 gen-hell.py
+    python3 gen-en.py
 """
 import re
 import sys
@@ -97,7 +97,7 @@ PAARE = [
     ('>Oder lern mich unverbindlich kennen</a>', '>Or get to know me, no strings attached</a>'),
 
     # ── 01 · Über mich ───────────────────────────────────────────────────
-    ('<p class="marke reveal">01 — Über mich</p>', '<p class="marke reveal">01 — About me</p>'),
+    ('<p class="marke">01 — Über mich</p>', '<p class="marke">01 — About me</p>'),
     ('<strong>Kurz vorweg:</strong> In diesem Kapitel spreche ich offen über Essstörung, Suizidgedanken und sexuelle Gewalt. Wenn dir das gerade zu nah geht, springe hier gern direkt zu <a href="#arbeit">meiner Arbeit</a>.',
      '<strong>Before you read on:</strong> in this chapter I speak openly about an eating disorder, suicidal thoughts and sexual violence. If that feels too close right now, feel free to skip straight to <a href="#arbeit">my work</a>.'),
     ('Stell dir vor, du wächst in einer augenscheinlich „ganz normalen Familie“ auf.',
@@ -166,17 +166,14 @@ PAARE = [
      '<p>“Not bad enough” does not exist with me — or rather, that is something we will look at lovingly in our work together. ;)</p>'),
 
     # ── 02 · Meine Arbeit ────────────────────────────────────────────────
-    ('<p class="marke reveal">02 — Meine Arbeit</p>', '<p class="marke reveal">02 — My work</p>'),
+    ('<p class="marke">02 — Meine Arbeit</p>', '<p class="marke">02 — My work</p>'),
     ('<p class="szene">Stell dir vor, du machst dir an einem aufregenden Tag zwischendurch dein Lieblingsgetränk und setzt dich für einen Moment gemütlich hin.<br>Eine innere Stimme sagt dir, dafür hättest du keine Zeit. Du umarmst sie gedanklich, schließt deine Augen und schenkst dir einen tiefen Atemzug. Mhhhhhhhhh.<br>Du spürst eine sprudelnde Energie in deinem Körper, fühlst dich lebendig, aber dennoch sicher. Es ist aufregend und manchmal herausfordernd, für die Dinge loszugehen, die dir wichtig sind. Doch gleichzeitig bist du tief im Vertrauen, dass du dich selbst liebevoll durch die Höhen und Tiefen deines Lebens begleiten kannst. Du bist stolz und dankbar. Und du freust dich auf dein Date mit dir selbst, das du dir für morgen eingeplant hast …</p>',
      '<p class="szene">Imagine: on an exciting day you make yourself your favourite drink and sit down comfortably for a moment.<br>An inner voice tells you that you have no time for this. You hug it in your mind, close your eyes and give yourself a deep breath. Mhhhhhhhhh.<br>You feel a bubbling energy in your body, you feel alive and yet safe. It is exciting and sometimes challenging to go for the things that matter to you. But at the same time you trust deeply that you can lovingly accompany yourself through the highs and lows of your life. You are proud and grateful. And you are looking forward to the date with yourself that you have planned for tomorrow …</p>'),
     ('<span class="audio-text">Kurze Sprachnachricht von mir, als ich beim Schreiben dieses Textes genau diesen Moment erlebt habe. <b>Folgt bald.</b></span>',
      '<span class="audio-text">A short voice message I recorded while writing this, in exactly that moment. <b>Coming soon.</b></span>'),
-    ('<tspan x="140" dy="0">Körper &amp;</tspan><tspan x="140" dy="36">Nerven-</tspan><tspan x="140" dy="36">system</tspan>',
-     '<tspan x="140" dy="0">Body &amp;</tspan><tspan x="140" dy="36">nervous</tspan><tspan x="140" dy="36">system</tspan>'),
-    ('<tspan x="460" dy="0">Somatische</tspan><tspan x="460" dy="36">Aufarbeitung</tspan>',
-     '<tspan x="460" dy="0">Somatic</tspan><tspan x="460" dy="36">processing</tspan>'),
-    ('<tspan x="300" dy="0">System-</tspan><tspan x="300" dy="36">bewusstsein</tspan>',
-     '<tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="36">awareness</tspan>'),
+    ('<li class="l1">Körper &amp; Nervensystem</li>', '<li class="l1">Body &amp; nervous system</li>'),
+    ('<li class="l2">Somatische Aufarbeitung</li>', '<li class="l2">Somatic processing</li>'),
+    ('<li class="l3">Systembewusstsein</li>', '<li class="l3">Systemic awareness</li>'),
     ('<p class="gross">Genau das ist das Ziel meiner Arbeit: Dass du dich selbst, deinen Körper, dein Nervensystem, deine Emotionen und Energien kennst und spürst, was du brauchst. Dass du dich sicher in dir fühlst, dir selbst vertraust und weißt, dass du dir aus einer liebevollen Beziehung zu dir dein Leben kreierst.</p>',
      '<p class="gross">That is exactly the aim of my work: that you know yourself, your body, your nervous system, your emotions and energies, and sense what you need. That you feel safe within yourself, trust yourself and know that you are creating your life from a loving relationship with yourself.</p>'),
     ('<h3>Wie machen wir das?</h3>', '<h3>How do we get there?</h3>'),
@@ -192,20 +189,20 @@ PAARE = [
      '<p class="methode-hinweis">Tap a field to find out what it is about.</p>'),
     ('aria-label="Modell Spirit of Body and Breath: drei sich überlappende Kreise"',
      'aria-label="Spirit of Body and Breath model: three overlapping circles"'),
-    ('<tspan x="135" dy="0">Körper &amp;</tspan><tspan x="135" dy="1.22em">Nerven-</tspan><tspan x="135" dy="1.22em">system</tspan>',
-     '<tspan x="135" dy="0">Body &amp;</tspan><tspan x="135" dy="1.22em">nervous</tspan><tspan x="135" dy="1.22em">system</tspan>'),
-    ('<tspan x="465" dy="0">Somatische</tspan><tspan x="465" dy="1.22em">Aufarbeitung</tspan>',
-     '<tspan x="465" dy="0">Somatic</tspan><tspan x="465" dy="1.22em">processing</tspan>'),
-    ('<tspan x="300" dy="0">System-</tspan><tspan x="300" dy="1.22em">bewusstsein</tspan>',
-     '<tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="1.22em">awareness</tspan>'),
-    ('<tspan x="300" dy="0">Frieden mit</tspan><tspan x="300" dy="1.22em">deinen</tspan><tspan x="300" dy="1.22em">Themen</tspan>',
-     '<tspan x="300" dy="0">Peace with</tspan><tspan x="300" dy="1.22em">your</tspan><tspan x="300" dy="1.22em">themes</tspan>'),
-    ('<tspan x="192" dy="0">Du in</tspan><tspan x="192" dy="1.22em">unserer</tspan><tspan x="192" dy="1.22em">heutigen Welt</tspan>',
-     '<tspan x="192" dy="0">You in</tspan><tspan x="192" dy="1.22em">today’s</tspan><tspan x="192" dy="1.22em">world</tspan>'),
-    ('<tspan x="408" dy="0">Deine</tspan><tspan x="408" dy="1.22em">Aufgabe</tspan><tspan x="408" dy="1.22em">hier</tspan>',
-     '<tspan x="408" dy="0">Your</tspan><tspan x="408" dy="1.22em">purpose</tspan><tspan x="408" dy="1.22em">here</tspan>'),
-    ('<tspan x="300" dy="0">Sicherheit &amp;</tspan><tspan x="300" dy="1.22em">Selbstwert</tspan>',
-     '<tspan x="300" dy="0">Safety &amp;</tspan><tspan x="300" dy="1.22em">self-worth</tspan>'),
+    ('<tspan x="140" dy="0">Körper &amp;</tspan><tspan x="140" dy="1.2em">Nervensystem</tspan>',
+     '<tspan x="140" dy="0">Body &amp;</tspan><tspan x="140" dy="1.2em">nervous system</tspan>'),
+    ('<tspan x="460" dy="0">Somatische</tspan><tspan x="460" dy="1.2em">Aufarbeitung</tspan>',
+     '<tspan x="460" dy="0">Somatic</tspan><tspan x="460" dy="1.2em">processing</tspan>'),
+    ('<tspan x="300" dy="0">System-</tspan><tspan x="300" dy="1.2em">bewusstsein</tspan>',
+     '<tspan x="300" dy="0">Systemic</tspan><tspan x="300" dy="1.2em">awareness</tspan>'),
+    ('<tspan x="300" dy="0">Frieden mit</tspan><tspan x="300" dy="1.25em">deinen Themen</tspan>',
+     '<tspan x="300" dy="0">Peace with</tspan><tspan x="300" dy="1.25em">your themes</tspan>'),
+    ('<tspan x="214" dy="0">Du in unserer</tspan><tspan x="214" dy="1.25em">heutigen Welt</tspan>',
+     '<tspan x="214" dy="0">You in</tspan><tspan x="214" dy="1.25em">today’s world</tspan>'),
+    ('<tspan x="388" dy="0">Deine</tspan><tspan x="388" dy="1.25em">Aufgabe hier</tspan>',
+     '<tspan x="388" dy="0">Your purpose</tspan><tspan x="388" dy="1.25em">here</tspan>'),
+    ('<tspan x="300" dy="0">Sicherheit &amp;</tspan><tspan x="300" dy="1.25em">Selbstwert</tspan>',
+     '<tspan x="300" dy="0">Safety &amp;</tspan><tspan x="300" dy="1.25em">self-worth</tspan>'),
     ('<p class="methode-leer">Wähle ein Feld im Modell.</p>', '<p class="methode-leer">Choose a field in the model.</p>'),
     ('<h4>Körper &amp; Nervensystem</h4>', '<h4>Body &amp; nervous system</h4>'),
     ('<p>Das Fundament besteht darin, überhaupt erstmal wieder eine Verbindung zu deinem Körper aufzubauen. Du lernst ihn wieder zu spüren und zuzuhören. Außerdem geht es darum, dein Nervensystem zu verstehen. Du lernst zu erkennen, wo du mit deinem Nervensystem gerade stehst, und dich darin zu navigieren. Dabei geht es nicht darum, immer ruhig und reguliert zu sein, sondern dir das zu geben, was du gerade wirklich brauchst. Dadurch brauchen wir es mit der Zeit immer weniger, zu ungesunden Mechanismen zu greifen.</p>',
@@ -250,7 +247,7 @@ PAARE = [
      'alt="Lilly laughing with her eyes closed, cut out from the background."'),
 
     # ── 03 · Online-Begleitungen ─────────────────────────────────────────
-    ('<p class="marke reveal">03 — Online-Begleitungen</p>', '<p class="marke reveal">03 — Online journeys</p>'),
+    ('<p class="marke">03 — Online-Begleitungen</p>', '<p class="marke">03 — Online journeys</p>'),
     ('Meine Online-Begleitungen erstrecken sich über einen längeren Zeitraum und richten sich an Menschen, die wirklich etwas verändern wollen.',
      'My online journeys run over a longer period and are for people who truly want to change something.'),
     ('<p>Es geht darum umzusetzen, auszuprobieren, zu fühlen, dich selbst zu erfahren.<br>Meine Arbeit ist nicht für dich, wenn du dich berieseln lassen möchtest, auf der Suche nach einem „Quick Fix“ bist oder gerettet werden möchtest.</p>',
@@ -277,7 +274,7 @@ PAARE = [
      '<strong>Who this is not right for:</strong> I am not a therapist and I do not offer psychotherapy. If you are in an acute crisis, living with a mental illness that needs treatment, or in an acute eating disorder, a doctor or psychotherapist is the better place for you. Feel free to tell me in our call — I will be honest with you.'),
 
     # ── 04 · Community ───────────────────────────────────────────────────
-    ('<p class="marke reveal">04 — Online-Community</p>', '<p class="marke reveal">04 — Online community</p>'),
+    ('<p class="marke">04 — Online-Community</p>', '<p class="marke">04 — Online community</p>'),
     ('<p class="plakette">Kostenlos und unverbindlich</p>', '<p class="plakette">Free and without obligation</p>'),
     ('<h2>Heilung geschieht nicht allein.</h2>', '<h2>Healing does not happen alone.</h2>'),
     ('<p>So lange habe ich es alleine versucht, mir eingeredet, ich bräuchte niemanden, alleine geht es mir besser. Dabei war ich tief im Inneren einsam und Verbindung für mich einfach nicht sicher.<br><strong>Heute weiß ich: Verbindung kann wieder sicher werden und ist kein Extra, sondern Teil der Arbeit.</strong></p>',
@@ -292,8 +289,8 @@ PAARE = [
      'alt="Lilly hugging another person, both with their eyes closed."'),
 
     # ── 05 · Offline ─────────────────────────────────────────────────────
-    ('<p class="marke reveal">05 — Offline-Angebote &amp; Kooperationen</p>',
-     '<p class="marke reveal">05 — In person &amp; collaborations</p>'),
+    ('<p class="marke">05 — Offline-Angebote &amp; Kooperationen</p>',
+     '<p class="marke">05 — In person &amp; collaborations</p>'),
     ('Ob im 1:1 oder in der Gruppe: Offline zu arbeiten, liebe ich am meisten.',
      'One-to-one or in a group: working in person is what I love most.'),
     ('alt="Blick von oben in einen vorbereiteten Retreat-Raum mit Matten und Klangschalen."',
@@ -324,11 +321,10 @@ PAARE = [
      '<li>In an emergency: <b>112</b> or the nearest psychiatric hospital</li>'),
 
     # ── Kontakt ──────────────────────────────────────────────────────────
-    ('<p class="marke reveal">Kontakt &amp; Kennenlerncall</p>', '<p class="marke reveal">Contact &amp; introductory call</p>'),
-    ('<h2 class="reveal lese">Lern mich unverbindlich kennen.</h2>',
-     '<h2 class="reveal lese">Get to know me, no strings attached.</h2>'),
-    ('<p class="lese reveal">Ob Kennenlerncall, Warteliste, Community oder eine Offline-Session — sag mir einfach, worum es geht. Ich lese jede Nachricht selbst und melde mich innerhalb von zwei Werktagen bei dir.</p>',
-     '<p class="lese reveal">Whether it is an introductory call, the community or an in-person session — just tell me what it is about. I read every message myself and will get back to you within two working days.</p>'),
+    ('<p class="marke">Kontakt &amp; Kennenlerncall</p>', '<p class="marke">Contact &amp; introductory call</p>'),
+    ('<h2>Lern mich unverbindlich kennen.</h2>', '<h2>Get to know me, no strings attached.</h2>'),
+    ('<p class="lese reveal" style="text-align:center">Ob Kennenlerncall, Warteliste, Community oder eine Offline-Session — sag mir einfach, worum es geht. Ich lese jede Nachricht selbst und melde mich innerhalb von zwei Werktagen bei dir.</p>',
+     '<p class="lese reveal" style="text-align:center">Whether it is an introductory call, the community or an in-person session — just tell me what it is about. I read every message myself and will get back to you within two working days.</p>'),
     ('<label for="name">Wie heißt du?</label>', '<label for="name">What is your name?</label>'),
     ('<label for="email">Deine E-Mail-Adresse</label>', '<label for="email">Your email address</label>'),
     ('<label for="thema">Worum geht es?</label>', '<label for="thema">What is it about?</label>'),

@@ -24,8 +24,6 @@ const AUS   = process.argv[3] || './beweise/nachher';
 const SEITEN = [
   ['startseite',      'index.html'],
   ['startseite-en',   'en.html'],
-  ['richtungB',       'hell.html'],      // Pergament-Fassung
-  ['richtungB-en',    'hell-en.html'],
   ['vorschau',        'vorschau.html'],
   ['impressum',       'impressum.html'],
   ['datenschutz',     'datenschutz.html'],
@@ -47,7 +45,6 @@ for (const [name, datei] of SEITEN) {
     await page.goto(`${BASIS}/${datei}`, { waitUntil: 'networkidle' });
 
     // Erster Viewport, bevor gescrollt wird — zeigt, was ohne Zutun sichtbar ist.
-    if (name.startsWith('startseite') || name.startsWith('richtungB')) {
       await page.waitForTimeout(350);
       await page.screenshot({ path: `${AUS}/erster-viewport-${name}-${label}.png` });
     }

@@ -18,9 +18,10 @@ W = Path(__file__).parent
 IMG = W / "assets" / "img"
 BREITE, HOEHE = 1200, 630
 
-NACHT = (0x14, 0x10, 0x0C)
-LICHT = (0xF4, 0xEB, 0xDF)
-DAEMMER = (0xC9, 0xB7, 0xA4)
+# Runde 2b: hell — Creme-Grund, Tinte-Schrift, Bordeaux-Akzent
+NACHT = (0xF7, 0xF0, 0xE6)     # Grund (Name historisch)
+LICHT = (0x2B, 0x1A, 0x17)     # Schrift
+DAEMMER = (0x79, 0x24, 0x27)   # Marke/Unterzeile in Bordeaux
 GLUT = (0x79, 0x24, 0x27)
 
 
