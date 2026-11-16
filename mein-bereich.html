@@ -3,8 +3,9 @@
   ╔══════════════════════════════════════════════════════════════════╗
   ║  LECHCODE — Mein Bereich (Kunden-Dashboard)                       ║
   ║  Generisches Template — wird per lc-dashboard-install.sh <slug>   ║
-  ║  UNVERÄNDERT in jedes Kundenrepo kopiert. Personalisierung läuft  ║
-  ║  zur Laufzeit über den Worker (Magic-Link-Token → Name/Slug).     ║
+  ║  in jedes Kundenrepo kopiert; dabei setzt lc-dashboard-og.py die  ║
+  ║  WhatsApp-Vorschau (OG-Tags + Bild). Rest personalisiert der      ║
+  ║  Worker zur Laufzeit (Magic-Link-Token → Name/Slug).              ║
   ║  Zugang:  mein-bereich.html#k=<token>   (Link kommt von uns)      ║
   ║  Selbst-tragend: Systemschriften, keine Requests außer LC_API.    ║
   ╚══════════════════════════════════════════════════════════════════╝
@@ -15,6 +16,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Mein Bereich · Lechcode</title>
+  <!--LC-OG-->
+  <meta name="description" content="Hier änderst du deine Website selbst – einfach schreiben oder sprechen, was du dir wünschst. Änderungen sind inklusive." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Lechcode" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:title" content="Lilly, dein Kundenbereich bei Lechcode" />
+  <meta property="og:description" content="Hier änderst du deine Website selbst – einfach schreiben oder sprechen, was du dir wünschst. Änderungen sind inklusive." />
+  <meta property="og:url" content="https://lechcode.github.io/lilly-stradner-vorschau/mein-bereich.html" />
+  <meta property="og:image" content="https://lechcode.github.io/lilly-stradner-vorschau/assets/lc-bereich-og.jpg?v=20261116" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Lilly, dein Kundenbereich bei Lechcode" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!--/LC-OG-->
   <meta name="theme-color" content="#16130c" />
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCc+PHJlY3Qgd2lkdGg9JzY0JyBoZWlnaHQ9JzY0JyByeD0nMTUnIGZpbGw9JyMxZjFiMTInLz48Y2lyY2xlIGN4PSczMicgY3k9JzMyJyByPScyMi41JyBmaWxsPSdub25lJyBzdHJva2U9JyNlN2I5NjQnIHN0cm9rZS13aWR0aD0nMy40Jy8+PHBhdGggZD0nTTE1IDM2IEMgMjIgMjgsIDI5IDI4LCAzMyAzNCBDIDM3IDQwLCA0NCA0MCwgNTAgMzEnIGZpbGw9J25vbmUnIHN0cm9rZT0nI2U3Yjk2NCcgc3Ryb2tlLXdpZHRoPSc0LjInIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPjxjaXJjbGUgY3g9JzQ0JyBjeT0nMTguNScgcj0nMy40JyBmaWxsPScjZTg5MjNmJy8+PC9zdmc+" />
   <style>
