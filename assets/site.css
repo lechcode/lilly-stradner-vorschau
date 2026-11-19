@@ -94,10 +94,21 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .kopf-marke span{display:block; text-align:left}
 .kopf-marke b{display:block; font:400 1.06rem/1.05 var(--kopf); letter-spacing:0}
 .kopf-marke i{display:block; font:400 .7rem/1.25 var(--leib); font-style:normal; color:var(--tinte-2); margin-top:.1rem}
-@media (max-width:359.98px){
-  .kopf-marke img{width:30px}
-  .kopf-marke b{font-size:.95rem}
-  .kopf-marke i{font-size:.62rem}
+/* schmale Handys: Brandzeichen etwas kleiner, damit Menü und Sprache Platz haben */
+@media (max-width:1023.98px){
+  .kopf-marke{gap:.4rem}
+  .kopf-marke img{width:31px}
+  .kopf-marke b{font-size:.98rem}
+  .kopf-marke i{font-size:.64rem}
+}
+@media (max-width:389.98px){
+  .kopf-marke img{width:27px}
+  .kopf-marke b{font-size:.88rem}
+  .kopf-marke i{font-size:.58rem}
+}
+@media (max-width:349.98px){
+  .kopf-marke i{display:none}
+  .sprache .flagge{display:none}         /* nur sehr schmale Handys (320px) */
 }
 .menue-knopf{
   display:inline-flex; align-items:center; gap:.55rem; min-height:46px; padding:.5rem .95rem;
@@ -106,9 +117,10 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   transition:border-color .25s var(--ease), background .25s var(--ease);
 }
 .menue-knopf:hover{border-color:var(--bordeaux); background:var(--creme-2)}
+/* Handy/Tablet (19.11.): Symbol + „Menü" in einer schmalen Pille */
 @media (max-width:1023.98px){
-  .menue-knopf{width:44px; min-height:44px; height:44px; padding:0; justify-content:center; border-radius:50%}
-  .menue-knopf span{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+  .menue-knopf{min-height:44px; height:44px; padding:0 .55rem 0 .65rem; gap:.35rem; font-size:.68rem; letter-spacing:.06em}
+  .menue-knopf svg{width:13px; height:10px}
 }
 .menue-knopf svg{width:15px; height:11px; flex:none}
 .menue-knopf svg line{stroke:currentColor; stroke-width:1.6; transition:transform .3s var(--ease)}
@@ -129,9 +141,9 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .flagge{width:20px; height:14px; border-radius:2px; flex:none; box-shadow:0 0 0 1px #00000026}
 /* Handy/Tablet: nur Kuerzel, schmal genug, dass das Brandzeichen exakt mittig bleibt */
 @media (max-width:1023.98px){
-  .sprache{gap:2px}
-  .sprache a{min-height:44px; padding:.4rem .48rem; font-size:.8rem; letter-spacing:.04em}
-  .sprache .flagge{display:none}
+  .sprache{gap:1px}
+  .sprache a{min-height:44px; padding:.4rem .34rem; gap:.22rem; font-size:.72rem; letter-spacing:.03em}
+  .sprache .flagge{width:13px; height:9px}
 }
 
 
@@ -245,48 +257,82 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .nav li.unter a{font-size:clamp(1rem,3.3vw,1.3rem); padding-left:2.4rem; color:#FBF3EA}
 .nav li.nav-kontakt a{border-bottom:none; margin-top:.3rem}
 
-/* ── Hero: Lillys Reihenfolge, als mittige Achse ───────────────
-   Bilder → „Transformation ist möglich." → Grundlage → Zeile →
-   Siegel + Wortmarke → ihr Text → Einladung zum Weiterlesen. */
-.hero{padding-top:clamp(5.6rem,11vw,7.5rem); padding-bottom:clamp(3rem,7vw,5.5rem); text-align:left}
+/* ── Hero ──────────────────────────────────────────────────────
+   19.11. (Lilly): Reihenfolge Ueberschrift → Grundlage → Kernsatz → Absatz →
+   „Somatische Prozessbegleitung & Atemarbeit" → zwei Knoepfe.
+   Desktop: die erste Seite ist genau ein Bildschirm. Ueberschrift in EINER
+   Zeile ueber Text und Fotos, Fotos senkrecht in der Mitte, die Unterkante
+   des zweiten Knopfs schliesst mit der Unterkante des ersten Fotos ab.
+   Handy: Fotos oben, dann dieselbe Reihenfolge, Knoepfe mittig. */
+.hero{
+  --frei:100vw;                           /* Breite neben dem Seitenmenue */
+  --versatz:clamp(1.4rem,5vw,2.6rem);     /* zweites Foto tiefer */
+  padding-top:clamp(5.6rem,11vw,7.5rem); padding-bottom:clamp(3rem,7vw,5.5rem); text-align:left;
+}
 .hero-gitter{display:flex; flex-direction:column; align-items:flex-start}
 .dipt{display:grid; grid-template-columns:1fr 1fr; gap:clamp(.6rem,1.6vw,1.1rem); width:min(100%, 30rem); margin:0 0 clamp(1.8rem,4vw,2.6rem)}
 .dipt figure{margin:0}
-.dipt figure:last-child{margin-top:clamp(1.4rem,5vw,2.6rem)}   /* versetzte Fotos */
-@media (min-width:900px){
-  .hero-gitter{flex-direction:row-reverse; align-items:flex-start; justify-content:space-between; gap:3rem}
-  /* 19.11.: Fotos duerfen schmaler werden, statt den Text nach links unter das
-     Seitenmenue zu schieben (row-reverse laeuft sonst links ueber). */
-  .dipt{width:auto; flex:0 1 30rem; min-width:0; margin:0}
-  .hero .hero-text{flex:1 1 auto; width:auto; min-width:0}
-}
-@media (min-width:1024px){
-  /* Ueberschrift nach der Breite NEBEN dem Seitenmenue bemessen, nicht nach
-     dem ganzen Fenster — sonst ist „Transformation" breiter als die Spalte. */
-  .hero h1{font-size:clamp(2.3rem, calc((100vw - var(--seitennav)) * .056), 4.4rem)}
-}
+.dipt figure:last-child{margin-top:var(--versatz)}   /* versetzte Fotos */
 .dipt picture{display:block; overflow:hidden; border-radius:6px; box-shadow:0 14px 34px #2b1a1726}
 .dipt img{width:100%; aspect-ratio:5/7; object-fit:cover}
 .dipt figure:first-child img{scale:1.08}
 .dipt figcaption{font:600 var(--klein)/1 var(--kopf); letter-spacing:.16em; color:var(--tinte-2); margin-top:.7rem}
 .hero-text{max-width:40rem; width:100%; min-width:0}   /* nie breiter als die Spalte (iPhone) */
 .hero h1{margin:0 0 .9rem; max-width:16ch}
-.grundlage{font-style:italic; font-size:clamp(1.12rem,1.7vw,1.32rem); color:var(--tinte); margin:0 0 1.8rem}
+.grundlage{font-style:italic; font-size:clamp(1.12rem,1.7vw,1.32rem); color:var(--tinte); margin:0 0 1.5rem}
 .herz{color:var(--bordeaux); font-style:normal}
+.kern{font:600 clamp(1.2rem,2vw,1.5rem)/1.35 var(--kopf); letter-spacing:-.015em; margin:0 0 .9rem; max-width:34rem}
+.kern em{font-style:normal; color:var(--bordeaux)}
+.hero-absatz{max-width:34rem; margin-inline:0; color:var(--tinte-2)}
+/* Zeile + Knoepfe: eine mittig ausgerichtete Gruppe */
+.hero-wege{display:flex; flex-direction:column; align-items:center; text-align:center; gap:.8rem; margin-top:1.8rem}
 /* Lilly: „am Handy in einer Zeile" — gemessen einzeilig ab 320px. */
 .zeile{
   font:600 min(.875rem, 2.85vw)/1.2 var(--kopf); letter-spacing:.06em; text-transform:uppercase;
-  white-space:nowrap; color:var(--bordeaux); margin:0 0 1rem;
+  white-space:nowrap; color:var(--bordeaux); margin:0 0 .3rem;
 }
-.lockup{display:inline-flex; align-items:center; gap:.9rem; margin:0 0 1.9rem; text-align:left}
-.lockup img{width:clamp(48px,7vw,62px); height:auto; flex:none}
-.lockup b{display:block; font:600 var(--h4)/1.2 var(--kopf); letter-spacing:-.01em}
-.lockup i{display:block; font:600 .78rem/1 var(--kopf); font-style:normal; letter-spacing:.16em;
-          text-transform:uppercase; color:var(--tinte-2); margin-top:.35rem}
-.kern{font:600 clamp(1.2rem,2vw,1.5rem)/1.35 var(--kopf); letter-spacing:-.015em; margin:0 0 .9rem; max-width:34rem}
-.kern em{font-style:normal; color:var(--bordeaux)}
-.hero-text > p:not(.kern):not(.zeile):not(.grundlage):not(.hero-wege){max-width:34rem; margin-inline:0; color:var(--tinte-2)}
-.hero-wege{display:flex; flex-direction:column; align-items:flex-start; gap:1rem; margin-top:2rem}
+.hero-wege .knopf{justify-content:center; text-align:center}
+/* Handy: beide Knoepfe einzeilig */
+@media (max-width:899.98px){
+  .hero-wege .knopf{font-size:min(1rem, 3.85vw); padding-inline:clamp(.9rem, 4vw, 1.6rem); white-space:nowrap}
+}
+
+@media (min-width:900px){
+  .hero{
+    --versatz:2rem;
+    min-height:100svh; display:flex; align-items:center;
+    /* oben Platz fuer die Kopfleiste, unten fuer das tiefere zweite Foto.
+       --heben schiebt den Block auf hohen Bildschirmen nach oben, damit die
+       Fotos naeher an der Bildschirmmitte sitzen. */
+    --heben:clamp(0px, 100svh - 740px, 220px);
+    padding:calc(64px + 2vh) 0 calc(2vh + var(--versatz) + 1.6rem + var(--heben));
+  }
+  .hero-gitter{
+    display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:clamp(2.5rem,5vw,5rem);
+    grid-template-areas:"titel titel" "text bilder"; align-items:end;
+  }
+  .hero h1{
+    grid-area:titel; white-space:nowrap; max-width:none; margin:0 0 clamp(.8rem,2.5vh,2.2rem);
+    font-size:clamp(2.4rem, calc(var(--frei) * .062), 5rem);
+  }
+  .hero .hero-text{grid-area:text; max-width:38rem}
+  /* Breite nach Bildschirmhoehe begrenzt, damit alles auf eine Seite passt.
+     Unterkante: das erste Foto endet auf Hoehe des zweiten Knopfs; das
+     tiefere zweite Foto samt Jahreszahl ragt darunter hinaus. */
+  .dipt{
+    grid-area:bilder; margin:0 0 calc(-1 * (var(--versatz) + 1.575rem));
+    width:min(34rem, 38vw, calc((100svh - 64px) * .64), calc(var(--frei) * .44));
+  }
+}
+@media (min-width:1024px){
+  .hero{--frei:calc(100vw - var(--seitennav))}
+}
+@media (min-width:900px){
+  .hero .grundlage{margin-bottom:clamp(.9rem,2.2vh,1.5rem)}
+  .hero .kern{font-size:clamp(1.15rem,1.6vw,1.4rem); margin-bottom:clamp(.5rem,1.4vh,.9rem)}
+  .hero-absatz{margin-bottom:0}
+  .hero-wege{margin-top:clamp(1rem,2.6vh,1.8rem); gap:clamp(.55rem,1.2vh,.8rem)}
+}
 
 /* ── Knoepfe ───────────────────────────────────────────────── */
 .knopf{
@@ -297,6 +343,9 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 }
 .knopf:hover{transform:translateY(-2px); background:var(--bordeaux-tief); box-shadow:0 10px 24px #79242733}
 .knopf svg{width:16px; height:16px; flex:none}
+/* Zweiter Knopf (19.11.): klar klickbar, aber leiser als der volle Knopf */
+.knopf.knopf-zweit{background:transparent; color:var(--bordeaux); box-shadow:inset 0 0 0 1.5px var(--bordeaux); min-height:48px; padding:.75rem 1.6rem}
+.knopf.knopf-zweit:hover{background:var(--bordeaux-zart); color:var(--bordeaux-tief); box-shadow:inset 0 0 0 1.5px var(--bordeaux-tief)}
 .boden-glut .knopf{background:var(--auf-bordeaux); color:var(--bordeaux)}
 .boden-glut .knopf:hover{background:#fff; box-shadow:0 10px 24px #00000033}
 .knopf-leise{
@@ -680,14 +729,15 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
   .glutlinie{inset:0 auto 0 calc(var(--seitennav) - 1px)}
   .nav{
     --streifen-oben:0px;
-    --streifen:clamp(140px, 20vh, 220px);
+    --streifen:clamp(84px, 17vh, 220px);      /* Lilly: alles ohne Scrollen sichtbar */
+    --luft:clamp(.4rem, 1.6vh, 1rem);
     inset:0 auto 0 0; width:var(--seitennav); z-index:96; opacity:1; visibility:visible;
     padding:calc(var(--streifen) + var(--luft)) 1.2rem calc(var(--streifen) + var(--luft)) 1.4rem; transition:none;
   }
   .nav::before,.nav::after{opacity:.5; transition:none}
   @supports not (mix-blend-mode:multiply){ .nav::before,.nav::after{opacity:1} }
   .nav ol{width:100%}
-  .nav a{font-size:clamp(1.02rem,1.3vw,1.18rem); gap:.7rem; padding:.5rem .2rem}
+  .nav a{font-size:clamp(.95rem, min(1.3vw, 2.4vh), 1.18rem); gap:.7rem; padding:clamp(.25rem, .9vh, .5rem) .2rem}
   .nav a span{min-width:2rem}
-  .nav li.unter a{font-size:.95rem; padding-left:2.2rem}
+  .nav li.unter a{font-size:clamp(.85rem, 2vh, .95rem); padding-left:2.2rem}
 }
