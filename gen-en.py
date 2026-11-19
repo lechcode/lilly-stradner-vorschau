@@ -85,6 +85,8 @@ PAARE = [
     ('<h1>Transformation ist möglich.</h1>', '<h1>Transformation is possible.</h1>'),
     ('Und die Grundlage dafür:<br> eine gesunde Beziehung zu Dir selbst.',
      'And the foundation for it:<br> a healthy relationship with yourself.'),
+    ('<p class="kopf-zeile">Somatische Prozessbegleitung &amp; Atemarbeit</p>',
+     '<p class="kopf-zeile">Somatic process facilitation &amp; breathwork</p>'),
     ('<p class="zeile">Somatische Prozessbegleitung &amp; Atemarbeit</p>',
      '<p class="zeile">Somatic process facilitation &amp; breathwork</p>'),
     ('<p class="kern">Jahrelang habe ich mich und meinen Körper gehasst. Heute weiß ich:<br> <em>Wir waren nie das wirkliche Problem!</em></p>',
@@ -92,7 +94,6 @@ PAARE = [
     ('Genau deshalb begleite ich Menschen hin zu einer liebevollen Beziehung zu sich selbst und ihrem Körper ~ damit von hier aus alles andere wachsen kann.',
      'That is exactly why I accompany people towards a loving relationship with themselves and their body ~ so that everything else can grow from there.'),
     ('        Erfahre mehr über mich und meine Arbeit\n', '        Learn more about me and my work\n'),
-    ('        Oder lern mich unverbindlich kennen\n', '        Or get to know me, no strings attached\n'),
 
     # ── 01 · Über mich ───────────────────────────────────────────────────
     ('<p class="marke">01 — Über mich</p>', '<p class="marke">01 — About me</p>'),

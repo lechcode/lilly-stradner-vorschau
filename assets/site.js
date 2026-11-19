@@ -308,3 +308,119 @@
     });
   });
 })();
+
+/* ── Hero Desktop ausrichten (Runde 5, 19.11.) ──────────────────────────
+   Ab 1024px:
+   1. Spalte 1 reicht vom Textrand bis genau dorthin, wo oben
+      „Unverbindlich kennenlernen" beginnt; die Ueberschrift fuellt sie
+      in einer Zeile.
+   2. Oberkante der Grossbuchstaben liegt auf der Goldlinie ueber
+      „01 Über mich" im Seitenmenue.
+   3. Die zwei Zeilen „Und die Grundlage dafür …" reichen genau von der
+      Oberkante bis zur Grundlinie der Ueberschrift.
+   4. Die Fotos werden so gross, dass der Hero genau einen Bildschirm fuellt.
+   Ohne JavaScript greifen die Ersatzwerte in site.css. */
+(function(){
+  var hero = document.querySelector('.hero');
+  if (!hero || !window.matchMedia) return;
+  var breit = window.matchMedia('(min-width:1024px)');
+  var buehne = hero.querySelector('.buehne'),
+      h1 = hero.querySelector('h1'),
+      grund = hero.querySelector('.grundlage'),
+      dipt = hero.querySelector('.dipt'),
+      absatz = hero.querySelector('.hero-absatz'),
+      wege = hero.querySelector('.hero-wege'),
+      knopf = document.querySelector('.kopf .kennenlernen'),
+      rechts = document.querySelector('.kopf-rechts'),
+      nav = document.getElementById('nav');
+  var VARS = ['--spalte-1','--h1-groesse','--hero-oben','--grund-groesse','--grund-zeile','--grund-oben','--fotos-breit'];
+  var leinwand = document.createElement('canvas').getContext('2d');
+
+  function masse(el, groesse, zeichen){
+    var cs = getComputedStyle(el);
+    leinwand.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + groesse + 'px ' + cs.fontFamily;
+    var m = leinwand.measureText(zeichen);
+    return {kappe:m.actualBoundingBoxAscent, auf:m.fontBoundingBoxAscent, ab:m.fontBoundingBoxDescent};
+  }
+  /* Abstand von der Oberkante der Zeile bis zur Oberkante der Grossbuchstaben */
+  function kappeOben(m, zeile){ return (zeile - (m.auf + m.ab)) / 2 + m.auf - m.kappe; }
+
+  function ausrichten(){
+    VARS.forEach(function(v){ hero.style.removeProperty(v); });
+    hero.classList.remove('hero-schmal');
+    if (!breit.matches || !knopf || !nav) return;
+
+    var L = buehne.getBoundingClientRect().left,
+        K = knopf.getBoundingClientRect().left,
+        R = rechts.getBoundingClientRect().right,
+        luecke = parseFloat(getComputedStyle(hero.querySelector('.hero-gitter')).columnGap) || 24,
+        spalte1 = Math.floor(K - L);
+    /* Schmale Desktops (unter ca. 1200px): bis zum Knopf ist zu wenig Platz,
+       Ueberschrift und Grundlage wuerden winzig. Dann steht die Grundlage
+       unter der Ueberschrift und die Ueberschrift fuellt die ganze Breite. */
+    var schmal = spalte1 < 450;
+    if (schmal){
+      hero.classList.add('hero-schmal');
+      spalte1 = Math.floor((R - L - luecke) * 0.6);
+    }
+    hero.style.setProperty('--spalte-1', spalte1 + 'px');
+
+    /* 1. Ueberschrift auf Spaltenbreite */
+    h1.style.fontSize = '100px';
+    var r = document.createRange(); r.selectNodeContents(h1);
+    var b100 = r.getBoundingClientRect().width;
+    h1.style.fontSize = '';
+    var g1 = Math.floor(100 * (schmal ? R - L : spalte1) / b100 * 100) / 100;
+    hero.style.setProperty('--h1-groesse', g1 + 'px');
+
+    /* 2. Oberkante auf die Goldlinie (Unterkante des oberen Buecherstreifens) */
+    var m1 = masse(h1, g1, 'T'),
+        oben1 = kappeOben(m1, g1),                       /* line-height:1 */
+        streifen = getComputedStyle(nav, '::before'),
+        gold = nav.getBoundingClientRect().top + parseFloat(streifen.top) + parseFloat(streifen.height),
+        heroOben = hero.getBoundingClientRect().top + window.scrollY;
+    hero.style.setProperty('--hero-oben', Math.max(0, gold - heroOben - oben1) + 'px');
+
+    /* 3. Grundlage: zwei Zeilen = Kappenhoehe der Ueberschrift */
+    if (!schmal){
+    grund.style.fontSize = '100px'; grund.style.width = 'max-content';
+    var bG = grund.getBoundingClientRect().width;
+    grund.style.fontSize = ''; grund.style.width = '';
+    var platz = R - (K + luecke),
+        verhaeltnis = masse(grund, 100, 'U').kappe / 100,
+        gW = 100 * platz / bG,
+        gH = m1.kappe / (verhaeltnis + 1.25),
+        gG = Math.min(gW, gH) * 0.995,
+        zeile = m1.kappe - verhaeltnis * gG,
+        mG = masse(grund, gG, 'U');
+    hero.style.setProperty('--grund-groesse', gG + 'px');
+    hero.style.setProperty('--grund-zeile', zeile + 'px');
+    hero.style.setProperty('--grund-oben', (oben1 - kappeOben(mG, zeile)) + 'px');
+    }
+
+    /* 4. Fotos: so gross, dass alles auf einen Bildschirm passt */
+    var hr = hero.getBoundingClientRect(),
+        dr = dipt.getBoundingClientRect(),
+        bild = dipt.querySelector('picture').getBoundingClientRect(),
+        unterFoto = dr.bottom - bild.bottom,              /* Jahreszahl */
+        as = getComputedStyle(absatz),
+        rest = unterFoto + absatz.getBoundingClientRect().height + parseFloat(as.marginTop) + parseFloat(as.marginBottom)
+               + wege.getBoundingClientRect().height,
+        unten = Math.max(16, window.innerHeight * 0.04),
+        hoehe = window.innerHeight - unten - (dr.top - hr.top) - rest,
+        fuge = parseFloat(getComputedStyle(dipt).columnGap) || 16,
+        breiteMax = spalte1,
+        breite = Math.min(breiteMax, Math.max(260, 2 * hoehe * 5 / 7 + fuge));
+    hero.style.setProperty('--fotos-breit', Math.floor(breite) + 'px');
+  }
+
+  /* kurz entprellt; setTimeout statt requestAnimationFrame, damit es auch
+     in Hintergrund-Tabs laeuft */
+  var zeit = 0;
+  function planen(){ clearTimeout(zeit); zeit = setTimeout(ausrichten, 40); }
+  window.addEventListener('resize', planen);
+  window.addEventListener('load', planen);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(planen);
+  if (breit.addEventListener) breit.addEventListener('change', planen);
+  planen();
+})();
