@@ -13,6 +13,7 @@ HEIC-Vorstufe (macOS-Bordmittel, einmalig, liegt in material/konvertiert/):
 Freisteller (rembg, u2net_human_seg) liegen als PNG mit Alpha in material/freisteller/.
 
 Aufruf:  python3 optimize-images.py
+         python3 optimize-images.py --nur-buecher   (nur die Menue-Buecher)
 """
 from pathlib import Path
 from PIL import Image, ImageOps, ImageEnhance
@@ -72,6 +73,36 @@ ALPHA = {
     "siegel":     ("IMG_4719.PNG",   [120, 240, 480]),
     "lilly-frei": ("lilly-frei.png", [420, 840]),
 }
+
+
+# Buecherstapel fuer den Menue-Hintergrund (Lillys Foto, 19.11.)
+# Obere und untere Haelfte, waagerecht. Beschnitt in Anteilen des Originals
+# (links, oben, rechts, unten), damit er unabhaengig von der Aufloesung ist.
+#   grau → wird im Menue per CSS mit dem Bordeaux multipliziert
+#   rot  → dieselbe Mischung fest ins Bild gerechnet (Ersatz ohne mix-blend-mode)
+BUECHER_QUELLE = "buecher-stapel.jpg"
+BUECHER = {
+    "buecher-oben":  (0.099, 0.277, 0.877, 0.549),
+    "buecher-unten": (0.099, 0.544, 0.877, 0.760),
+}
+BUECHER_BREITEN = [1000]
+BUECHER_DECKKRAFT = 0.5                    # muss zu site.css (.nav::before) passen
+
+
+def buecher():
+    """Graustufen- und Rot-Fassung der beiden Buecherstreifen."""
+    from PIL import ImageChops
+    im = ImageOps.exif_transpose(Image.open(quelle(BUECHER_QUELLE))).convert("RGB")
+    b, h = im.size
+    rot = Image.new("RGB", (1, 1), (0x8B, 0x0F, 0x1E))     # --bordeaux
+    for name, (l, o, r, u) in BUECHER.items():
+        teil = im.crop((int(l * b), int(o * h), int(r * b), int(u * h)))
+        teil.save(MATERIAL / f"{name}-original.jpg", quality=90)
+        grau = ImageOps.autocontrast(ImageOps.grayscale(teil), cutoff=1).convert("RGB")
+        schreiben(grau, f"{name}-grau", BUECHER_BREITEN, guete=(70, 74))
+        flaeche = rot.resize(grau.size)
+        gemischt = Image.blend(flaeche, ImageChops.multiply(flaeche, grau), BUECHER_DECKKRAFT)
+        schreiben(gemischt, f"{name}-rot", BUECHER_BREITEN, guete=(70, 74))
 
 
 def quelle(name: str) -> Path:
@@ -188,4 +219,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--nur-buecher" in sys.argv:        # python3 optimize-images.py --nur-buecher
+        buecher()
+    else:
+        main()
+        print("Buecher:")
+        buecher()

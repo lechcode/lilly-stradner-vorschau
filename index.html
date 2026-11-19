@@ -53,8 +53,22 @@
     <span>Menü</span>
   </button>
 
+  <!-- Brandzeichen (19.11.): mittig in der Leiste, fuehrt zum Seitenanfang.
+       Ersetzt das Siegel, das vorher im Hero stand. -->
+  <a class="kopf-marke" href="#">
+    <img src="assets/img/siegel-120.webp" width="40" height="41" fetchpriority="high"
+         srcset="assets/img/siegel-120.webp 120w, assets/img/siegel-240.webp 240w" sizes="(min-width:1024px) 44px, 34px"
+         alt="Spirit of Body and Breath Logo">
+    <span>
+      <b>Lilly Stradner</b>
+      <i>Spirit of Body and Breath</i>
+    </span>
+  </a>
+
+  <div class="kopf-rechts">
+
   <!-- Runde 2: Lilly will den Kennenlerncall „wirklich ohne Hürde" — deshalb
-       dauerhaft erreichbar. Ab 640px in der Kopfleiste, darunter schwebt er
+       dauerhaft erreichbar. Ab 1024px in der Kopfleiste, darunter schwebt er
        unten am Rand, sobald der Hero verlassen ist (site.js). -->
   <a class="kennenlernen" href="#kontakt" data-thema="Kennenlerncall">Unverbindlich kennenlernen</a>
 
@@ -68,6 +82,7 @@
       EN
     </a>
   </nav>
+  </div>
 </header>
 
 <!-- ══ Seitenreiter (ab 900px) ══ -->
@@ -101,8 +116,9 @@
 
 <!-- ══════════ HERO ══════════
      Reihenfolge nach Lillys PDF (Runde 2):
-     Bilder → „Transformation ist möglich." → Grundlage → Zeile → Siegel +
-     „Spirit of…" → ihr neuer Text → Einladung zum Runterscrollen. -->
+     Bilder → „Transformation ist möglich." → Grundlage → Zeile →
+     ihr neuer Text → Einladung zum Runterscrollen.
+     Das Siegel mit „Spirit of…" steht seit 19.11. oben in der Kopfleiste. -->
 <section class="hero">
   <div class="buehne hero-gitter">
     <div class="dipt">
@@ -135,15 +151,6 @@
 
       <!-- Runde 2: ohne Strich davor, „&" statt Punkt, am Handy in EINER Zeile. -->
       <p class="zeile">Somatische Prozessbegleitung &amp; Atemarbeit</p>
-
-      <div class="lockup">
-        <img src="assets/img/siegel-120.webp" width="60" height="62" alt=""
-             srcset="assets/img/siegel-120.webp 120w, assets/img/siegel-240.webp 240w" sizes="60px">
-        <span>
-          <b>Spirit of Body and Breath</b>
-          <i>Lilly Stradner</i>
-        </span>
-      </div>
 
       <p class="kern">Jahrelang habe ich mich und meinen Körper gehasst. Heute weiß ich: <em>Wir waren nie das wirkliche Problem!</em></p>
       <p>Genau deshalb begleite ich Menschen hin zu einer liebevollen Beziehung zu sich selbst und ihrem Körper ~ damit von hier aus alles andere wachsen kann. <span aria-hidden="true">🌱</span></p>

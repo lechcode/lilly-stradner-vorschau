@@ -58,19 +58,46 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .boden-glut .marke{color:var(--auf-bordeaux-2)}
 
 /* ── Kopfleiste ────────────────────────────────────────────── */
+/* 19.11.: Brandzeichen mittig. Raster 1fr | auto | 1fr, damit es wirklich in
+   der Mitte steht, egal wie breit links und rechts sind.
+   Handy/Tablet (unter 1024px): schwebende Pille oben, gleiche Hoehe, Rundung
+   und Randabstand wie der Kennenlern-Knopf unten.
+   Desktop: durchgehende Leiste neben dem Seitenmenue. */
 .kopf{
-  position:fixed; inset:0 0 auto 0; z-index:100;
-  display:flex; justify-content:space-between; align-items:center;
-  gap:1rem; padding:.55rem clamp(.8rem,2vw,1.4rem);
+  --leiste:50px;                          /* = Hoehe Kennenlern-Knopf am Handy */
+  --rand:1rem;                            /* = sein Abstand zum Rand */
+  position:fixed; z-index:100;
+  top:max(var(--rand), env(safe-area-inset-top)); left:var(--rand); right:var(--rand);
+  height:var(--leiste); padding:0 3px;
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:.35rem;
 }
+.menue-knopf{grid-column:1; justify-self:start}
+.kopf-marke{grid-column:2}
+.kopf-rechts{grid-column:3; justify-self:end; display:flex; align-items:center; gap:.6rem}
 /* ⚠ Glas-Unschaerfe NICHT auf .kopf selbst: backdrop-filter macht das Element
    zum Bezugsrahmen fuer position:fixed — der schwebende Kennenlern-Knopf klebte
    dadurch am Handy OBEN statt unten. Deshalb liegt die Flaeche im ::before. */
 .kopf::before{
   content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
-  background:color-mix(in srgb, var(--creme) 90%, transparent);
-  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--linie);
+  background:color-mix(in srgb, var(--creme) 86%, transparent);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--linie); border-radius:999px;
+  box-shadow:0 10px 26px #2b1a171f;
+}
+
+/* Brandzeichen: rundes Siegel + zweizeilig Name / Methode */
+.kopf-marke{
+  display:inline-flex; align-items:center; gap:.5rem; min-height:44px;
+  text-decoration:none; color:var(--tinte); white-space:nowrap;
+}
+.kopf-marke img{width:34px; height:auto; flex:none}
+.kopf-marke span{display:block; text-align:left}
+.kopf-marke b{display:block; font:400 1.06rem/1.05 var(--kopf); letter-spacing:0}
+.kopf-marke i{display:block; font:400 .7rem/1.25 var(--leib); font-style:normal; color:var(--tinte-2); margin-top:.1rem}
+@media (max-width:359.98px){
+  .kopf-marke img{width:30px}
+  .kopf-marke b{font-size:.95rem}
+  .kopf-marke i{font-size:.62rem}
 }
 .menue-knopf{
   display:inline-flex; align-items:center; gap:.55rem; min-height:46px; padding:.5rem .95rem;
@@ -79,17 +106,17 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   transition:border-color .25s var(--ease), background .25s var(--ease);
 }
 .menue-knopf:hover{border-color:var(--bordeaux); background:var(--creme-2)}
+@media (max-width:1023.98px){
+  .menue-knopf{width:44px; min-height:44px; height:44px; padding:0; justify-content:center; border-radius:50%}
+  .menue-knopf span{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+}
 .menue-knopf svg{width:15px; height:11px; flex:none}
 .menue-knopf svg line{stroke:currentColor; stroke-width:1.6; transition:transform .3s var(--ease)}
 [aria-expanded=true] .b1{transform:translateY(4.4px) rotate(45deg); transform-origin:center}
 [aria-expanded=true] .b2{opacity:0}
 [aria-expanded=true] .b3{transform:translateY(-4.4px) rotate(-45deg); transform-origin:center}
-/* Menue offen: Kopfleiste liegt auf Bordeaux — Knopf und Sprache hell */
-.nav-offen .kopf::before{opacity:0}
-.nav-offen .menue-knopf,.nav-offen .sprache a{color:var(--auf-bordeaux); border-color:#ffffff40}
-.nav-offen .sprache a[aria-current=true]{background:#00000033; color:var(--auf-bordeaux)}
-.nav-offen .menue-knopf:hover,.nav-offen .sprache a:hover{background:#00000026; color:var(--auf-bordeaux)}
-.nav-offen .kennenlernen{background:var(--auf-bordeaux); color:var(--bordeaux)}
+/* Menue offen: die Leiste bleibt creme und ohne Buecher. Der schwebende
+   Kennenlern-Knopf tritt zurueck — im Menue steht „Kontakt & Kennenlerncall". */
 
 .sprache{display:flex; gap:.3rem; align-items:center}
 .sprache a{
@@ -100,18 +127,29 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .sprache a:hover{color:var(--tinte); border-color:var(--linie)}
 .sprache a[aria-current=true]{background:var(--creme-2); color:var(--tinte); border-color:var(--linie)}
 .flagge{width:20px; height:14px; border-radius:2px; flex:none; box-shadow:0 0 0 1px #00000026}
+/* Handy/Tablet: nur Kuerzel, schmal genug, dass das Brandzeichen exakt mittig bleibt */
+@media (max-width:1023.98px){
+  .sprache{gap:2px}
+  .sprache a{min-height:44px; padding:.4rem .48rem; font-size:.8rem; letter-spacing:.04em}
+  .sprache .flagge{display:none}
+}
+/* Kleinere Desktops: Flaggen weg, damit rechts nicht breiter wird als links
+   Platz ist — sonst rutscht das Brandzeichen aus der Mitte. */
+@media (min-width:1024px) and (max-width:1399.98px){
+  .sprache .flagge{display:none}
+  .sprache a{padding:.45rem .6rem}
+}
 
-/* Kennenlernen: immer erreichbar (Lilly: „keine Huerde"). Ab 640px in der
+/* Kennenlernen: immer erreichbar (Lilly: „keine Huerde"). Ab 1024px in der
    Kopfleiste, darunter schwebt er unten, sobald der Hero verlassen ist. */
 .kennenlernen{
   display:inline-flex; align-items:center; min-height:44px; padding:.5rem 1.1rem;
-  border-radius:999px; background:var(--bordeaux); color:#fff; text-decoration:none;
+  border-radius:999px; background:var(--bordeaux); color:var(--auf-bordeaux); text-decoration:none;
   font:600 var(--klein)/1.1 var(--kopf); letter-spacing:.02em; white-space:nowrap;
   transition:background .25s var(--ease);
 }
 .kennenlernen:hover{background:var(--bordeaux-tief)}
-@media (min-width:640px){ .kennenlernen{margin-left:auto} }
-@media (max-width:639.98px){
+@media (max-width:1023.98px){
   .kennenlernen{
     position:fixed; left:50%; bottom:max(1rem, env(safe-area-inset-bottom)); z-index:90;
     min-height:50px; padding:.7rem 1.4rem; font-size:.95rem;
@@ -121,11 +159,12 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   }
   .cta-zeigen .kennenlernen{transform:translate(-50%,0); opacity:1; pointer-events:auto}
   html:not(.js) .kennenlernen{transform:translate(-50%,0); opacity:1; pointer-events:auto}
+  .nav-offen .kennenlernen{transform:translate(-50%,140%); opacity:0; pointer-events:none}
 }
 
-/* ── Seitenreiter (ab 900px) ───────────────────────────────── */
+/* ── Seitenreiter (vom Seitenmenue abgeloest, bleibt ausgeblendet) ── */
 .rail{display:none}
-@media (min-width:900px){
+@media (min-width:1024px){
   .rail{
     display:flex; position:fixed; left:0; top:0; bottom:0; z-index:80;
     width:var(--rail); flex-direction:column; align-items:center; justify-content:center; gap:1.15rem;
@@ -148,23 +187,66 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   .rail a.aktiv::before{transform:scale(1.35)}
 }
 
-/* ── Ausklapp-Menue: ganze Flaeche Bordeaux ────────────────── */
+/* ── Ausklapp-Menue: Bordeaux mit Buecherstreifen oben und unten ──
+   19.11.: Lillys Buecherstapel, obere Haelfte oben, untere unten. Graustufen-
+   Bild, per multiply ins Rot gemischt (50 %), weich zur Mitte ausgeblendet —
+   wie ein Blick durch das Rot auf ein Regal. Die Menuepunkte stehen in einer
+   eigenen Scrollflaeche ZWISCHEN den Streifen, also nie auf den Buechern.
+   Am Handy beginnt der obere Streifen erst unter der Logo-Leiste. */
 .nav{
+  --streifen:clamp(140px, 18vh, 220px);
+  --streifen-oben:calc(max(1rem, env(safe-area-inset-top)) + 50px + .5rem);   /* unter der Pille */
   position:fixed; inset:0; z-index:95; background:var(--bordeaux); color:var(--auf-bordeaux);
-  display:grid; place-items:center; padding:5rem 1.5rem 2rem; overflow-y:auto;
+  display:grid; grid-template-rows:minmax(0,1fr); place-items:center; overflow:hidden;
+  padding:calc(var(--streifen-oben) + var(--streifen)) 1.5rem var(--streifen);
   opacity:0; visibility:hidden; transition:opacity .35s var(--ease), visibility .35s;
 }
 .nav[data-offen=true]{opacity:1; visibility:visible}
-.nav ol{list-style:none; margin:0; padding:0; display:grid; gap:.1rem; width:min(100%,32rem)}
+.nav::before,.nav::after{
+  content:''; position:absolute; left:0; right:0; height:var(--streifen); pointer-events:none;
+  background-position:center; background-size:cover; background-repeat:no-repeat;
+  mix-blend-mode:multiply; opacity:0; transition:opacity .4s var(--ease) .05s;
+}
+.nav::before{
+  top:var(--streifen-oben);
+  background-image:url(img/buecher-oben-grau-1000.jpg);
+  background-image:image-set(url(img/buecher-oben-grau-1000.webp) type("image/webp"), url(img/buecher-oben-grau-1000.jpg) type("image/jpeg"));
+  background-position:center 20%;
+  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 48%, transparent);
+          mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 48%, transparent);
+}
+.nav::after{
+  bottom:0;
+  background-image:url(img/buecher-unten-grau-1000.jpg);
+  background-image:image-set(url(img/buecher-unten-grau-1000.webp) type("image/webp"), url(img/buecher-unten-grau-1000.jpg) type("image/jpeg"));
+  background-position:center 70%;
+  -webkit-mask-image:linear-gradient(to top, #000 52%, transparent);
+          mask-image:linear-gradient(to top, #000 52%, transparent);
+}
+.nav[data-offen=true]::before,.nav[data-offen=true]::after{opacity:.5}
+/* Ersatz ohne mix-blend-mode: dieselbe Mischung fest ins Bild gerechnet */
+@supports not (mix-blend-mode:multiply){
+  .nav::before{background-image:url(img/buecher-oben-rot-1000.jpg)}
+  .nav::after{background-image:url(img/buecher-unten-rot-1000.jpg)}
+  .nav::before,.nav::after{mix-blend-mode:normal}
+  .nav[data-offen=true]::before,.nav[data-offen=true]::after{opacity:1}
+}
+@media (prefers-reduced-motion:reduce){ .nav::before,.nav::after{transition:none} }
+.nav ol{
+  list-style:none; margin:0; padding:0; display:grid; gap:.1rem; width:min(100%,32rem);
+  max-height:100%; overflow-y:auto; overscroll-behavior:contain; position:relative; z-index:1;
+  scrollbar-width:thin; scrollbar-color:color-mix(in srgb, #C9A35B 45%, transparent) transparent;
+}
 .nav a{
-  display:flex; align-items:baseline; gap:1rem; padding:.7rem .3rem; text-decoration:none;
-  font:600 clamp(1.35rem,4.4vw,1.9rem)/1.2 var(--kopf); letter-spacing:-.015em;
-  border-bottom:1px solid #ffffff26; transition:padding-left .25s var(--ease), opacity .25s;
+  display:flex; align-items:baseline; gap:1rem; padding:.46rem .3rem; text-decoration:none;
+  font:600 clamp(1.3rem,4.4vw,1.9rem)/1.2 var(--kopf); letter-spacing:-.015em; color:#FBF3EA;
+  border-bottom:1px solid color-mix(in srgb, #C9A35B 32%, transparent);
+  transition:padding-left .25s var(--ease), opacity .25s;
 }
 .nav a:hover{padding-left:.9rem}
-.nav a span{min-width:2.3rem; font-size:var(--klein); color:var(--auf-bordeaux-2); letter-spacing:.06em}
-.nav li.unter a{font-size:clamp(1.05rem,3.3vw,1.3rem); padding-left:2.4rem; color:var(--auf-bordeaux-2)}
-.nav li.nav-kontakt a{border-bottom:none; margin-top:.8rem}
+.nav a span{min-width:2.3rem; font-size:var(--klein); color:#D9BC86; letter-spacing:.06em}
+.nav li.unter a{font-size:clamp(1.02rem,3.3vw,1.3rem); padding-left:2.4rem; color:#FBF3EA}
+.nav li.nav-kontakt a{border-bottom:none; margin-top:.3rem}
 
 /* ── Hero: Lillys Reihenfolge, als mittige Achse ───────────────
    Bilder → „Transformation ist möglich." → Grundlage → Zeile →
@@ -512,7 +594,7 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
 .glutlinie{position:fixed; z-index:99; pointer-events:none; inset:0 0 auto 0; height:2px}
 .glutlinie span{display:block; height:100%; background:var(--bordeaux);
                 transform-origin:left; transform:scaleX(var(--fortschritt,0))}
-@media (min-width:900px){
+@media (min-width:1024px){
   .glutlinie{inset:0 auto 0 calc(var(--rail) - 1px); width:2px; height:auto}
   .glutlinie span{width:100%; height:100%; transform-origin:top; transform:scaleY(var(--fortschritt,0))}
 }
@@ -553,21 +635,38 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
 .legende .l1::before{background:var(--wald)} .legende .l2::before{background:var(--bordeaux)} .legende .l3::before{background:var(--erde)}
 .venn .k,.methode-mini .k{display:none}   /* alte Kreisflaechen — die Masken uebernehmen */
 
-/* ── Desktop (ab 900px): Menue dauerhaft ausgeklappt links ─────
+/* ── Desktop (ab 1024px): Menue dauerhaft ausgeklappt links ────
    Kein Menue-Knopf, kein Vollflaechen-Overlay, kein Seitenreiter;
-   der Inhalt rueckt neben die Leiste. Mobil bleibt alles wie gehabt. */
-@media (min-width:900px){
+   der Inhalt rueckt neben die Leiste. Die Kopfleiste beginnt rechts vom
+   Seitenmenue und verdeckt die Buecher dort nie. */
+@media (min-width:1024px){
   body{padding-left:var(--seitennav)}
   .menue-knopf,.rail{display:none}
-  .kopf{left:var(--seitennav)}
+  .kopf{
+    top:0; left:var(--seitennav); right:0; height:auto; min-height:64px;
+    padding:.55rem clamp(.8rem,2vw,1.4rem);
+  }
+  .kopf::before{border:0; border-bottom:1px solid var(--linie); border-radius:0; box-shadow:none}
+  .kopf-rechts{gap:.4rem}
+  .kopf-marke{gap:.65rem}
+  .kopf-marke img{width:44px}
+  .kopf-marke b{font-size:1.3rem}
+  .kopf-marke i{font-size:.8rem}
   .glutlinie{inset:0 auto 0 calc(var(--seitennav) - 1px)}
   .nav{
+    --streifen-oben:0px;
+    --streifen:clamp(140px, 20vh, 220px);
     inset:0 auto 0 0; width:var(--seitennav); z-index:96; opacity:1; visibility:visible;
-    display:flex; align-items:center; padding:5rem 1.2rem 2rem 1.4rem; transition:none;
+    padding:var(--streifen) 1.2rem var(--streifen) 1.4rem; transition:none;
+  }
+  .nav::before,.nav::after{opacity:.5; transition:none}
+  @supports not (mix-blend-mode:multiply){ .nav::before,.nav::after{opacity:1} }
+  .nav::before{
+    -webkit-mask-image:linear-gradient(to bottom, #000 50%, transparent);
+            mask-image:linear-gradient(to bottom, #000 50%, transparent);
   }
   .nav ol{width:100%}
-  .nav a{font-size:clamp(1.02rem,1.3vw,1.18rem); gap:.7rem; padding:.6rem .2rem}
+  .nav a{font-size:clamp(1.02rem,1.3vw,1.18rem); gap:.7rem; padding:.5rem .2rem}
   .nav a span{min-width:2rem}
   .nav li.unter a{font-size:.95rem; padding-left:2.2rem}
-  .nav-offen .kopf::before{opacity:1}
 }

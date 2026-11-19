@@ -45,8 +45,8 @@
        der Browser focus() stillschweigend (rAF war dafuer zu frueh). */
     if (offen) setTimeout(function(){ nav.querySelector('a').focus(); }, 60);
   }
-  /* Ab 900px steht das Menue dauerhaft links: ein offenes Mobil-Menue schliessen */
-  var breit = window.matchMedia('(min-width:900px)');
+  /* Ab 1024px steht das Menue dauerhaft links: ein offenes Mobil-Menue schliessen */
+  var breit = window.matchMedia('(min-width:1024px)');
   if (breit.addEventListener) breit.addEventListener('change', function(){
     if (breit.matches && nav.dataset.offen === 'true') navSetzen(false);
   });
@@ -246,7 +246,7 @@
   }
 
   /* ── Kennenlernen-Knopf am Handy (Runde 2) ──
-     Unter 640px schwebt er unten, sobald der Hero verlassen ist, und
+     Unter 1024px schwebt er unten, sobald der Hero verlassen ist, und
      macht Platz, wenn das Formular im Bild ist. Die Klasse wirkt nur
      dort (CSS) — auf breiten Schirmen sitzt er fest in der Kopfleiste. */
   var hero = document.querySelector('.hero'),
