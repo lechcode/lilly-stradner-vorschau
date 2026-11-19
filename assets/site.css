@@ -174,7 +174,8 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .dipt{display:grid; grid-template-columns:1fr 1fr; gap:clamp(.6rem,1.6vw,1.1rem); width:min(100%, 30rem); margin:0 0 clamp(1.8rem,4vw,2.6rem)}
 .dipt figure{margin:0}
 .dipt picture{display:block; overflow:hidden; border-radius:6px; box-shadow:0 14px 34px #2b1a1726}
-.dipt img{width:100%; aspect-ratio:4/5; object-fit:cover}
+.dipt img{width:100%; aspect-ratio:5/7; object-fit:cover}
+.dipt figure:first-child img{scale:1.08}
 .dipt figcaption{font:600 var(--klein)/1 var(--kopf); letter-spacing:.16em; color:var(--tinte-2); margin-top:.7rem}
 .hero-text{max-width:40rem}
 .hero h1{margin:0 auto .9rem; max-width:16ch}
