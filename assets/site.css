@@ -258,7 +258,15 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .dipt figure:last-child{margin-top:clamp(1.4rem,5vw,2.6rem)}   /* versetzte Fotos */
 @media (min-width:900px){
   .hero-gitter{flex-direction:row-reverse; align-items:flex-start; justify-content:space-between; gap:3rem}
-  .dipt{width:30rem; flex:none; margin:0}
+  /* 19.11.: Fotos duerfen schmaler werden, statt den Text nach links unter das
+     Seitenmenue zu schieben (row-reverse laeuft sonst links ueber). */
+  .dipt{width:auto; flex:0 1 30rem; min-width:0; margin:0}
+  .hero-text{flex:1 1 auto; min-width:0}
+}
+@media (min-width:1024px){
+  /* Ueberschrift nach der Breite NEBEN dem Seitenmenue bemessen, nicht nach
+     dem ganzen Fenster — sonst ist „Transformation" breiter als die Spalte. */
+  .hero h1{font-size:clamp(2.3rem, calc((100vw - var(--seitennav)) * .056), 4.4rem)}
 }
 .dipt picture{display:block; overflow:hidden; border-radius:6px; box-shadow:0 14px 34px #2b1a1726}
 .dipt img{width:100%; aspect-ratio:5/7; object-fit:cover}
