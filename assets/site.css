@@ -73,7 +73,6 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 }
 .menue-knopf{grid-column:1; justify-self:start}
 .kopf-mitte{grid-column:2; display:flex; flex-direction:column; align-items:center; min-width:0}
-.kopf-zeile{display:none}                 /* nur Desktop (Runde 5) */
 .kopf-rechts{grid-column:3; justify-self:end; display:flex; align-items:center; gap:.6rem}
 /* ⚠ Glas-Unschaerfe NICHT auf .kopf selbst: backdrop-filter macht das Element
    zum Bezugsrahmen fuer position:fixed — der schwebende Kennenlern-Knopf klebte
@@ -328,63 +327,62 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   .hero{--frei:calc(100vw - var(--seitennav))}
 }
 
-/* ── Hero Desktop, Runde 5 (19.11.): ruhige, gerade Kanten ─────────────
-   Reihe 1: Ueberschrift | Grundlage (gleiche Hoehe wie die Ueberschrift)
-   Reihe 2: Fotos        | Zitat (mittig zu den Fotos, Goldlinie)
-   Reihe 3: Absatz, Reihe 4: Knopf.
-   Spalte 1 endet genau dort, wo oben „Unverbindlich kennenlernen" beginnt;
-   die Ueberschrift fuellt sie in einer Zeile, ihre Oberkante liegt auf der
-   Goldlinie ueber „01 Über mich". Die exakten Masse rechnet site.js
-   (heroAusrichten) und setzt sie als Variablen; die Werte hier sind nur
-   der Ersatz ohne JavaScript. */
+/* ── Hero Desktop, Runde 6 (19.11.) ────────────────────────────────────
+   Raster: linke Spalte so breit wie die Ueberschrift (max-content).
+     Reihe 1  Ueberschrift | Grundlage (genau so hoch wie die Ueberschrift)
+     Reihe 2  Fotos        | Zitat (mittig zu den Fotos, Goldlinie)
+     Reihe 3  Absatz
+     Reihe 4  Knopf
+   Die Fotos sind zusammen (inkl. 16px Fuge) genau so breit wie die
+   Ueberschrift. Groesse der Ueberschrift und die Grundlage rechnet
+   site.js (heroAusrichten); hier stehen die Ersatzwerte ohne JavaScript.
+   Alle aelteren Desktop-Regeln fuer den Hero werden hier ueberschrieben. */
 @media (min-width:1024px){
   .hero{
     --rand-l:clamp(1.5rem, 3vw, 3rem);
     --rand-r:clamp(.8rem, 2vw, 1.4rem);    /* = Innenabstand der Kopfleiste rechts */
-    --luecke:clamp(1.2rem, 2vw, 2rem);
     display:block; min-height:100svh;
-    padding:var(--hero-oben, calc(84px + 6vh)) 0 0;
+    padding:calc(var(--kopf-hoehe) + 1px + 36px) 0 0;   /* 36px unter der Goldlinie */
   }
   .hero .buehne{width:auto; margin:0 var(--rand-r) 0 var(--rand-l)}
   .hero-gitter{
-    display:grid; min-height:0;
-    grid-template-columns:var(--spalte-1, minmax(0,62fr)) minmax(0,38fr);
+    display:grid; min-height:0; align-items:start;
+    grid-template-columns:max-content minmax(0, 1fr);
     grid-template-rows:auto auto auto auto;
-    grid-template-areas:"titel grund" "bilder zitat" "absatz ." "wege .";
-    column-gap:var(--luecke); row-gap:0;
+    grid-template-areas:"title sub" "photos quote" "text ." "cta .";
+    column-gap:clamp(28px, 3vw, 56px); row-gap:0;
   }
   .hero h1{
-    grid-area:titel; white-space:nowrap; max-width:none; margin:0 0 clamp(1rem, 3vh, 2rem);
-    font-size:var(--h1-groesse, clamp(2.4rem, 4.4vw, 5rem)); line-height:1;
+    grid-area:title; white-space:nowrap; max-width:none; margin:0 0 24px;
+    font-size:var(--h1-groesse, clamp(2.4rem, 3.6vw, 4.6rem)); line-height:1;
   }
   .hero .grundlage{
-    grid-area:grund; align-self:start; white-space:nowrap; margin:var(--grund-oben, 0) 0 0;
-    font-size:var(--grund-groesse, 1.2rem); line-height:var(--grund-zeile, 1.3);
+    grid-area:sub; align-self:start; white-space:nowrap; margin:var(--grund-oben, 0) 0 0;
+    font-size:var(--grund-groesse, 1.1rem); line-height:var(--grund-zeile, 1.3);
   }
+  /* Fotos: gleich gross, gleiche Hoehe, nicht versetzt, 4:5 */
   .hero .dipt{
-    grid-area:bilder; justify-self:start; align-self:start; margin:0;
-    width:var(--fotos-breit, min(100%, 30rem)); gap:clamp(.8rem, 1.2vw, 1.2rem);
+    grid-area:photos; justify-self:stretch; align-self:start; margin:0;
+    width:0; min-width:100%;               /* nimmt die Spaltenbreite an, ohne sie aufzublaehen */
+    grid-template-columns:1fr 1fr; gap:16px;
   }
-  .hero .dipt figure:last-child{margin-top:0}          /* nicht mehr versetzt */
-  .hero .dipt figure:first-child img{scale:1}
-  .hero .dipt figcaption{margin-top:.5rem}
+  .hero .dipt figure,.hero .dipt figure:last-child{margin:0}
+  .hero .dipt img,.hero .dipt figure:first-child img{
+    aspect-ratio:4/5; max-height:48vh; width:100%; object-fit:cover; scale:none; transform:none;
+  }
+  .hero .dipt figcaption{margin-top:.45rem}
   .hero .kern{
-    grid-area:zitat; align-self:center; margin:0 0 1.6rem;   /* 1.6rem = Jahreszahl, damit mittig zu den Fotos */
+    grid-area:quote; align-self:center; margin:0 0 1.4rem;   /* 1.4rem = Jahreszahl: mittig zu den Fotos */
     padding-left:1.1rem; border-left:2px solid #C9A35B;
-    font-size:clamp(1.1rem, 1.55vw, 1.6rem); line-height:1.3;
+    font-size:clamp(1.1rem, 1.5vw, 1.6rem); line-height:1.3;
   }
   .hero .kern em{color:var(--bordeaux)}
-  .hero-absatz{grid-area:absatz; margin:clamp(.9rem, 2.4vh, 1.6rem) 0 clamp(.9rem, 2.4vh, 1.6rem)}
-  .hero .zeile{display:none}                           /* steht am Desktop in der Kopfleiste */
-  .hero-wege{grid-area:wege; flex-direction:row}
+  .hero-absatz{grid-area:text; width:0; min-width:100%; margin:clamp(.8rem, 2vh, 1.4rem) 0 clamp(.9rem, 2.2vh, 1.5rem)}
+  .hero .zeile{display:none}
+  .hero-wege{grid-area:cta; flex-direction:row}
   .hero-wege .knopf{width:auto; padding:.9rem 2.6rem; font-size:1rem; cursor:pointer}
-  /* schmale Desktops: Grundlage unter der Ueberschrift (setzt site.js) */
-  .hero-schmal .hero-gitter{grid-template-areas:"titel titel" "grund grund" "bilder zitat" "absatz ." "wege ."}
-  .hero-schmal .grundlage{font-size:1.15rem; line-height:1.45; margin:0 0 clamp(1rem, 2.6vh, 1.6rem)}
 }
-@media (min-width:1024px) and (max-width:1279.98px){
-  .kopf .kopf-zeile{font-size:.6rem; letter-spacing:.1em}
-}
+
 
 /* ── Knoepfe ───────────────────────────────────────────────── */
 .knopf{
@@ -761,24 +759,33 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
    Kein Menue-Knopf, kein Vollflaechen-Overlay, kein Seitenreiter;
    der Inhalt rueckt neben die Leiste. Die Kopfleiste beginnt rechts vom
    Seitenmenue und verdeckt die Buecher dort nie. */
+/* Runde 6 (19.11.): Kopfleiste und oberer Buecherstreifen teilen sich EINE
+   Hoehe (--kopf-hoehe). Die Goldlinie unter dem Streifen und die Linie unter
+   der Kopfleiste liegen dadurch auf demselben Pixel und wirken wie eine
+   durchgehende Linie ueber die ganze Breite. Beide 1px, --linie-gold. */
 @media (min-width:1024px){
+  :root{
+    --kopf-hoehe:clamp(76px, 11vh, 108px);
+    --linie-gold:#C9A35B;
+  }
+  /* auf ganze Pixel runden: beide Linien landen garantiert auf derselben Pixelzeile */
+  @supports (width:round(1.5px, 1px)){
+    :root{--kopf-hoehe:round(clamp(76px, 11vh, 108px), 1px)}
+  }
   body{padding-left:var(--seitennav)}
   .menue-knopf,.rail{display:none}
-  /* Lilly 19.11.: Logo mittig auf der Strecke zwischen Seitenmenue und
-     „Unverbindlich kennenlernen", nicht mittig im ganzen Fenster.
-     Spalte 1 reicht genau von der Menuekante bis zum Knopf. */
+  /* Logo mittig zwischen Seitenmenue und „Unverbindlich kennenlernen":
+     Logo-Bereich flex:1 (beginnt an der Menuekante, endet am Knopf),
+     rechts Knopf + Sprache mit flex:none. Die Linie liegt 1px unter
+     --kopf-hoehe, genau wie im Seitenmenue. */
   .kopf{
-    top:0; left:var(--seitennav); right:0; height:auto; min-height:64px;
-    padding:.55rem clamp(.8rem,2vw,1.4rem) .55rem 0;
-    grid-template-columns:minmax(0,1fr) auto; column-gap:0;
+    display:flex; align-items:center; gap:0;
+    top:0; left:var(--seitennav); right:0; height:calc(var(--kopf-hoehe) + 1px); min-height:0;
+    padding:0 clamp(.8rem,2vw,1.4rem) 1px 0;
   }
-  .kopf-mitte{grid-column:1; justify-self:center}
-  .kopf-zeile{
-    display:block; margin:.3rem 0 0; white-space:nowrap;
-    font:600 .68rem/1 var(--kopf); letter-spacing:.16em; text-transform:uppercase; color:var(--bordeaux);
-  }
-  .kopf-rechts{grid-column:2}
-  .kopf::before{border:0; border-bottom:1px solid var(--linie); border-radius:0; box-shadow:none}
+  .kopf-mitte{flex:1; display:flex; justify-content:center; align-items:center}
+  .kopf-rechts{flex:none}
+  .kopf::before{border:0; border-bottom:1px solid var(--linie-gold); border-radius:0; box-shadow:none}
   .kopf-rechts{gap:.4rem}
   .kopf-marke{gap:.65rem}
   .kopf-marke img{width:44px}
@@ -787,11 +794,14 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
   .glutlinie{inset:0 auto 0 calc(var(--seitennav) - 1px)}
   .nav{
     --streifen-oben:0px;
-    --streifen:clamp(84px, 17vh, 220px);      /* Lilly: alles ohne Scrollen sichtbar */
+    --streifen:clamp(84px, 17vh, 220px);      /* unterer Streifen; Lilly: alles ohne Scrollen sichtbar */
     --luft:clamp(.4rem, 1.6vh, 1rem);
+    --nav-linie:var(--linie-gold);
     inset:0 auto 0 0; width:var(--seitennav); z-index:96; opacity:1; visibility:visible;
-    padding:calc(var(--streifen) + var(--luft)) 1.2rem calc(var(--streifen) + var(--luft)) 1.4rem; transition:none;
+    padding:calc(var(--kopf-hoehe) + 1px + var(--luft)) 1.2rem calc(var(--streifen) + var(--luft)) 1.4rem; transition:none;
+    background-position:0 var(--kopf-hoehe), 0 calc(100% - var(--streifen));
   }
+  .nav::before{height:var(--kopf-hoehe)}     /* oberer Streifen = Kopfleistenhoehe */
   .nav::before,.nav::after{opacity:.5; transition:none}
   @supports not (mix-blend-mode:multiply){ .nav::before,.nav::after{opacity:1} }
   .nav ol{width:100%}
