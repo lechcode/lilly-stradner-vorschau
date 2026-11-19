@@ -86,7 +86,53 @@ BUECHER = {
     "buecher-unten": (0.099, 0.544, 0.877, 0.760),
 }
 BUECHER_BREITEN = [1000]
+
+# Retusche (Lilly 19.11.: „die russische Schrift soll weg"). Kaesten in Anteilen
+# des jeweiligen Streifens (links, oben, rechts, unten). „v" fuellt von oben nach
+# unten auf, „h" von links nach rechts (fuer senkrechte Schrift).
+BUECHER_RETUSCHE = {
+    "buecher-oben": [
+        ((0.083, 0.211, 0.496, 0.269), "v"),   # «ВОЛШЕБНАЯ АЗИЯ» БЛОКНОТ
+        ((0.681, 0.196, 0.788, 0.246), "v"),   # АНТЕЙКУ
+        ((0.893, 0.157, 0.921, 0.246), "h"),   # МИФ (senkrecht)
+    ],
+}
 BUECHER_DECKKRAFT = 0.5                    # muss zu site.css (.nav::before) passen
+
+
+def retuschieren(im: Image.Image, kaesten) -> Image.Image:
+    """Schrift auf glattem Buchruecken uebermalen: zwischen den sauberen Kanten
+    des Kastens verlaufen lassen, weichzeichnen gegen Streifen, dann leichtes
+    Rauschen gegen den Plastik-Look."""
+    import random
+    from PIL import ImageFilter
+    im = im.copy(); px = im.load(); b, h = im.size
+    zufall = random.Random(7)
+    for (l, o, r, u), richtung in kaesten:
+        x0, y0, x1, y1 = int(l * b), int(o * h), int(r * b), int(u * h)
+        def mittel(pkte):
+            n = len(pkte); return tuple(sum(p[i] for p in pkte) / n for i in range(3))
+        if richtung == "v":
+            for x in range(x0, x1):
+                a = mittel([px[x, y0 - k] for k in range(1, 4)])
+                z = mittel([px[x, y1 + k] for k in range(1, 4)])
+                for y in range(y0, y1):
+                    t = (y - y0) / max(1, y1 - y0); n = 0
+                    px[x, y] = tuple(int(a[i] + (z[i] - a[i]) * t + n) for i in range(3))
+        else:
+            for y in range(y0, y1):
+                a = mittel([px[x0 - k, y] for k in range(1, 4)])
+                z = mittel([px[x1 + k, y] for k in range(1, 4)])
+                for x in range(x0, x1):
+                    t = (x - x0) / max(1, x1 - x0); n = 0
+                    px[x, y] = tuple(int(a[i] + (z[i] - a[i]) * t + n) for i in range(3))
+        flaeche = im.crop((x0, y0, x1, y1)).filter(ImageFilter.GaussianBlur(5))
+        im.paste(flaeche, (x0, y0)); px = im.load()
+        for x in range(x0, x1):
+            for y in range(y0, y1):
+                n = zufall.gauss(0, 2.5)
+                px[x, y] = tuple(int(v + n) for v in px[x, y])
+    return im
 
 
 def buecher():
@@ -97,6 +143,7 @@ def buecher():
     rot = Image.new("RGB", (1, 1), (0x8B, 0x0F, 0x1E))     # --bordeaux
     for name, (l, o, r, u) in BUECHER.items():
         teil = im.crop((int(l * b), int(o * h), int(r * b), int(u * h)))
+        teil = retuschieren(teil, BUECHER_RETUSCHE.get(name, []))
         teil.save(MATERIAL / f"{name}-original.jpg", quality=90)
         grau = ImageOps.autocontrast(ImageOps.grayscale(teil), cutoff=1).convert("RGB")
         schreiben(grau, f"{name}-grau", BUECHER_BREITEN, guete=(70, 74))

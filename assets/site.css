@@ -133,12 +133,7 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   .sprache a{min-height:44px; padding:.4rem .48rem; font-size:.8rem; letter-spacing:.04em}
   .sprache .flagge{display:none}
 }
-/* Kleinere Desktops: Flaggen weg, damit rechts nicht breiter wird als links
-   Platz ist — sonst rutscht das Brandzeichen aus der Mitte. */
-@media (min-width:1024px) and (max-width:1399.98px){
-  .sprache .flagge{display:none}
-  .sprache a{padding:.45rem .6rem}
-}
+
 
 /* Kennenlernen: immer erreichbar (Lilly: „keine Huerde"). Ab 1024px in der
    Kopfleiste, darunter schwebt er unten, sobald der Hero verlassen ist. */
@@ -189,16 +184,22 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 
 /* ── Ausklapp-Menue: Bordeaux mit Buecherstreifen oben und unten ──
    19.11.: Lillys Buecherstapel, obere Haelfte oben, untere unten. Graustufen-
-   Bild, per multiply ins Rot gemischt (50 %), weich zur Mitte ausgeblendet —
-   wie ein Blick durch das Rot auf ein Regal. Die Menuepunkte stehen in einer
+   Bild, per multiply ins Rot gemischt (50 %). Lilly: klare Kante zum Menue,
+   kein Verlauf. Eine feine Goldlinie markiert sie. Die Menuepunkte stehen in einer
    eigenen Scrollflaeche ZWISCHEN den Streifen, also nie auf den Buechern.
    Am Handy beginnt der obere Streifen erst unter der Logo-Leiste. */
 .nav{
-  --streifen:clamp(140px, 18vh, 220px);
+  --streifen:clamp(120px, 16vh, 220px);
+  --luft:1rem;                            /* Abstand Menuepunkte ↔ Goldlinie */
   --streifen-oben:calc(max(1rem, env(safe-area-inset-top)) + 50px + .5rem);   /* unter der Pille */
   position:fixed; inset:0; z-index:95; background:var(--bordeaux); color:var(--auf-bordeaux);
   display:grid; grid-template-rows:minmax(0,1fr); place-items:center; overflow:hidden;
-  padding:calc(var(--streifen-oben) + var(--streifen)) 1.5rem var(--streifen);
+  /* Goldlinien genau an der Kante der beiden Buecherstreifen */
+  background-image:linear-gradient(var(--nav-linie), var(--nav-linie)), linear-gradient(var(--nav-linie), var(--nav-linie));
+  background-size:100% 1px; background-repeat:no-repeat;
+  background-position:0 calc(var(--streifen-oben) + var(--streifen)), 0 calc(100% - var(--streifen));
+  --nav-linie:color-mix(in srgb, #C9A35B 60%, transparent);
+  padding:calc(var(--streifen-oben) + var(--streifen) + var(--luft)) 1.5rem calc(var(--streifen) + var(--luft));
   opacity:0; visibility:hidden; transition:opacity .35s var(--ease), visibility .35s;
 }
 .nav[data-offen=true]{opacity:1; visibility:visible}
@@ -212,16 +213,12 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   background-image:url(img/buecher-oben-grau-1000.jpg);
   background-image:image-set(url(img/buecher-oben-grau-1000.webp) type("image/webp"), url(img/buecher-oben-grau-1000.jpg) type("image/jpeg"));
   background-position:center 20%;
-  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 48%, transparent);
-          mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 48%, transparent);
 }
 .nav::after{
   bottom:0;
   background-image:url(img/buecher-unten-grau-1000.jpg);
   background-image:image-set(url(img/buecher-unten-grau-1000.webp) type("image/webp"), url(img/buecher-unten-grau-1000.jpg) type("image/jpeg"));
   background-position:center 70%;
-  -webkit-mask-image:linear-gradient(to top, #000 52%, transparent);
-          mask-image:linear-gradient(to top, #000 52%, transparent);
 }
 .nav[data-offen=true]::before,.nav[data-offen=true]::after{opacity:.5}
 /* Ersatz ohne mix-blend-mode: dieselbe Mischung fest ins Bild gerechnet */
@@ -239,13 +236,13 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 }
 .nav a{
   display:flex; align-items:baseline; gap:1rem; padding:.46rem .3rem; text-decoration:none;
-  font:600 clamp(1.3rem,4.4vw,1.9rem)/1.2 var(--kopf); letter-spacing:-.015em; color:#FBF3EA;
+  font:600 clamp(1.2rem,4.4vw,1.9rem)/1.2 var(--kopf); letter-spacing:-.015em; color:#FBF3EA;
   border-bottom:1px solid color-mix(in srgb, #C9A35B 32%, transparent);
   transition:padding-left .25s var(--ease), opacity .25s;
 }
 .nav a:hover{padding-left:.9rem}
 .nav a span{min-width:2.3rem; font-size:var(--klein); color:#D9BC86; letter-spacing:.06em}
-.nav li.unter a{font-size:clamp(1.02rem,3.3vw,1.3rem); padding-left:2.4rem; color:#FBF3EA}
+.nav li.unter a{font-size:clamp(1rem,3.3vw,1.3rem); padding-left:2.4rem; color:#FBF3EA}
 .nav li.nav-kontakt a{border-bottom:none; margin-top:.3rem}
 
 /* ── Hero: Lillys Reihenfolge, als mittige Achse ───────────────
@@ -261,7 +258,7 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   /* 19.11.: Fotos duerfen schmaler werden, statt den Text nach links unter das
      Seitenmenue zu schieben (row-reverse laeuft sonst links ueber). */
   .dipt{width:auto; flex:0 1 30rem; min-width:0; margin:0}
-  .hero-text{flex:1 1 auto; min-width:0}
+  .hero .hero-text{flex:1 1 auto; width:auto; min-width:0}
 }
 @media (min-width:1024px){
   /* Ueberschrift nach der Breite NEBEN dem Seitenmenue bemessen, nicht nach
@@ -272,13 +269,13 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .dipt img{width:100%; aspect-ratio:5/7; object-fit:cover}
 .dipt figure:first-child img{scale:1.08}
 .dipt figcaption{font:600 var(--klein)/1 var(--kopf); letter-spacing:.16em; color:var(--tinte-2); margin-top:.7rem}
-.hero-text{max-width:40rem}
+.hero-text{max-width:40rem; width:100%; min-width:0}   /* nie breiter als die Spalte (iPhone) */
 .hero h1{margin:0 0 .9rem; max-width:16ch}
 .grundlage{font-style:italic; font-size:clamp(1.12rem,1.7vw,1.32rem); color:var(--tinte); margin:0 0 1.8rem}
 .herz{color:var(--bordeaux); font-style:normal}
 /* Lilly: „am Handy in einer Zeile" — gemessen einzeilig ab 320px. */
 .zeile{
-  font:600 min(.875rem, 3.05vw)/1.2 var(--kopf); letter-spacing:.075em; text-transform:uppercase;
+  font:600 min(.875rem, 2.85vw)/1.2 var(--kopf); letter-spacing:.06em; text-transform:uppercase;
   white-space:nowrap; color:var(--bordeaux); margin:0 0 1rem;
 }
 .lockup{display:inline-flex; align-items:center; gap:.9rem; margin:0 0 1.9rem; text-align:left}
@@ -496,6 +493,20 @@ html:not(.js) .methode-leer,html:not(.js) .methode-hinweis{display:none}
 }
 .falte[open] summary::after{transform:rotate(-135deg) translateY(-3px)}
 .falte .inhalt{padding:0 1.3rem 1.3rem}
+/* „Für die Nerds" (19.11.): langer Erklaertext, gut gegliedert */
+.nerds-text{padding-top:.3rem}
+.nerds-text .einladung{font-style:italic; color:var(--tinte); font-size:1.06em; margin-bottom:1.6rem}
+.nerds-text h4{
+  font:400 var(--h4)/1.25 var(--kopf); font-size:clamp(1.15rem,1.8vw,1.35rem); color:var(--bordeaux);
+  margin:2rem 0 .7rem; padding-top:1.4rem; border-top:1px solid var(--linie);
+}
+.nerds-text h4:first-of-type{margin-top:0}
+.nerds-text b{font-weight:600; color:var(--tinte)}
+.nerds-text em{font-style:italic}
+.nerds-text .betont{border-left:3px solid var(--gold); padding:.2rem 0 .2rem 1rem; font-style:italic; color:var(--tinte)}
+.nerds-text .hinweis{background:var(--creme); border-radius:6px; padding:.8rem 1rem; font-size:.92em; color:var(--tinte-2)}
+.nerds-text .schluss{margin:1.2rem 0 0; font:400 clamp(1.1rem,1.7vw,1.3rem)/1.4 var(--kopf); color:var(--tinte)}
+.nerds-text .schluss b{color:var(--bordeaux); font-weight:400}
 
 /* ── Werdegang ─────────────────────────────────────────────── */
 .werdegang{display:grid; gap:clamp(1.4rem,3vw,2.6rem); align-items:center; max-width:56rem;
@@ -650,10 +661,16 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
 @media (min-width:1024px){
   body{padding-left:var(--seitennav)}
   .menue-knopf,.rail{display:none}
+  /* Lilly 19.11.: Logo mittig auf der Strecke zwischen Seitenmenue und
+     „Unverbindlich kennenlernen", nicht mittig im ganzen Fenster.
+     Spalte 1 reicht genau von der Menuekante bis zum Knopf. */
   .kopf{
     top:0; left:var(--seitennav); right:0; height:auto; min-height:64px;
-    padding:.55rem clamp(.8rem,2vw,1.4rem);
+    padding:.55rem clamp(.8rem,2vw,1.4rem) .55rem 0;
+    grid-template-columns:minmax(0,1fr) auto; column-gap:0;
   }
+  .kopf-marke{grid-column:1; justify-self:center}
+  .kopf-rechts{grid-column:2}
   .kopf::before{border:0; border-bottom:1px solid var(--linie); border-radius:0; box-shadow:none}
   .kopf-rechts{gap:.4rem}
   .kopf-marke{gap:.65rem}
@@ -665,14 +682,10 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
     --streifen-oben:0px;
     --streifen:clamp(140px, 20vh, 220px);
     inset:0 auto 0 0; width:var(--seitennav); z-index:96; opacity:1; visibility:visible;
-    padding:var(--streifen) 1.2rem var(--streifen) 1.4rem; transition:none;
+    padding:calc(var(--streifen) + var(--luft)) 1.2rem calc(var(--streifen) + var(--luft)) 1.4rem; transition:none;
   }
   .nav::before,.nav::after{opacity:.5; transition:none}
   @supports not (mix-blend-mode:multiply){ .nav::before,.nav::after{opacity:1} }
-  .nav::before{
-    -webkit-mask-image:linear-gradient(to bottom, #000 50%, transparent);
-            mask-image:linear-gradient(to bottom, #000 50%, transparent);
-  }
   .nav ol{width:100%}
   .nav a{font-size:clamp(1.02rem,1.3vw,1.18rem); gap:.7rem; padding:.5rem .2rem}
   .nav a span{min-width:2rem}
