@@ -10,29 +10,28 @@
      Lora  — Fließtext
    Vorher Young Serif + Epilogue.
 
-   Inter aus goldschnitt/ übernommen, Lora von @fontsource/lora
-   (OFL 1.1). Kein Fettschnitt für Inter über 600 — sonst
-   rechnet der Browser synthetisch nach.
+   Runde 3: Inter ist entfernt. DM Serif Display für alles außer
+   Fließtext (siehe unten), Lora von @fontsource/lora (OFL 1.1).
 
    size-adjust: gegen den System-Fallback abgeglichen, damit beim
    Nachladen nichts springt (CLS).
    ============================================================ */
 
-/* — Inter (Headlines, Labels, Knöpfe) — */
+/* — DM Serif Display (Menü, Buttons, Headlines, kleine Zeilen; Runde 3) —
+   Nur ein Schnitt (400). Der Gewichtsbereich 400–700 verhindert, dass der
+   Browser bei font-weight:600 künstlich fett nachrechnet.
+   TODO: Datei assets/fonts/dm-serif-display-400.woff2 (OFL 1.1) ablegen und
+   hier als zweite src-Zeile eintragen — bis dahin greift die lokal
+   installierte Schrift, sonst Georgia. */
 @font-face{
-  font-family:'Inter';
-  font-style:normal; font-weight:400; font-display:swap;
-  src:url(fonts/inter-400.woff2) format('woff2');
+  font-family:'DM Serif Display';
+  font-style:normal; font-weight:400 700; font-display:swap;
+  src:local('DM Serif Display'), local('DMSerifDisplay-Regular');
 }
 @font-face{
-  font-family:'Inter';
-  font-style:normal; font-weight:600; font-display:swap;
-  src:url(fonts/inter-600.woff2) format('woff2');
-}
-@font-face{
-  font-family:'Inter Fallback';
-  src:local('Helvetica Neue'), local('Arial');
-  size-adjust:107%; ascent-override:90%; descent-override:22%;
+  font-family:'DM Serif Fallback';
+  src:local('Georgia'), local('Times New Roman');
+  size-adjust:100%; ascent-override:92%; descent-override:24%;
 }
 
 /* — Lora (Fließtext) — */

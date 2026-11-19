@@ -54,7 +54,7 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   color:var(--bordeaux); margin:0 0 1rem;
   display:inline-flex; align-items:center; gap:.8rem;
 }
-.marke::before,.kapitel-kopf .marke::after{content:''; width:1.8rem; height:1px; background:currentColor; flex:none; opacity:.6}
+.marke::before,.kapitel-kopf .marke::after{content:''; width:1.8rem; height:1px; background:var(--gold); flex:none; height:2px}
 .boden-glut .marke{color:var(--auf-bordeaux-2)}
 
 /* ── Kopfleiste ────────────────────────────────────────────── */
@@ -169,17 +169,22 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 /* ── Hero: Lillys Reihenfolge, als mittige Achse ───────────────
    Bilder → „Transformation ist möglich." → Grundlage → Zeile →
    Siegel + Wortmarke → ihr Text → Einladung zum Weiterlesen. */
-.hero{padding-top:clamp(5.6rem,11vw,7.5rem); padding-bottom:clamp(3rem,7vw,5.5rem); text-align:center}
-.hero-gitter{display:flex; flex-direction:column; align-items:center}
+.hero{padding-top:clamp(5.6rem,11vw,7.5rem); padding-bottom:clamp(3rem,7vw,5.5rem); text-align:left}
+.hero-gitter{display:flex; flex-direction:column; align-items:flex-start}
 .dipt{display:grid; grid-template-columns:1fr 1fr; gap:clamp(.6rem,1.6vw,1.1rem); width:min(100%, 30rem); margin:0 0 clamp(1.8rem,4vw,2.6rem)}
 .dipt figure{margin:0}
+.dipt figure:last-child{margin-top:clamp(1.4rem,5vw,2.6rem)}   /* versetzte Fotos */
+@media (min-width:900px){
+  .hero-gitter{flex-direction:row-reverse; align-items:flex-start; justify-content:space-between; gap:3rem}
+  .dipt{width:30rem; flex:none; margin:0}
+}
 .dipt picture{display:block; overflow:hidden; border-radius:6px; box-shadow:0 14px 34px #2b1a1726}
 .dipt img{width:100%; aspect-ratio:5/7; object-fit:cover}
 .dipt figure:first-child img{scale:1.08}
 .dipt figcaption{font:600 var(--klein)/1 var(--kopf); letter-spacing:.16em; color:var(--tinte-2); margin-top:.7rem}
 .hero-text{max-width:40rem}
-.hero h1{margin:0 auto .9rem; max-width:16ch}
-.grundlage{font-style:italic; font-size:clamp(1.12rem,1.7vw,1.32rem); color:var(--tinte); margin:0 auto 1.8rem}
+.hero h1{margin:0 0 .9rem; max-width:16ch}
+.grundlage{font-style:italic; font-size:clamp(1.12rem,1.7vw,1.32rem); color:var(--tinte); margin:0 0 1.8rem}
 .herz{color:var(--bordeaux); font-style:normal}
 /* Lilly: „am Handy in einer Zeile" — gemessen einzeilig ab 320px. */
 .zeile{
@@ -191,10 +196,10 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .lockup b{display:block; font:600 var(--h4)/1.2 var(--kopf); letter-spacing:-.01em}
 .lockup i{display:block; font:600 .78rem/1 var(--kopf); font-style:normal; letter-spacing:.16em;
           text-transform:uppercase; color:var(--tinte-2); margin-top:.35rem}
-.kern{font:600 clamp(1.2rem,2vw,1.5rem)/1.35 var(--kopf); letter-spacing:-.015em; margin:0 auto .9rem; max-width:34rem}
+.kern{font:600 clamp(1.2rem,2vw,1.5rem)/1.35 var(--kopf); letter-spacing:-.015em; margin:0 0 .9rem; max-width:34rem}
 .kern em{font-style:normal; color:var(--bordeaux)}
-.hero-text > p:not(.kern):not(.zeile):not(.grundlage):not(.hero-wege){max-width:34rem; margin-inline:auto; color:var(--tinte-2)}
-.hero-wege{display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:2rem}
+.hero-text > p:not(.kern):not(.zeile):not(.grundlage):not(.hero-wege){max-width:34rem; margin-inline:0; color:var(--tinte-2)}
+.hero-wege{display:flex; flex-direction:column; align-items:flex-start; gap:1rem; margin-top:2rem}
 
 /* ── Knoepfe ───────────────────────────────────────────────── */
 .knopf{

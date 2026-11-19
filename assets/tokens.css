@@ -8,8 +8,9 @@
    ═══════════════════════════════════════════════════════════════ */
 :root{
   /* Lillys Markenfarben */
-  --bordeaux:#792427;       /* gemessen am roten Top (Runde 2) — Knoepfe, Kapitel, Siegel */
-  --bordeaux-tief:#5E1A1D;  /* Fuss, gedrueckte Zustaende */
+  --bordeaux:#8B0F1E;       /* Dunkelrot (Runde 3) — Knoepfe, Kapitel, Siegel */
+  --bordeaux-tief:#6A0B17;  /* Fuss, gedrueckte Zustaende */
+  --gold:#C29A45;           /* Akzent: Linien ueber den Ueberschriften */
   --bordeaux-zart:#F4DEDB;  /* getoente Flaechen auf Creme */
   --wald:#13602F;           /* Dunkelgruen — Koerper & Nervensystem */
   --wald-zart:#DCEBDF;
@@ -33,7 +34,7 @@
   --daemmer:var(--tinte-2);
   --wald-hell:var(--wald);
 
-  --kopf:'Inter','Inter Fallback','Helvetica Neue',Arial,sans-serif;   /* Headlines, Labels, Knoepfe */
+  --kopf:'DM Serif Display','DM Serif Fallback',Georgia,'Times New Roman',serif;   /* Menue, Buttons, Headlines, kleine Zeilen */
   --leib:'Lora','Lora Fallback',Georgia,serif;                         /* Fliesstext */
 
   --h1:clamp(2.3rem,6.2vw,4.4rem);
