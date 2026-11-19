@@ -309,22 +309,25 @@
   });
 })();
 
-/* ── Hero Desktop ausrichten (Runde 6, 19.11.) ──────────────────────────
-   Ab 1024px. Die linke Spalte ist so breit wie die Ueberschrift, rechts
-   steht die Grundlage. Gerechnet wird die Groesse der Ueberschrift so, dass
-     - beide Spalten zusammen genau die verfuegbare Breite fuellen und
-     - die zwei Zeilen der Grundlage genau von der Oberkante bis zur
-       Grundlinie der Ueberschrift reichen.
+/* ── Hero Desktop ausrichten (Runde 7, 19.11.) ──────────────────────────
+   Ab 1024px. Die linke Spalte endet an der Linie, an der oben
+   „Unverbindlich kennenlernen" beginnt (abzueglich --vor-linie).
+   1. Die Ueberschrift fuellt die linke Spalte in einer Zeile.
+   2. Die zwei Zeilen der Grundlage reichen genau von der Oberkante bis
+      zur Grundlinie der Ueberschrift und passen in den rechten Streifen.
+   3. Die Fotos (5:7) werden so hoch, dass der Hero auf einen Bildschirm
+      passt, hoechstens 50vh.
    Ohne JavaScript greifen die Ersatzwerte in site.css. */
 (function(){
   var hero = document.querySelector('.hero');
   if (!hero || !window.matchMedia) return;
   var breit = window.matchMedia('(min-width:1024px)');
-  var buehne = hero.querySelector('.buehne'),
-      gitter = hero.querySelector('.hero-gitter'),
-      h1 = hero.querySelector('h1'),
-      grund = hero.querySelector('.grundlage');
-  var VARS = ['--h1-groesse','--grund-groesse','--grund-zeile','--grund-oben'];
+  var h1 = hero.querySelector('h1'),
+      grund = hero.querySelector('.grundlage'),
+      dipt = hero.querySelector('.dipt'),
+      absatz = hero.querySelector('.hero-absatz'),
+      wege = hero.querySelector('.hero-wege');
+  var VARS = ['--h1-groesse','--grund-groesse','--grund-zeile','--grund-oben','--foto-hoehe'];
   var leinwand = document.createElement('canvas').getContext('2d');
 
   function masse(el, groesse, zeichen){
@@ -346,25 +349,35 @@
     VARS.forEach(function(v){ hero.style.removeProperty(v); });
     if (!breit.matches) return;
 
-    var b = buehne.getBoundingClientRect(),
-        luecke = parseFloat(getComputedStyle(gitter).columnGap) || 32,
-        platz = b.width - luecke,
-        w1 = breite100(h1) / 100,                       /* Breite je px Schriftgroesse */
-        wG = breite100(grund) / 100,
-        k1 = masse(h1, 100, 'T').kappe / 100,           /* Kappenhoehe je px */
-        kG = masse(grund, 100, 'U').kappe / 100,
-        anteil = k1 / (kG + 1.25),                      /* Grundlage-Groesse je px Ueberschrift */
-        g1 = Math.min(80, platz / (w1 + wG * anteil) * 0.99),
-        gG = g1 * anteil,
-        kappe = k1 * g1,
-        zeile = kappe - kG * gG;                        /* zwei Zeilen = Kappenhoehe */
-    g1 = Math.floor(g1 * 100) / 100;
+    /* 1. Ueberschrift bis zur Linie */
+    var ziel1 = h1.getBoundingClientRect().width,
+        g1 = Math.floor(100 * ziel1 / breite100(h1) * 100) / 100;
     hero.style.setProperty('--h1-groesse', g1 + 'px');
+
+    /* 2. Grundlage: so hoch wie die Ueberschrift, so breit wie der Streifen */
+    var k1 = masse(h1, g1, 'T'),
+        kG = masse(grund, 100, 'U').kappe / 100,
+        zielG = grund.getBoundingClientRect().width,
+        gG = Math.min(100 * zielG / breite100(grund) * 0.995, k1.kappe / (kG + 1.25)),
+        zeile = k1.kappe - kG * gG;
     hero.style.setProperty('--grund-groesse', gG + 'px');
     hero.style.setProperty('--grund-zeile', zeile + 'px');
-    var oben1 = kappeOben(masse(h1, g1, 'T'), g1),     /* line-height:1 */
-        obenG = kappeOben(masse(grund, gG, 'U'), zeile);
-    hero.style.setProperty('--grund-oben', (oben1 - obenG) + 'px');
+    hero.style.setProperty('--grund-oben', (kappeOben(k1, g1) - kappeOben(masse(grund, gG, 'U'), zeile)) + 'px');
+
+    /* 3. Fotohoehe: alles auf einen Bildschirm, hoechstens 50vh,
+          und beide Fotos muessen nebeneinander in die Spalte passen */
+    var hr = hero.getBoundingClientRect(),
+        dr = dipt.getBoundingClientRect(),
+        bild = dipt.querySelector('img').getBoundingClientRect(),
+        jahr = dr.bottom - bild.bottom,
+        as = getComputedStyle(absatz),
+        rest = jahr + absatz.getBoundingClientRect().height + parseFloat(as.marginTop) + parseFloat(as.marginBottom)
+               + wege.getBoundingClientRect().height,
+        unten = Math.max(16, window.innerHeight * 0.035),
+        frei = window.innerHeight - unten - (dr.top - hr.top) - rest,
+        passt = (dr.width - 32) * 7 / 10,
+        hoehe = Math.max(220, Math.min(frei, window.innerHeight * 0.5, passt));
+    hero.style.setProperty('--foto-hoehe', Math.floor(hoehe) + 'px');
   }
 
   /* kurz entprellt; setTimeout statt requestAnimationFrame, damit es auch

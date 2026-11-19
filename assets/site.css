@@ -327,57 +327,62 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
   .hero{--frei:calc(100vw - var(--seitennav))}
 }
 
-/* ── Hero Desktop, Runde 6 (19.11.) ────────────────────────────────────
-   Raster: linke Spalte so breit wie die Ueberschrift (max-content).
-     Reihe 1  Ueberschrift | Grundlage (genau so hoch wie die Ueberschrift)
-     Reihe 2  Fotos        | Zitat (mittig zu den Fotos, Goldlinie)
+/* ── Hero Desktop, Runde 7 (19.11.) ────────────────────────────────────
+   Gleiche Spalten wie die Kopfleiste: links alles bis zur Linie, an der oben
+   „Unverbindlich kennenlernen" beginnt; rechts ein Streifen so breit wie das
+   Seitenmenue.
+     Reihe 1  Ueberschrift | Grundlage (so hoch wie die Ueberschrift)
+     Reihe 2  Fotos 5:7    | Zitat (mittig zu den Fotos, Goldlinie)
      Reihe 3  Absatz
      Reihe 4  Knopf
-   Die Fotos sind zusammen (inkl. 16px Fuge) genau so breit wie die
-   Ueberschrift. Groesse der Ueberschrift und die Grundlage rechnet
-   site.js (heroAusrichten); hier stehen die Ersatzwerte ohne JavaScript.
-   Alle aelteren Desktop-Regeln fuer den Hero werden hier ueberschrieben. */
+   --vor-linie: Abstand der linken Spalte vor der Linie, fuer Ueberschrift
+   und Fotos gleich. Die rechte Spalte beginnt genau an der Linie.
+   Groesse der Ueberschrift, Grundlage und Fotohoehe rechnet site.js
+   (heroAusrichten); hier stehen die Ersatzwerte ohne JavaScript. */
 @media (min-width:1024px){
   .hero{
     --rand-l:clamp(1.5rem, 3vw, 3rem);
-    --rand-r:clamp(.8rem, 2vw, 1.4rem);    /* = Innenabstand der Kopfleiste rechts */
+    --rand-r:clamp(.8rem, 2vw, 1.4rem);
+    --vor-linie:32px;
     display:block; min-height:100svh;
     padding:calc(var(--kopf-hoehe) + 1px + 36px) 0 0;   /* 36px unter der Goldlinie */
   }
-  .hero .buehne{width:auto; margin:0 var(--rand-r) 0 var(--rand-l)}
+  .hero .buehne{width:auto; margin:0 0 0 var(--rand-l)}
   .hero-gitter{
     display:grid; min-height:0; align-items:start;
-    grid-template-columns:max-content minmax(0, 1fr);
+    grid-template-columns:minmax(0, 1fr) var(--seitennav);
     grid-template-rows:auto auto auto auto;
     grid-template-areas:"title sub" "photos quote" "text ." "cta .";
-    column-gap:clamp(28px, 3vw, 56px); row-gap:0;
+    column-gap:0; row-gap:0;
   }
+  .hero h1,.hero .dipt,.hero-absatz,.hero-wege{margin-right:var(--vor-linie)}
   .hero h1{
-    grid-area:title; white-space:nowrap; max-width:none; margin:0 0 24px;
-    font-size:var(--h1-groesse, clamp(2.4rem, 3.6vw, 4.6rem)); line-height:1;
+    grid-area:title; white-space:nowrap; max-width:none; margin-top:0; margin-bottom:24px; margin-left:0;
+    font-size:var(--h1-groesse, clamp(2.4rem, 4.2vw, 5rem)); line-height:1;
   }
   .hero .grundlage{
-    grid-area:sub; align-self:start; white-space:nowrap; margin:var(--grund-oben, 0) 0 0;
-    font-size:var(--grund-groesse, 1.1rem); line-height:var(--grund-zeile, 1.3);
+    grid-area:sub; align-self:start; white-space:nowrap; margin:var(--grund-oben, 0) var(--rand-r) 0 0;
+    font-size:var(--grund-groesse, 1rem); line-height:var(--grund-zeile, 1.3);
   }
-  /* Fotos: gleich gross, gleiche Hoehe, nicht versetzt, 4:5 */
+  /* Fotos 5:7, gleich gross, gleiche Hoehe, nicht versetzt. Links buendig
+     mit der Ueberschrift, rechts buendig mit ihrem Ende. */
   .hero .dipt{
-    grid-area:photos; justify-self:stretch; align-self:start; margin:0;
-    width:0; min-width:100%;               /* nimmt die Spaltenbreite an, ohne sie aufzublaehen */
-    grid-template-columns:1fr 1fr; gap:16px;
+    grid-area:photos; display:flex; justify-content:space-between; align-self:start; justify-self:stretch;
+    width:auto; min-width:0; margin-top:0; margin-bottom:0; margin-left:0; gap:16px;
   }
-  .hero .dipt figure,.hero .dipt figure:last-child{margin:0}
+  .hero .dipt figure,.hero .dipt figure:last-child{margin:0; flex:none}
   .hero .dipt img,.hero .dipt figure:first-child img{
-    aspect-ratio:4/5; max-height:48vh; width:100%; object-fit:cover; scale:none; transform:none;
+    height:var(--foto-hoehe, min(46vh, 30rem)); width:auto; max-height:none;
+    aspect-ratio:5/7; object-fit:cover; scale:none; transform:none;
   }
   .hero .dipt figcaption{margin-top:.45rem}
   .hero .kern{
-    grid-area:quote; align-self:center; margin:0 0 1.4rem;   /* 1.4rem = Jahreszahl: mittig zu den Fotos */
-    padding-left:1.1rem; border-left:2px solid #C9A35B;
-    font-size:clamp(1.1rem, 1.5vw, 1.6rem); line-height:1.3;
+    grid-area:quote; align-self:center; margin:0 var(--rand-r) 1.4rem 0;   /* 1.4rem = Jahreszahl */
+    padding-left:1rem; border-left:2px solid #C9A35B;
+    font-size:clamp(1.05rem, 1.3vw, 1.4rem); line-height:1.3;
   }
   .hero .kern em{color:var(--bordeaux)}
-  .hero-absatz{grid-area:text; width:0; min-width:100%; margin:clamp(.8rem, 2vh, 1.4rem) 0 clamp(.9rem, 2.2vh, 1.5rem)}
+  .hero-absatz{grid-area:text; width:auto; min-width:0; margin-top:clamp(.8rem, 2vh, 1.4rem); margin-bottom:clamp(.9rem, 2.2vh, 1.5rem); margin-left:0}
   .hero .zeile{display:none}
   .hero-wege{grid-area:cta; flex-direction:row}
   .hero-wege .knopf{width:auto; padding:.9rem 2.6rem; font-size:1rem; cursor:pointer}
@@ -394,8 +399,13 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .knopf:hover{transform:translateY(-2px); background:var(--bordeaux-tief); box-shadow:0 10px 24px #79242733}
 .knopf svg{width:16px; height:16px; flex:none}
 /* Hero-Knoepfe (19.11., Lilly Runde 4): gleiche Hoehe und Rundung */
-.hero-wege .knopf.runter{background:#8B0F1E; color:#FBF3EA}
-.hero-wege .knopf.runter:hover{background:#6A0B17}
+/* Runde 7: „Erfahre mehr" hell mit Goldrahmen, klar anders als der rote
+   Kennenlern-Knopf oben. Beim Darueberfahren rutscht der Pfeil 3px nach unten. */
+.hero-wege .knopf.runter{background:#FBF3EA; color:var(--bordeaux); box-shadow:inset 0 0 0 1.5px #C9A35B; cursor:pointer}
+.hero-wege .knopf.runter:hover{background:#F3E6CC; color:var(--bordeaux); transform:none; box-shadow:inset 0 0 0 1.5px #C9A35B}
+.hero-wege .knopf.runter svg{transition:transform .3s var(--ease)}
+.hero-wege .knopf.runter:hover svg,.hero-wege .knopf.runter:focus-visible svg{transform:translateY(3px)}
+@media (prefers-reduced-motion:reduce){ .hero-wege .knopf.runter svg{transition:none; transform:none !important} }
 .knopf.knopf-zweit{background:#FBF3EA; color:#8B0F1E; box-shadow:inset 0 0 0 1.5px #C9A35B}
 .knopf.knopf-zweit:hover{background:#F3E6CC; color:#8B0F1E; box-shadow:inset 0 0 0 1.5px #C9A35B}
 .boden-glut .knopf{background:var(--auf-bordeaux); color:var(--bordeaux)}
@@ -774,19 +784,24 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
   }
   body{padding-left:var(--seitennav)}
   .menue-knopf,.rail{display:none}
-  /* Logo mittig zwischen Seitenmenue und „Unverbindlich kennenlernen":
-     Logo-Bereich flex:1 (beginnt an der Menuekante, endet am Knopf),
-     rechts Knopf + Sprache mit flex:none. Die Linie liegt 1px unter
-     --kopf-hoehe, genau wie im Seitenmenue. */
+  /* Runde 7: Symmetrie. Rechts ein Streifen, genau so breit wie das
+     Seitenmenue links. Der Kennenlern-Knopf beginnt an seiner linken Kante,
+     Knopf und Sprache stehen darin. Das Logo steht mittig zwischen
+     Seitenmenue und Knopf. Die Linie liegt 1px unter --kopf-hoehe,
+     genau wie im Seitenmenue. */
   .kopf{
-    display:flex; align-items:center; gap:0;
+    display:grid; grid-template-columns:minmax(0, 1fr) var(--seitennav); align-items:center; gap:0;
     top:0; left:var(--seitennav); right:0; height:calc(var(--kopf-hoehe) + 1px); min-height:0;
-    padding:0 clamp(.8rem,2vw,1.4rem) 1px 0;
+    padding:0 0 1px 0;
   }
-  .kopf-mitte{flex:1; display:flex; justify-content:center; align-items:center}
-  .kopf-rechts{flex:none}
+  .kopf-mitte{grid-column:1; justify-self:center; display:flex; justify-content:center; align-items:center}
+  .kopf-rechts{grid-column:2; justify-self:start; gap:.35rem}
+  /* Knopf + DE + EN muessen in den Streifen (Breite Seitenmenue) passen */
+  .kopf .kennenlernen{padding:.5rem .75rem; font-size:.78rem; letter-spacing:0}
+  .kopf .sprache{gap:.1rem}
+  .kopf .sprache a{padding:.4rem .3rem; gap:.2rem; font-size:.78rem; letter-spacing:.04em}
+  .kopf .sprache .flagge{width:13px; height:9px}
   .kopf::before{border:0; border-bottom:1px solid var(--linie-gold); border-radius:0; box-shadow:none}
-  .kopf-rechts{gap:.4rem}
   .kopf-marke{gap:.65rem}
   .kopf-marke img{width:44px}
   .kopf-marke b{font-size:1.3rem}
