@@ -313,8 +313,9 @@
    Ab 1024px. Die linke Spalte endet an der Linie, an der oben
    „Unverbindlich kennenlernen" beginnt (abzueglich --vor-linie).
    1. Die Ueberschrift fuellt die linke Spalte in einer Zeile.
-   2. Die zwei Zeilen der Grundlage reichen genau von der Oberkante bis
-      zur Grundlinie der Ueberschrift und passen in den rechten Streifen.
+   2. Die Grundlage (zwei Zeilen) beginnt oben buendig mit der Oberkante
+      der Ueberschrift; Groesse ca. 1,35vw, hoechstens so gross, dass die
+      laengere Zeile in den rechten Streifen passt (Runde 8).
    3. Die Fotos (5:7) werden so hoch, dass der Hero auf einen Bildschirm
       passt, hoechstens 50vh.
    Ohne JavaScript greifen die Ersatzwerte in site.css. */
@@ -354,12 +355,12 @@
         g1 = Math.floor(100 * ziel1 / breite100(h1) * 100) / 100;
     hero.style.setProperty('--h1-groesse', g1 + 'px');
 
-    /* 2. Grundlage: so hoch wie die Ueberschrift, so breit wie der Streifen */
+    /* 2. Grundlage: oben buendig, so gross wie moeglich bis 1,35vw */
     var k1 = masse(h1, g1, 'T'),
-        kG = masse(grund, 100, 'U').kappe / 100,
         zielG = grund.getBoundingClientRect().width,
-        gG = Math.min(100 * zielG / breite100(grund) * 0.995, k1.kappe / (kG + 1.25)),
-        zeile = k1.kappe - kG * gG;
+        wunsch = Math.min(21.6, Math.max(16, window.innerWidth * 0.0135)),
+        gG = Math.min(100 * zielG / breite100(grund) * 0.995, wunsch),
+        zeile = gG * 1.35;
     hero.style.setProperty('--grund-groesse', gG + 'px');
     hero.style.setProperty('--grund-zeile', zeile + 'px');
     hero.style.setProperty('--grund-oben', (kappeOben(k1, g1) - kappeOben(masse(grund, gG, 'U'), zeile)) + 'px');
@@ -375,7 +376,7 @@
                + wege.getBoundingClientRect().height,
         unten = Math.max(16, window.innerHeight * 0.035),
         frei = window.innerHeight - unten - (dr.top - hr.top) - rest,
-        passt = (dr.width - 32) * 7 / 10,
+        passt = (dr.width - 24) * 7 / 10,
         hoehe = Math.max(220, Math.min(frei, window.innerHeight * 0.5, passt));
     hero.style.setProperty('--foto-hoehe', Math.floor(hoehe) + 'px');
   }
