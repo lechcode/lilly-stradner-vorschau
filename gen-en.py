@@ -83,7 +83,7 @@ PAARE = [
     ('alt="Lilly heute lachend vor einer roten Wand: gemustertes Top, tätowierter Arm, offenes Lächeln."',
      'alt="Lilly today, laughing in front of a red wall: patterned top, tattooed arm, an open smile."'),
     ('<h1>Transformation ist möglich.</h1>', '<h1>Transformation is possible.</h1>'),
-    ('Und die Grundlage dafür:<br> eine gesunde Beziehung zu dir selbst.',
+    ('Und die Grundlage dafür:<br> eine gesunde Beziehung zu Dir selbst.',
      'And the foundation for it:<br> a healthy relationship with yourself.'),
     ('<p class="zeile">Somatische Prozessbegleitung &amp; Atemarbeit</p>',
      '<p class="zeile">Somatic process facilitation &amp; breathwork</p>'),
@@ -91,8 +91,8 @@ PAARE = [
      '<p class="kern">For years I hated myself and my body. Today I know:<br> <em>we were never the real problem!</em></p>'),
     ('Genau deshalb begleite ich Menschen hin zu einer liebevollen Beziehung zu sich selbst und ihrem Körper ~ damit von hier aus alles andere wachsen kann.',
      'That is exactly why I accompany people towards a loving relationship with themselves and their body ~ so that everything else can grow from there.'),
-    ('          Erfahre mehr über mich und meine Arbeit\n', '          Learn more about me and my work\n'),
-    ('>Oder lern mich unverbindlich kennen</a>', '>Or get to know me, no strings attached</a>'),
+    ('        Erfahre mehr über mich und meine Arbeit\n', '        Learn more about me and my work\n'),
+    ('        Oder lern mich unverbindlich kennen\n', '        Or get to know me, no strings attached\n'),
 
     # ── 01 · Über mich ───────────────────────────────────────────────────
     ('<p class="marke">01 — Über mich</p>', '<p class="marke">01 — About me</p>'),

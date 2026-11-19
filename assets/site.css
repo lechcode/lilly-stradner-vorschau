@@ -258,80 +258,73 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 .nav li.nav-kontakt a{border-bottom:none; margin-top:.3rem}
 
 /* ── Hero ──────────────────────────────────────────────────────
-   19.11. (Lilly): Reihenfolge Ueberschrift → Grundlage → Kernsatz → Absatz →
-   „Somatische Prozessbegleitung & Atemarbeit" → zwei Knoepfe.
-   Desktop: die erste Seite ist genau ein Bildschirm. Ueberschrift in EINER
-   Zeile ueber Text und Fotos, Fotos senkrecht in der Mitte, die Unterkante
-   des zweiten Knopfs schliesst mit der Unterkante des ersten Fotos ab.
-   Handy: Fotos oben, dann dieselbe Reihenfolge, Knoepfe mittig. */
+   19.11. (Lilly, Runde 4). Alle Teile liegen direkt im Raster, in der
+   Handy-Reihenfolge: Ueberschrift, Grundlage, Fotos, Zitat, Absatz, Zeile,
+   Knoepfe. Desktop: links Text (60 %), rechts Fotos (40 %), der ganze Hero
+   ist genau ein Bildschirm, Fotos senkrecht mittig. */
 .hero{
   --frei:100vw;                           /* Breite neben dem Seitenmenue */
   --versatz:clamp(1.4rem,5vw,2.6rem);     /* zweites Foto tiefer */
   padding-top:clamp(5.6rem,11vw,7.5rem); padding-bottom:clamp(3rem,7vw,5.5rem); text-align:left;
 }
-.hero-gitter{display:flex; flex-direction:column; align-items:flex-start}
+.hero-gitter{display:flex; flex-direction:column; align-items:stretch}
+.hero h1{margin:0 0 .7rem; max-width:16ch}
+.grundlage{font-style:italic; font-size:clamp(1.12rem,1.7vw,1.32rem); line-height:1.55; color:var(--tinte); margin:0 0 1.6rem}
+.herz{color:var(--bordeaux); font-style:normal}
+
 .dipt{display:grid; grid-template-columns:1fr 1fr; gap:clamp(.6rem,1.6vw,1.1rem); width:min(100%, 30rem); margin:0 0 clamp(1.8rem,4vw,2.6rem)}
 .dipt figure{margin:0}
 .dipt figure:last-child{margin-top:var(--versatz)}   /* versetzte Fotos */
 .dipt picture{display:block; overflow:hidden; border-radius:6px; box-shadow:0 14px 34px #2b1a1726}
 .dipt img{width:100%; aspect-ratio:5/7; object-fit:cover}
 .dipt figure:first-child img{scale:1.08}
-.dipt figcaption{font:600 var(--klein)/1 var(--kopf); letter-spacing:.16em; color:var(--tinte-2); margin-top:.7rem}
-.hero-text{max-width:40rem; width:100%; min-width:0}   /* nie breiter als die Spalte (iPhone) */
-.hero h1{margin:0 0 .9rem; max-width:16ch}
-.grundlage{font-style:italic; font-size:clamp(1.12rem,1.7vw,1.32rem); color:var(--tinte); margin:0 0 1.5rem}
-.herz{color:var(--bordeaux); font-style:normal}
-.kern{font:600 clamp(1.2rem,2vw,1.5rem)/1.35 var(--kopf); letter-spacing:-.015em; margin:0 0 .9rem; max-width:34rem}
-.kern em{font-style:normal; color:var(--bordeaux)}
-.hero-absatz{max-width:34rem; margin-inline:0; color:var(--tinte-2)}
-/* Zeile + Knoepfe: eine mittig ausgerichtete Gruppe */
-.hero-wege{display:flex; flex-direction:column; align-items:center; text-align:center; gap:.8rem; margin-top:1.8rem}
+.dipt figcaption{font:400 .8rem/1 var(--leib); letter-spacing:.06em; color:var(--tinte-2); margin-top:.6rem}
+
+.kern{font:400 clamp(1.2rem,2vw,1.5rem)/1.35 var(--kopf); letter-spacing:-.01em; margin:0 0 .9rem}
+.kern em{font-style:normal; color:#8B0F1E}
+.hero-absatz{color:var(--tinte-2); margin:0 0 1.4rem}
 /* Lilly: „am Handy in einer Zeile" — gemessen einzeilig ab 320px. */
 .zeile{
-  font:600 min(.875rem, 2.85vw)/1.2 var(--kopf); letter-spacing:.06em; text-transform:uppercase;
-  white-space:nowrap; color:var(--bordeaux); margin:0 0 .3rem;
+  font:600 min(.82rem, 2.85vw)/1.2 var(--kopf); letter-spacing:.09em; text-transform:uppercase;
+  white-space:nowrap; color:#8B0F1E; margin:0 0 .9rem;
 }
-.hero-wege .knopf{justify-content:center; text-align:center}
-/* Handy: beide Knoepfe einzeilig */
-@media (max-width:899.98px){
-  .hero-wege .knopf{font-size:min(1rem, 3.85vw); padding-inline:clamp(.9rem, 4vw, 1.6rem); white-space:nowrap}
-}
+/* Knoepfe: Handy untereinander in voller Breite, Desktop nebeneinander */
+.hero-wege{display:flex; flex-direction:column; gap:.7rem}
+.hero-wege .knopf{width:100%; justify-content:center; text-align:center; cursor:pointer;
+  min-height:54px; padding:.85rem 1.4rem; font-size:min(1rem, 3.9vw); white-space:nowrap}
 
 @media (min-width:900px){
   .hero{
-    --versatz:2rem;
+    --versatz:2.4rem;
+    --hero-breit:min(var(--frei) - 4rem, 1500px);   /* erste Seite darf breiter sein als der Rest */
+    --links-breit:calc((var(--hero-breit) - clamp(2rem,4vw,4rem)) * .6);
     min-height:100svh; display:flex; align-items:center;
-    /* oben Platz fuer die Kopfleiste, unten fuer das tiefere zweite Foto.
-       --heben schiebt den Block auf hohen Bildschirmen nach oben, damit die
-       Fotos naeher an der Bildschirmmitte sitzen. */
-    --heben:clamp(0px, 100svh - 740px, 220px);
-    padding:calc(64px + 2vh) 0 calc(2vh + var(--versatz) + 1.6rem + var(--heben));
+    padding:calc(64px + 2.5vh) 0 2.5vh;    /* oben die Kopfleiste */
   }
+  .hero .buehne{width:var(--hero-breit)}
   .hero-gitter{
-    display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:clamp(2.5rem,5vw,5rem);
-    grid-template-areas:"titel titel" "text bilder"; align-items:end;
+    display:grid; min-height:calc(100svh - 64px - 5vh);
+    grid-template-columns:minmax(0,60fr) minmax(0,40fr); column-gap:clamp(2rem,4vw,4rem);
+    /* obere und untere Leerzeile fangen die Resthoehe auf: links bleibt alles
+       eng zusammen, die Fotos stehen mittig ueber die ganze Hoehe */
+    grid-template-rows:1fr repeat(6, auto) 1fr;
+    grid-template-areas:". bilder" "titel bilder" "grund bilder" "kern bilder" "absatz bilder" "zeile bilder" "wege bilder" ". bilder";
   }
   .hero h1{
-    grid-area:titel; white-space:nowrap; max-width:none; margin:0 0 clamp(.8rem,2.5vh,2.2rem);
-    font-size:clamp(2.4rem, calc(var(--frei) * .062), 5rem);
+    grid-area:titel; white-space:nowrap; max-width:none; margin:0 0 clamp(.5rem,2vh,1.2rem);
+    font-size:clamp(2rem, calc(var(--links-breit) / 12), 5rem);   /* fuellt die Spalte in einer Zeile */
   }
-  .hero .hero-text{grid-area:text; max-width:38rem}
-  /* Breite nach Bildschirmhoehe begrenzt, damit alles auf eine Seite passt.
-     Unterkante: das erste Foto endet auf Hoehe des zweiten Knopfs; das
-     tiefere zweite Foto samt Jahreszahl ragt darunter hinaus. */
-  .dipt{
-    grid-area:bilder; margin:0 0 calc(-1 * (var(--versatz) + 1.575rem));
-    width:min(34rem, 38vw, calc((100svh - 64px) * .64), calc(var(--frei) * .44));
-  }
+  .grundlage{grid-area:grund; font-size:clamp(1.15rem, calc(var(--links-breit) / 30), 1.55rem); margin-bottom:clamp(1rem,4.2vh,2.8rem)}
+  .dipt{grid-area:bilder; align-self:center; justify-self:end; width:100%; margin:0}
+  /* erste Zeile des Zitats laeuft ueber die ganze Spalte */
+  .kern{grid-area:kern; font-size:clamp(1.05rem, calc(var(--links-breit) / 30.5), 2rem); margin-bottom:clamp(.7rem,2.8vh,1.6rem)}
+  .hero-absatz{grid-area:absatz; font-size:clamp(1.04rem, calc(var(--links-breit) / 38), 1.25rem); margin-bottom:clamp(1rem,4.2vh,2.8rem)}
+  .zeile{grid-area:zeile; font-size:.84rem; margin-bottom:clamp(.7rem,1.8vh,1.1rem)}
+  .hero-wege{grid-area:wege; flex-direction:row; flex-wrap:wrap; gap:.75rem}
+  .hero-wege .knopf{width:auto; font-size:.95rem; padding:.85rem 2.1rem}
 }
 @media (min-width:1024px){
   .hero{--frei:calc(100vw - var(--seitennav))}
-}
-@media (min-width:900px){
-  .hero .grundlage{margin-bottom:clamp(.9rem,2.2vh,1.5rem)}
-  .hero .kern{font-size:clamp(1.15rem,1.6vw,1.4rem); margin-bottom:clamp(.5rem,1.4vh,.9rem)}
-  .hero-absatz{margin-bottom:0}
-  .hero-wege{margin-top:clamp(1rem,2.6vh,1.8rem); gap:clamp(.55rem,1.2vh,.8rem)}
 }
 
 /* ── Knoepfe ───────────────────────────────────────────────── */
@@ -343,9 +336,11 @@ section{padding:clamp(4.2rem,9vw,7.5rem) 0; position:relative; scroll-margin-top
 }
 .knopf:hover{transform:translateY(-2px); background:var(--bordeaux-tief); box-shadow:0 10px 24px #79242733}
 .knopf svg{width:16px; height:16px; flex:none}
-/* Zweiter Knopf (19.11.): klar klickbar, aber leiser als der volle Knopf */
-.knopf.knopf-zweit{background:transparent; color:var(--bordeaux); box-shadow:inset 0 0 0 1.5px var(--bordeaux); min-height:48px; padding:.75rem 1.6rem}
-.knopf.knopf-zweit:hover{background:var(--bordeaux-zart); color:var(--bordeaux-tief); box-shadow:inset 0 0 0 1.5px var(--bordeaux-tief)}
+/* Hero-Knoepfe (19.11., Lilly Runde 4): gleiche Hoehe und Rundung */
+.hero-wege .knopf.runter{background:#8B0F1E; color:#FBF3EA}
+.hero-wege .knopf.runter:hover{background:#6A0B17}
+.knopf.knopf-zweit{background:#FBF3EA; color:#8B0F1E; box-shadow:inset 0 0 0 1.5px #C9A35B}
+.knopf.knopf-zweit:hover{background:#F3E6CC; color:#8B0F1E; box-shadow:inset 0 0 0 1.5px #C9A35B}
 .boden-glut .knopf{background:var(--auf-bordeaux); color:var(--bordeaux)}
 .boden-glut .knopf:hover{background:#fff; box-shadow:0 10px 24px #00000033}
 .knopf-leise{
