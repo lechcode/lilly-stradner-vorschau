@@ -45,6 +45,11 @@
        der Browser focus() stillschweigend (rAF war dafuer zu frueh). */
     if (offen) setTimeout(function(){ nav.querySelector('a').focus(); }, 60);
   }
+  /* Ab 900px steht das Menue dauerhaft links: ein offenes Mobil-Menue schliessen */
+  var breit = window.matchMedia('(min-width:900px)');
+  if (breit.addEventListener) breit.addEventListener('change', function(){
+    if (breit.matches && nav.dataset.offen === 'true') navSetzen(false);
+  });
   knopf.addEventListener('click', function(){
     navSetzen(nav.dataset.offen !== 'true');
   });

@@ -45,6 +45,7 @@
 
   --spalte:1180px;          /* aeussere Buehne */
   --text-breite:40rem;      /* mittige Lesespalte — ~72 Zeichen */
-  --rail:58px;              /* Seitenreiter ab 900px */
+  --rail:58px;              /* Seitenreiter ab 900px (vom Seitenmenue abgeloest) */
+  --seitennav:19rem;        /* Seitenmenue links ab 900px, dauerhaft sichtbar */
   --ease:cubic-bezier(.22,.61,.36,1);
 }

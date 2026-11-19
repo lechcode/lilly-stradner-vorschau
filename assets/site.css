@@ -36,7 +36,7 @@ p{margin:0 0 1.1em}
 /* ── Buehne ─────────────────────────────────────────────────── */
 .buehne{width:min(100% - 2.5rem, var(--spalte)); margin-inline:auto}
 @media (min-width:900px){
-  .buehne{width:min(100% - var(--rail) - 4rem, var(--spalte)); translate:calc(var(--rail) / 2) 0}
+  .buehne{width:min(100% - 4rem, var(--spalte))}
 }
 /* Mittige Lesespalte: Kapitelkopf zentriert, Fliesstext linksbuendig
    INNERHALB der mittigen Spalte — lange Absaetze zentriert liest niemand. */
@@ -546,3 +546,22 @@ footer{background:var(--bordeaux-tief); color:var(--auf-bordeaux); padding:clamp
 .legende li::before{content:''; width:.7rem; height:.7rem; border-radius:50%; flex:none}
 .legende .l1::before{background:var(--wald)} .legende .l2::before{background:var(--bordeaux)} .legende .l3::before{background:var(--erde)}
 .venn .k,.methode-mini .k{display:none}   /* alte Kreisflaechen — die Masken uebernehmen */
+
+/* ── Desktop (ab 900px): Menue dauerhaft ausgeklappt links ─────
+   Kein Menue-Knopf, kein Vollflaechen-Overlay, kein Seitenreiter;
+   der Inhalt rueckt neben die Leiste. Mobil bleibt alles wie gehabt. */
+@media (min-width:900px){
+  body{padding-left:var(--seitennav)}
+  .menue-knopf,.rail{display:none}
+  .kopf{left:var(--seitennav)}
+  .glutlinie{inset:0 auto 0 calc(var(--seitennav) - 1px)}
+  .nav{
+    inset:0 auto 0 0; width:var(--seitennav); z-index:96; opacity:1; visibility:visible;
+    display:flex; align-items:center; padding:5rem 1.2rem 2rem 1.4rem; transition:none;
+  }
+  .nav ol{width:100%}
+  .nav a{font-size:clamp(1.02rem,1.3vw,1.18rem); gap:.7rem; padding:.6rem .2rem}
+  .nav a span{min-width:2rem}
+  .nav li.unter a{font-size:.95rem; padding-left:2.2rem}
+  .nav-offen .kopf::before{opacity:1}
+}
