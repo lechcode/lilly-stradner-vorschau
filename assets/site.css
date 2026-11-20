@@ -669,8 +669,21 @@ html:not(.js) .methode-leer,html:not(.js) .methode-hinweis{display:none}
 }
 .kennenlern-karte .knopf{background:var(--bordeaux); color:#fff}
 .kennenlern-karte p:last-child{margin-bottom:0}
-.gruppe{margin-top:3.6rem; padding-top:3.2rem; border-top:1px solid #ffffff33; scroll-margin-top:84px}
-.gruppe h3{margin-bottom:1rem}
+/* Gruppenmentoring als kleiner, ruhiger Teaser (Lilly 20.11.): helle Karte
+   auf dem Bordeaux, damit das Dunkelrot der Hervorhebung lesbar bleibt. */
+.gruppe-teaser{
+  max-width:40rem; margin:3.6rem auto 0; padding:clamp(1.5rem,4vw,2.3rem);
+  background:#FBF3EA; color:var(--tinte); border-radius:8px; scroll-margin-top:84px;
+  box-shadow:0 14px 34px #00000026;
+}
+.gruppe-teaser :focus-visible{outline-color:var(--tinte)}
+.gruppe-teaser h3{font-family:var(--kopf); color:var(--tinte); margin-bottom:.25rem}
+.gruppe-teaser p{font-family:var(--leib); color:var(--tinte); font-size:.97em}
+.gruppe-teaser .teaser-unterzeile{font-style:italic; color:var(--tinte-2); margin-bottom:1.2rem}
+.teaser-betont{display:block; margin-top:.5rem; font:400 1.18em/1.35 var(--kopf); color:#8B0F1E}
+.teaser-knopf{margin:1.6rem 0 0}
+.boden-glut .knopf.knopf-warteliste{background:#FBF3EA; color:#8B0F1E; box-shadow:inset 0 0 0 1.5px #C9A35B; cursor:pointer}
+.boden-glut .knopf.knopf-warteliste:hover{background:#F3E6CC; color:#8B0F1E; box-shadow:inset 0 0 0 1.5px #C9A35B}
 #einszueins{scroll-margin-top:84px}
 .paar .marke{margin-bottom:.8rem}
 
