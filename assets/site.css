@@ -619,16 +619,33 @@ html:not(.js) .methode-leer,html:not(.js) .methode-hinweis{display:none}
 .nerds-text .schluss{margin:1.2rem 0 0; font:400 clamp(1.1rem,1.7vw,1.3rem)/1.4 var(--kopf); color:var(--tinte)}
 .nerds-text .schluss b{color:var(--bordeaux); font-weight:400}
 
-/* ── Werdegang ─────────────────────────────────────────────── */
-.werdegang{display:grid; gap:clamp(1.4rem,3vw,2.6rem); align-items:center; max-width:56rem;
-           margin:3.4rem auto 0; padding-top:3rem; border-top:1px solid var(--linie)}
-@media (min-width:820px){ .werdegang{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)} }
-.werdegang .lese{margin:0}
+/* ── Mein Weg (bis 19.11. „Woher ich komme") ─────────────────
+   20.11. (Lilly): Foto vorerst raus, der Text nimmt die Breite ein.
+   Liste: Titel fett, darunter eine kurze Zeile. Die letzten beiden Punkte
+   (Soma Akademie, Evolution of Breath) mit Goldlinie hervorgehoben. */
+.werdegang{display:block; max-width:56rem; margin:3.4rem auto 0; padding-top:3rem; border-top:1px solid var(--linie)}
+.werdegang .lese{margin:0; max-width:none}
 .werdegang h3{margin-bottom:.8rem}
-.werdegang ul{padding-left:1.1rem; margin:0 0 1.6rem}
-.werdegang li{margin-bottom:.3rem}
-.werdegang li::marker{color:var(--bordeaux)}
-.werdegang .bild{max-width:320px; justify-self:center; margin:0}
+.weg-einleitung{margin:0 0 1.4rem}
+.weg-liste{list-style:none; padding:0; margin:0; display:grid; gap:1.05rem}
+.weg-liste li{margin:0}
+.weg-liste b{display:block; font:600 1em/1.4 var(--leib); color:var(--tinte)}
+.weg-liste span{display:block; color:var(--tinte-2); line-height:1.55}
+.weg-liste li.betont{border-left:2px solid #C9A35B; padding-left:14px}
+.weg-schluss{margin:2rem 0 0; font-family:var(--leib); font-style:italic; color:var(--tinte); font-size:1.06em}
+
+/* ── Lass uns kennenlernen (20.11.) ──────────────────────────
+   Drei nummerierte Schritte, am Desktop nebeneinander. */
+.kennenlernen-block{max-width:56rem; margin:3rem auto 0; padding-top:2.6rem; border-top:1px solid var(--linie)}
+.kennenlernen-block h3{margin-bottom:.8rem}
+.schritte{list-style:none; padding:0; margin:1.4rem 0 2rem; display:grid; gap:1.5rem}
+@media (min-width:820px){ .schritte{grid-template-columns:repeat(3, minmax(0,1fr)); gap:2.2rem} }
+.schritte li{margin:0}
+.schritt-nr{display:block; font:400 2.2rem/1 var(--kopf); color:#C9A35B; margin-bottom:.55rem}
+.schritte b{display:block; font:600 1em/1.4 var(--leib); color:var(--tinte); margin-bottom:.35rem}
+.schritte li > span:last-child{display:block; color:var(--tinte-2); line-height:1.55}
+.knopf.knopf-call{background:#8B0F1E; color:#FBF3EA; cursor:pointer}
+.knopf.knopf-call:hover{background:#6A0B17}
 
 /* ── Bild-Text-Paare ───────────────────────────────────────── */
 .paar{display:grid; gap:clamp(1.6rem,3vw,3rem); align-items:center; max-width:64rem; margin:2.8rem auto 0}
