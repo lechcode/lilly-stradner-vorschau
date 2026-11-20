@@ -272,26 +272,7 @@ PAARE = [
     # ── 04 · Community ───────────────────────────────────────────────────
     ('<p class="marke">03b — Online-Community</p>', '<p class="marke">03b — Online community</p>'),
 
-    # ── 05 · Offline ─────────────────────────────────────────────────────
-    ('<p class="marke">04 — Offline-Angebote &amp; Kooperationen</p>',
-     '<p class="marke">04 — In person &amp; collaborations</p>'),
-    ('Ob im 1:1 oder in der Gruppe: Offline zu arbeiten, liebe ich am meisten.',
-     'One-to-one or in a group: working in person is what I love most.'),
-    ('alt="Blick von oben in einen vorbereiteten Retreat-Raum mit Matten und Klangschalen."',
-     'alt="View from above into a prepared retreat room with mats and singing bowls."'),
-    ('<p>Im selben Raum zu sitzen, gemeinsam zu atmen, sich wirklich zu begegnen. Mit somatischer Arbeit und Breathwork entstehen dabei tiefe, trauma-informierte Erfahrungsräume — einzigartige Sessions und Rituale, die unter die Haut gehen.</p>',
-     '<p>Sitting in the same room, breathing together, truly meeting each other. With somatic work and breathwork, deep, trauma-informed spaces of experience emerge — unique sessions and rituals that get under your skin.</p>'),
-    ('<p>Ich bin viel unterwegs, aber immer offen für Anfragen: im Winter meist in Indien und Südostasien, im Sommer in Deutschland (vor allem NRW &amp; Berlin) und Europa.</p>',
-     '<p>I travel a lot, but I am always open to requests: in winter mostly in India and Southeast Asia, in summer in Germany (especially North Rhine-Westphalia &amp; Berlin) and Europe.</p>'),
-    ('<p>Ich biete offline Folgendes an:</p>', '<p>In person, I offer:</p>'),
-    ('<li>Offline-1:1-Sessions (gerne auch in Verbindung mit Online-Begleitungen)</li>',
-     '<li>One-to-one sessions in person (also in combination with an online journey)</li>'),
-    ('<li>Offline-Gruppensessions zu verschiedenen Themen</li>', '<li>Group sessions in person on various themes</li>'),
-    ('<li>Frauenkreise</li>', '<li>Women’s circles</li>'),
-    ('<p>Hast du Interesse an einer Offline-Session oder einer Kooperation?</p>',
-     '<p>Interested in an in-person session or a collaboration?</p>'),
-    ('data-thema="Offline-Session / Kooperation">Lass uns ins Gespräch kommen',
-     'data-thema="In-person session / collaboration">Let’s talk'),
+    # ── 04 · Offline: steht seit 20.11. getrennt auf Deutsch (nur-de) und Englisch (nur-en) in index.html
 
     # ── Hilfe ────────────────────────────────────────────────────────────
     ('<h3>Wenn es gerade akut ist</h3>', '<h3>If things are acute right now</h3>'),

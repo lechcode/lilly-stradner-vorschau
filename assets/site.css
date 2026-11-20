@@ -710,6 +710,14 @@ html:not(.js) .methode-leer,html:not(.js) .methode-hinweis{display:none}
 #community h2{text-align:left}
 
 /* ── 05 · Offline-Angebote ─────────────────────────────────── */
+/* ── 04 · Offline neu gegliedert (20.11.): 4a Sessions, 4b Retreat, 4c Kooperationen ── */
+.offline-teil{max-width:46rem; margin:3.4rem auto 0; padding-top:2.8rem; border-top:1px solid #ffffff33; scroll-margin-top:110px}
+.offline-teil .lese{margin:0; max-width:none}
+.offline-teil .marke{margin-bottom:1.1rem}
+.offline-teil h3{margin:1.6rem 0 .5rem}
+.offline-teil h3:first-child{margin-top:0}
+.offline-teil .plakette{margin-bottom:1rem}
+.offline-teil p:last-child{margin-bottom:0}
 .angebote{list-style:none; padding:0; margin:0 0 1.4rem; display:grid; gap:.5rem}
 .angebote li{padding:.65rem 1rem; background:#00000026; border-radius:6px; font-family:var(--kopf); font-weight:600; font-size:.98rem}
 
