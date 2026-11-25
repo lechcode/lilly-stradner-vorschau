@@ -13,7 +13,7 @@ from pathlib import Path
 
 W = Path(__file__).parent
 
-VORSCHAU = "https://lechcode.github.io/lilly-stradner-vorschau/"
+VORSCHAU = "https://lillystradner.de/"
 
 # ── Kopf/Fuss ────────────────────────────────────────────────────────────
 def seite(datei, lang, titel, beschreibung, marke, ueberschrift, inhalt,

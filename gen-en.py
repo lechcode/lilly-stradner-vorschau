@@ -52,8 +52,8 @@ PAARE = [
     ('<meta property="og:description" content="Somatische Prozessbegleitung &amp; Atemarbeit. Transformation ist möglich.">',
      '<meta property="og:description" content="Somatic process facilitation &amp; breathwork. Transformation is possible.">'),
     ('<meta property="og:locale" content="de_DE">', '<meta property="og:locale" content="en_GB">'),
-    ('<meta property="og:url" content="https://lechcode.github.io/lilly-stradner-vorschau/">',
-     '<meta property="og:url" content="https://lechcode.github.io/lilly-stradner-vorschau/en.html">'),
+    ('<meta property="og:url" content="https://lillystradner.de/">',
+     '<meta property="og:url" content="https://lillystradner.de/en.html">'),
 
     ('<a class="skip" href="#inhalt">Zum Inhalt springen</a>',
      '<a class="skip" href="#inhalt">Skip to content</a>'),
