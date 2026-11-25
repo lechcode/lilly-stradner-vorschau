@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://lillystradner.de/</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://lillystradner.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lillystradner.de/en.html"/>
+  </url>
+  <url>
+    <loc>https://lillystradner.de/en.html</loc>
+    <xhtml:link rel="alternate" hreflang="de" href="https://lillystradner.de/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lillystradner.de/en.html"/>
+  </url>
+</urlset>

@@ -30,7 +30,7 @@ def seite(datei, lang, titel, beschreibung, marke, ueberschrift, inhalt,
 <script>document.documentElement.classList.add('js')</script>
 
 <!-- ENTFERNEN, sobald Impressum + Datenschutz vollstaendig sind und Lilly freigegeben hat -->
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="noindex, follow">
 
 <title>{titel}</title>
 <meta name="description" content="{beschreibung}">

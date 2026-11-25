@@ -54,6 +54,8 @@ PAARE = [
     ('<meta property="og:locale" content="de_DE">', '<meta property="og:locale" content="en_GB">'),
     ('<meta property="og:url" content="https://lillystradner.de/">',
      '<meta property="og:url" content="https://lillystradner.de/en.html">'),
+    ('<link rel="canonical" href="https://lillystradner.de/">',
+     '<link rel="canonical" href="https://lillystradner.de/en.html">'),
 
     ('<a class="skip" href="#inhalt">Zum Inhalt springen</a>',
      '<a class="skip" href="#inhalt">Skip to content</a>'),

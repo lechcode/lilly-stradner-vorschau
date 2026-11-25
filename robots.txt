@@ -1,2 +1,7 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /mein-bereich.html
+Disallow: /onboarding.html
+Disallow: /vorschau.html
+
+Sitemap: https://lillystradner.de/sitemap.xml
