@@ -111,8 +111,7 @@ SEITEN.append(dict(
     titel="Impressum | Lilly Stradner",
     beschreibung="Impressum und Anbieterkennzeichnung nach § 5 DDG für die Website von Lilly Stradner.",
     marke="Rechtliches", ueberschrift="Impressum",
-    inhalt=f"""    {OFFEN_DE}
-    <div class="spalte">
+    inhalt=f"""    <div class="spalte">
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
         Lilly Stradner<br>
@@ -127,7 +126,7 @@ SEITEN.append(dict(
       </p>
 
       <h2>Umsatzsteuer</h2>
-      <p>{L('Umsatzsteuer-Identifikationsnummer nach § 27 a UStG — oder der Hinweis auf die Kleinunternehmerregelung nach § 19 UStG')}</p>
+      <p>Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).</p>
 
       <h2>Verantwortlich für den Inhalt</h2>
       <p>Lilly Stradner, Anschrift wie oben.</p>
@@ -143,8 +142,7 @@ SEITEN.append(dict(
         Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG).</p>
 
       <h2>Bildnachweis</h2>
-      <p>Alle Fotografien stammen aus dem privaten Bestand von Lilly Stradner.
-        {L('Namen der Fotografinnen und Fotografen ergänzen')}</p>
+      <p>Alle Fotografien stammen aus dem privaten Bestand von Lilly Stradner.</p>
 
       <h2>Umsetzung der Website</h2>
       <p>Gestaltung und Umsetzung: Schönbach &amp; Storz GbR, Landsberg am Lech.</p>
@@ -156,8 +154,7 @@ SEITEN.append(dict(
     titel="Legal notice | Lilly Stradner",
     beschreibung="Legal notice and provider identification under section 5 DDG for Lilly Stradner's website.",
     marke="Legal", ueberschrift="Legal notice",
-    inhalt=f"""    {OFFEN_EN}
-    <div class="spalte">
+    inhalt=f"""    <div class="spalte">
       <h2>Information under section 5 DDG</h2>
       <p>
         Lilly Stradner<br>
@@ -172,7 +169,7 @@ SEITEN.append(dict(
       </p>
 
       <h2>VAT</h2>
-      <p>{L('VAT identification number under section 27a UStG — or the small-business note under section 19 UStG')}</p>
+      <p>No VAT is charged in accordance with section 19 of the German VAT Act (small-business regulation).</p>
 
       <h2>Responsible for the content</h2>
       <p>Lilly Stradner, address as above.</p>
@@ -187,8 +184,7 @@ SEITEN.append(dict(
         consumer arbitration board (section 36 VSBG).</p>
 
       <h2>Image credits</h2>
-      <p>All photographs come from Lilly Stradner's private collection.
-        {L('add photographers’ names')}</p>
+      <p>All photographs come from Lilly Stradner's private collection.</p>
 
       <h2>Website</h2>
       <p>Design and build: Schönbach &amp; Storz GbR, Landsberg am Lech, Germany.</p>
@@ -200,8 +196,7 @@ SEITEN.append(dict(
     titel="Datenschutz | Lilly Stradner",
     beschreibung="Datenschutzerklärung: Diese Website setzt keine Cookies, bindet keine externen Dienste ein und verarbeitet nur, was du selbst schickst.",
     marke="Rechtliches", ueberschrift="Datenschutz",
-    inhalt=f"""    {OFFEN_DE}
-    <div class="spalte">
+    inhalt=f"""    <div class="spalte">
       <h2>Kurz gesagt</h2>
       <p>Diese Website setzt <strong>keine Cookies</strong>, bindet <strong>kein Tracking</strong> und
         <strong>keine externen Dienste</strong> ein. Die Schriften liegen auf demselben Server wie die
@@ -254,8 +249,7 @@ SEITEN.append(dict(
     titel="Privacy | Lilly Stradner",
     beschreibung="Privacy policy: this site sets no cookies, embeds no external services and processes only what you send yourself.",
     marke="Legal", ueberschrift="Privacy",
-    inhalt=f"""    {OFFEN_EN}
-    <div class="spalte">
+    inhalt=f"""    <div class="spalte">
       <h2>In short</h2>
       <p>This website sets <strong>no cookies</strong>, uses <strong>no tracking</strong> and embeds
         <strong>no external services</strong>. The fonts are served from the same server as the page,
