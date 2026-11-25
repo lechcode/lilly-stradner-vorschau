@@ -123,7 +123,7 @@ SEITEN.append(dict(
 
       <h2>Kontakt</h2>
       <p>
-        E-Mail: {L('E-Mail-Adresse')}<br>
+        E-Mail: <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a><br>
         Telefon: {L('optional')}
       </p>
 
@@ -169,7 +169,7 @@ SEITEN.append(dict(
 
       <h2>Contact</h2>
       <p>
-        Email: {L('email address')}<br>
+        Email: <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a><br>
         Phone: {L('optional')}
       </p>
 
@@ -211,7 +211,7 @@ SEITEN.append(dict(
         was du selbst über das Formular schickst.</p>
 
       <h2>Verantwortliche</h2>
-      <p>Lilly Stradner, {L('Anschrift')}, E-Mail {L('E-Mail-Adresse')}.</p>
+      <p>Lilly Stradner, {L('Anschrift')}, E-Mail <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>.</p>
 
       <h2>Hosting</h2>
       <p>Diese Seite wird bei <strong>GitHub Pages</strong> gehostet (GitHub Inc., 88 Colin P Kelly Jr
@@ -243,7 +243,7 @@ SEITEN.append(dict(
         <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
         <li>Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (Art. 21 DSGVO)</li>
       </ul>
-      <p>Eine Nachricht an {L('E-Mail-Adresse')} genügt. Außerdem kannst du dich bei einer
+      <p>Eine Nachricht an <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a> genügt. Außerdem kannst du dich bei einer
         Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO).</p>
 
       <h2>Keine automatisierte Entscheidungsfindung</h2>
@@ -265,7 +265,7 @@ SEITEN.append(dict(
         send through the contact form yourself.</p>
 
       <h2>Controller</h2>
-      <p>Lilly Stradner, {L('address')}, email {L('email address')}.</p>
+      <p>Lilly Stradner, {L('address')}, email <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>.</p>
 
       <h2>Hosting</h2>
       <p>This site is hosted on <strong>GitHub Pages</strong> (GitHub Inc., 88 Colin P Kelly Jr Street,
@@ -296,7 +296,7 @@ SEITEN.append(dict(
         <li>Data portability (Art. 20 GDPR)</li>
         <li>Objection to processing based on legitimate interests (Art. 21 GDPR)</li>
       </ul>
-      <p>An email to {L('email address')} is enough. You may also lodge a complaint with a data
+      <p>An email to <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a> is enough. You may also lodge a complaint with a data
         protection supervisory authority (Art. 77 GDPR).</p>
 
       <h2>No automated decision-making</h2>
