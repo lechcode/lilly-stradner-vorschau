@@ -116,15 +116,14 @@ SEITEN.append(dict(
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
         Lilly Stradner<br>
-        {L('Straße und Hausnummer')}<br>
-        {L('PLZ und Ort')}<br>
+        Im Strohsiek 11a<br>
+        33613 Bielefeld<br>
         Deutschland
       </p>
 
       <h2>Kontakt</h2>
       <p>
-        E-Mail: <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a><br>
-        Telefon: {L('optional')}
+        E-Mail: <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>
       </p>
 
       <h2>Umsatzsteuer</h2>
@@ -162,15 +161,14 @@ SEITEN.append(dict(
       <h2>Information under section 5 DDG</h2>
       <p>
         Lilly Stradner<br>
-        {L('street and number')}<br>
-        {L('postcode and town')}<br>
+        Im Strohsiek 11a<br>
+        33613 Bielefeld<br>
         Germany
       </p>
 
       <h2>Contact</h2>
       <p>
-        Email: <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a><br>
-        Phone: {L('optional')}
+        Email: <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>
       </p>
 
       <h2>VAT</h2>
@@ -211,7 +209,7 @@ SEITEN.append(dict(
         was du selbst über das Formular schickst.</p>
 
       <h2>Verantwortliche</h2>
-      <p>Lilly Stradner, {L('Anschrift')}, E-Mail <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>.</p>
+      <p>Lilly Stradner, Im Strohsiek 11a, 33613 Bielefeld, E-Mail <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>.</p>
 
       <h2>Hosting</h2>
       <p>Diese Seite wird bei <strong>GitHub Pages</strong> gehostet (GitHub Inc., 88 Colin P Kelly Jr
@@ -265,7 +263,7 @@ SEITEN.append(dict(
         send through the contact form yourself.</p>
 
       <h2>Controller</h2>
-      <p>Lilly Stradner, {L('address')}, email <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>.</p>
+      <p>Lilly Stradner, Im Strohsiek 11a, 33613 Bielefeld, Germany, email <a href="mailto:stradner.work@gmail.com">stradner.work@gmail.com</a>.</p>
 
       <h2>Hosting</h2>
       <p>This site is hosted on <strong>GitHub Pages</strong> (GitHub Inc., 88 Colin P Kelly Jr Street,
@@ -316,7 +314,7 @@ SEITEN.append(dict(
     <div class="spalte">
       <h2>1 · Geltungsbereich</h2>
       <p>Diese Bedingungen gelten für alle Begleitungen, Sessions, Gruppenangebote und digitalen
-        Inhalte von Lilly Stradner, {L('Anschrift')}.</p>
+        Inhalte von Lilly Stradner, Im Strohsiek 11a, 33613 Bielefeld.</p>
 
       <h2>2 · Was diese Arbeit ist — und was nicht</h2>
       <p>Die Begleitung ist eine somatische Prozessbegleitung. Sie ist <strong>keine Heilbehandlung,
@@ -373,7 +371,7 @@ SEITEN.append(dict(
     <div class="spalte">
       <h2>1 · Scope</h2>
       <p>These terms apply to all sessions, group offerings and digital content provided by
-        Lilly Stradner, {L('address')}.</p>
+        Lilly Stradner, Im Strohsiek 11a, 33613 Bielefeld, Germany.</p>
 
       <h2>2 · What this work is — and what it is not</h2>
       <p>This is somatic process facilitation. It is <strong>not medical treatment, not psychotherapy
